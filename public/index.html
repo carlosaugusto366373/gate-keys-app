@@ -31,7 +31,7 @@
     background-size: 100% 100%, 40px 40px, 40px 40px;
   }
 
-  /* Header */
+  /* ===== HEADER ===== */
   .header {
     background: rgba(10,10,10,.9);
     backdrop-filter: blur(10px);
@@ -46,48 +46,30 @@
     z-index: 50;
   }
   .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; align-items: center; gap: 10px;
     font-family: 'Rajdhani', sans-serif;
-    font-weight: 800;
-    font-size: 20px;
-    letter-spacing: 1px;
-    color: #fff;
+    font-weight: 800; font-size: 20px; letter-spacing: 1px;
   }
   .logo-badge {
-    width: 38px; height: 38px;
-    border-radius: 8px;
+    width: 38px; height: 38px; border-radius: 8px;
     background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 900; font-size: 16px;
+    font-family: 'Rajdhani', sans-serif; font-weight: 900; font-size: 16px;
     box-shadow: 0 0 20px rgba(225, 29, 42, 0.6);
   }
   .logo span { color: var(--vermelho-brilho); }
 
-  /* Tabs */
   .tabs {
-    display: flex;
-    gap: 8px;
-    background: #121214;
-    padding: 6px;
-    border-radius: 12px;
+    display: flex; gap: 8px; background: #121214;
+    padding: 6px; border-radius: 12px;
     border: 1px solid var(--preto-borda);
   }
   .tab {
-    padding: 9px 20px;
-    border-radius: 8px;
-    border: none;
-    background: transparent;
-    color: var(--cinza-txt);
-    font-weight: 700;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 14px;
-    letter-spacing: .5px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: .2s;
+    padding: 9px 20px; border-radius: 8px; border: none;
+    background: transparent; color: var(--cinza-txt);
+    font-weight: 700; font-family: 'Rajdhani', sans-serif;
+    font-size: 14px; letter-spacing: .5px; cursor: pointer;
+    text-transform: uppercase; transition: .2s;
   }
   .tab.active {
     background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
@@ -96,85 +78,63 @@
   }
   .tab:not(.active):hover { color: #ccc; }
 
-  /* Container */
+  /* ===== CONTAINER ===== */
   .container {
-    max-width: 720px;
-    margin: 0 auto;
+    max-width: 720px; margin: 0 auto;
     padding: 40px 20px 60px;
   }
 
-  /* Hero */
-  .hero {
-    text-align: center;
-    margin-bottom: 32px;
-  }
+  /* ===== HERO ===== */
+  .hero { text-align: center; margin-bottom: 32px; }
   .hero-badge {
-    display: inline-block;
-    padding: 6px 16px;
+    display: inline-block; padding: 6px 16px;
     background: rgba(225, 29, 42, 0.12);
     border: 1px solid rgba(225, 29, 42, 0.4);
-    border-radius: 20px;
-    font-size: 11px;
+    border-radius: 20px; font-size: 11px;
     color: var(--vermelho-brilho);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-weight: 700;
-    margin-bottom: 14px;
+    text-transform: uppercase; letter-spacing: 3px;
+    font-weight: 700; margin-bottom: 14px;
   }
   .hero h1 {
     font-family: 'Rajdhani', sans-serif;
     font-size: clamp(32px, 6vw, 48px);
-    font-weight: 800;
-    letter-spacing: 2px;
+    font-weight: 800; letter-spacing: 2px;
     text-transform: uppercase;
     background: linear-gradient(180deg, #fff 0%, var(--vermelho-brilho) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.1;
-    margin-bottom: 8px;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; line-height: 1.1; margin-bottom: 8px;
   }
   .hero .linha {
-    width: 60px; height: 3px;
-    background: var(--vermelho);
-    margin: 12px auto;
-    border-radius: 2px;
+    width: 60px; height: 3px; background: var(--vermelho);
+    margin: 12px auto; border-radius: 2px;
     box-shadow: 0 0 20px var(--vermelho);
   }
   .hero p {
-    color: var(--cinza-txt);
-    font-size: 14px;
-    max-width: 420px;
-    margin: 0 auto;
+    color: var(--cinza-txt); font-size: 14px;
+    max-width: 420px; margin: 0 auto;
   }
 
-  /* Card */
+  /* ===== CARD ===== */
   .card {
     background: var(--preto-card);
     border: 1px solid var(--preto-borda);
-    border-radius: 16px;
-    padding: 24px;
+    border-radius: 16px; padding: 24px;
     box-shadow: 0 0 40px rgba(225, 29, 42, 0.08);
   }
 
   .progresso {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    color: var(--cinza-txt);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--cinza-txt);
+    margin-bottom: 8px; text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 600;
   }
-  .progresso .num { color: var(--vermelho-brilho); font-weight: 800; font-family: 'Rajdhani', sans-serif; font-size: 14px; }
-
+  .progresso .num {
+    color: var(--vermelho-brilho); font-weight: 800;
+    font-family: 'Rajdhani', sans-serif; font-size: 14px;
+  }
   .barra {
-    width: 100%; height: 4px;
-    background: #1a1a1e;
-    border-radius: 4px; overflow: hidden;
-    margin-bottom: 22px;
+    width: 100%; height: 4px; background: #1a1a1e;
+    border-radius: 4px; overflow: hidden; margin-bottom: 22px;
   }
   .barra-fill {
     height: 100%; width: 0%;
@@ -183,16 +143,15 @@
     box-shadow: 0 0 12px var(--vermelho);
   }
 
-  /* Step */
+  /* ===== STEP ===== */
   .step {
     display: flex; align-items: center; gap: 14px;
     padding: 16px; border-radius: 12px;
     background: #0e0e10;
     border: 1px solid var(--preto-borda);
-    margin-bottom: 10px;
-    transition: .25s;
-    cursor: pointer;
-    user-select: none;
+    margin-bottom: 10px; transition: .25s;
+    cursor: pointer; user-select: none;
+    position: relative;
   }
   .step.locked { opacity: .35; pointer-events: none; }
   .step.done {
@@ -202,10 +161,14 @@
   }
   .step.done .check {
     background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
-    color: #fff;
-    box-shadow: 0 0 12px var(--vermelho);
+    color: #fff; box-shadow: 0 0 12px var(--vermelho);
   }
-  .step:not(.done):not(.locked):hover {
+  .step.timer {
+    background: linear-gradient(135deg, rgba(225, 29, 42, 0.08), rgba(225, 29, 42, 0.02));
+    border-color: var(--vermelho-escuro);
+    cursor: wait;
+  }
+  .step:not(.done):not(.locked):not(.timer):hover {
     border-color: var(--vermelho-escuro);
     background: #14141a;
   }
@@ -215,51 +178,75 @@
     display: flex; align-items: center; justify-content: center;
     font-family: 'Rajdhani', sans-serif;
     font-size: 15px; font-weight: 800;
-    flex-shrink: 0;
-    transition: .25s;
-    color: #666;
+    flex-shrink: 0; transition: .25s; color: #666;
   }
-  .step-txt { font-size: 14px; line-height: 1.4; }
+  .step-txt { font-size: 14px; line-height: 1.4; flex: 1; }
   .step-txt b { color: var(--vermelho-brilho); font-weight: 800; }
 
-  /* Botão */
-  .btn {
-    width: 100%;
-    padding: 16px;
-    border-radius: 12px;
-    border: none;
-    background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
-    color: #fff;
-    font-weight: 800;
+  /* Timer circular */
+  .timer-box {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 12px; border-radius: 8px;
+    background: rgba(225, 29, 42, 0.12);
+    border: 1px solid var(--vermelho-escuro);
     font-family: 'Rajdhani', sans-serif;
-    font-size: 16px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    margin-top: 16px;
-    transition: .2s;
+    font-weight: 800; font-size: 14px;
+    color: var(--vermelho-brilho);
+    flex-shrink: 0;
+  }
+  .timer-box .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--vermelho-brilho);
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .4; transform: scale(.8); }
+  }
+
+  /* ===== AVISO ===== */
+  .aviso-box {
+    padding: 14px 16px; border-radius: 12px;
+    background: rgba(225, 29, 42, 0.08);
+    border: 1px solid rgba(225, 29, 42, 0.4);
+    color: #fbb;
+    font-size: 13px; margin-bottom: 16px;
+    display: none; align-items: center; gap: 10px;
+    animation: shake .4s;
+  }
+  .aviso-box.show { display: flex; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  /* ===== BOTÃO ===== */
+  .btn {
+    width: 100%; padding: 16px; border-radius: 12px; border: none;
+    background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
+    color: #fff; font-weight: 800;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px; letter-spacing: 1.5px;
+    text-transform: uppercase; cursor: pointer;
+    margin-top: 16px; transition: .2s;
     box-shadow: 0 0 30px rgba(225, 29, 42, 0.35);
   }
   .btn:disabled {
-    background: #1a1a1e;
-    color: #4a4a52;
-    cursor: not-allowed;
-    box-shadow: none;
+    background: #1a1a1e; color: #4a4a52;
+    cursor: not-allowed; box-shadow: none;
   }
   .btn:not(:disabled):hover {
     transform: translateY(-1px);
     box-shadow: 0 0 40px rgba(225, 29, 42, 0.6);
   }
 
-  /* Resultado */
+  /* ===== RESULTADO ===== */
   .resultado {
-    margin-top: 20px;
-    padding: 22px;
-    border-radius: 14px;
+    margin-top: 20px; padding: 22px; border-radius: 14px;
     background: linear-gradient(135deg, rgba(225, 29, 42, 0.12), rgba(225, 29, 42, 0.02));
     border: 1px solid var(--vermelho);
-    text-align: center;
-    display: none;
+    text-align: center; display: none;
     box-shadow: 0 0 30px rgba(225, 29, 42, 0.15);
     animation: aparecer .4s ease;
   }
@@ -268,59 +255,38 @@
     to { opacity: 1; transform: translateY(0); }
   }
   .resultado .titulo-res {
-    font-size: 11px;
-    color: var(--vermelho-brilho);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-weight: 700;
-    margin-bottom: 10px;
+    font-size: 11px; color: var(--vermelho-brilho);
+    text-transform: uppercase; letter-spacing: 3px;
+    font-weight: 700; margin-bottom: 10px;
   }
   .resultado code {
-    display: block;
-    font-family: 'Courier New', monospace;
-    font-size: 20px;
-    font-weight: 800;
-    letter-spacing: 3px;
-    color: #fff;
-    padding: 14px;
-    background: #0a0a0c;
-    border-radius: 10px;
-    border: 1px solid var(--preto-borda);
-    word-break: break-all;
-    margin-bottom: 14px;
+    display: block; font-family: 'Courier New', monospace;
+    font-size: 20px; font-weight: 800;
+    letter-spacing: 3px; color: #fff;
+    padding: 14px; background: #0a0a0c;
+    border-radius: 10px; border: 1px solid var(--preto-borda);
+    word-break: break-all; margin-bottom: 14px;
   }
   .copy {
     background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
-    color: #fff;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 8px;
-    font-weight: 800;
-    font-family: 'Rajdhani', sans-serif;
-    letter-spacing: 1px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: 13px;
-    transition: .2s;
+    color: #fff; border: none;
+    padding: 10px 24px; border-radius: 8px;
+    font-weight: 800; font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 1px; cursor: pointer;
+    text-transform: uppercase; font-size: 13px; transition: .2s;
   }
   .copy:hover { filter: brightness(1.15); }
 
-  /* Downloads */
+  /* ===== DOWNLOADS ===== */
   .download-btn {
     display: block;
     background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
-    color: #fff;
-    text-decoration: none;
-    padding: 16px 22px;
-    border-radius: 12px;
-    font-weight: 800;
-    font-family: 'Rajdhani', sans-serif;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-size: 15px;
-    margin-bottom: 10px;
-    transition: .2s;
-    text-align: center;
+    color: #fff; text-decoration: none;
+    padding: 16px 22px; border-radius: 12px;
+    font-weight: 800; font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 1px; text-transform: uppercase;
+    font-size: 15px; margin-bottom: 10px;
+    transition: .2s; text-align: center;
     box-shadow: 0 0 20px rgba(225, 29, 42, 0.3);
   }
   .download-btn:hover {
@@ -328,41 +294,41 @@
     box-shadow: 0 0 30px rgba(225, 29, 42, 0.6);
   }
 
-  /* Aviso já resgatou */
+  /* ===== AVISO JÁ RESGATOU ===== */
   .aviso-resgatou {
-    padding: 20px;
-    border-radius: 12px;
+    padding: 24px 20px; border-radius: 12px;
     background: rgba(225, 29, 42, 0.08);
     border: 1px solid rgba(225, 29, 42, 0.4);
-    text-align: center;
-    color: #ddd;
-    font-size: 14px;
+    text-align: center; color: #ddd; font-size: 14px;
+    line-height: 1.5;
   }
-  .aviso-resgatou strong { color: var(--vermelho-brilho); display: block; margin-bottom: 6px; font-size: 15px; }
+  .aviso-resgatou strong {
+    color: var(--vermelho-brilho);
+    display: block; margin-bottom: 8px; font-size: 16px;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
 
   .loading {
     text-align: center; color: #666; padding: 80px 0;
     font-family: 'Rajdhani', sans-serif;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+    letter-spacing: 3px; text-transform: uppercase;
     font-size: 13px;
   }
 
   .footer {
-    text-align: center;
-    padding: 30px 20px;
-    color: #444;
-    font-size: 12px;
-    letter-spacing: 1px;
+    text-align: center; padding: 30px 20px;
+    color: #444; font-size: 12px; letter-spacing: 1px;
   }
   .footer span { color: var(--vermelho-brilho); font-weight: 700; }
 
-  /* Responsivo */
   @media (max-width: 640px) {
     .header { padding: 12px 16px; flex-wrap: wrap; }
     .tabs { width: 100%; order: 3; }
     .container { padding: 24px 14px 40px; }
     .card { padding: 18px; }
+    .step { padding: 14px 12px; gap: 10px; }
+    .step-txt { font-size: 13px; }
   }
 </style>
 </head>
@@ -399,21 +365,67 @@
 <div class="footer">QZZ <span>COMMUNITY</span> © 2026</div>
 
 <script>
+  // ==================== CONFIG ====================
+  const TIMER_SEGUNDOS = 30;
+  const STORAGE_KEY = 'qzz_progresso_v1';
+
+  // ==================== ESTADO ====================
   let config = null;
   let abaAtual = 'keys';
-  const estado = { keys: { atual: 1, jaResgatou: false }, downloads: { atual: 1, jaResgatou: false } };
+  let timerAtivo = null;
 
+  // Estado do progresso (persistido no localStorage)
+  const estado = {
+    keys: { atual: 1, jaResgatou: false, timers: {} },
+    downloads: { atual: 1, jaResgatou: false, timers: {} }
+  };
+
+  // ==================== LOCALSTORAGE ====================
+  function salvarProgresso() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        keys: { atual: estado.keys.atual, timers: estado.keys.timers },
+        downloads: { atual: estado.downloads.atual, timers: estado.downloads.timers },
+        ts: Date.now()
+      }));
+    } catch(e) {}
+  }
+
+  function carregarProgresso() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const dados = JSON.parse(raw);
+      // Expira em 24h
+      if (Date.now() - (dados.ts || 0) > 24 * 60 * 60 * 1000) {
+        localStorage.removeItem(STORAGE_KEY);
+        return;
+      }
+      if (dados.keys) {
+        estado.keys.atual = dados.keys.atual || 1;
+        estado.keys.timers = dados.keys.timers || {};
+      }
+      if (dados.downloads) {
+        estado.downloads.atual = dados.downloads.atual || 1;
+        estado.downloads.timers = dados.downloads.timers || {};
+      }
+    } catch(e) {}
+  }
+
+  // ==================== INICIALIZAÇÃO ====================
   async function carregar() {
     try {
       const res = await fetch('/api/config');
       config = await res.json();
-      // Verifica status do IP em paralelo
+
       const [sK, sD] = await Promise.all([
-        fetch('/api/status/keys').then(r => r.json()),
-        fetch('/api/status/downloads').then(r => r.json())
+        fetch('/api/status/keys').then(r => r.json()).catch(() => ({})),
+        fetch('/api/status/downloads').then(r => r.json()).catch(() => ({}))
       ]);
       if (sK.resgatou) estado.keys.jaResgatou = true;
       if (sD.resgatou) estado.downloads.jaResgatou = true;
+
+      carregarProgresso();
 
       document.getElementById('loading').style.display = 'none';
       document.getElementById('conteudo').style.display = 'block';
@@ -423,29 +435,33 @@
     }
   }
 
+  // ==================== NAVEGAÇÃO DE ABAS ====================
   function trocarAba(aba) {
+    pararTimer();
     abaAtual = aba;
     document.getElementById('tabKeys').classList.toggle('active', aba === 'keys');
     document.getElementById('tabDownloads').classList.toggle('active', aba === 'downloads');
     render();
   }
 
+  // ==================== RENDER ====================
   function render() {
     const card = document.getElementById('cardConteudo');
     const heroBadge = document.getElementById('heroBadge');
     const heroTitulo = document.getElementById('heroTitulo');
     const heroSub = document.getElementById('heroSub');
 
+    // ===== ABA KEYS =====
     if (abaAtual === 'keys') {
       heroBadge.textContent = 'RESGATE DE KEYS';
-      heroTitulo.textContent = config.titulo ? config.titulo.replace(/[🔑📦]\s?/g, '').toUpperCase() : 'RESGATAR KEY';
+      heroTitulo.textContent = 'RESGATAR KEY';
       heroSub.textContent = config.subtitulo || 'Complete as etapas pra liberar';
 
       if (estado.keys.jaResgatou) {
         card.innerHTML = `
           <div class="aviso-resgatou">
             <strong>⚠️ Você já resgatou uma key</strong>
-            Só é permitida 1 key por pessoa (por IP). Se você já pegou a sua, use ela.
+            Só é permitida 1 key por pessoa. Se você já pegou a sua, use ela.
           </div>
         `;
         return;
@@ -453,7 +469,12 @@
 
       const atual = estado.keys.atual;
       const total = config.etapas.length;
+      const aviso = atual > 1 && estado.keys.timers[`etapa_${atual}`] && !estado.keys.timers[`feito_${atual}`]
+        ? `⚠️ Você não completou a etapa ${atual} ainda. Refaça pra continuar.`
+        : '';
+
       card.innerHTML = `
+        ${aviso ? `<div class="aviso-box show">${aviso}</div>` : ''}
         <div class="progresso">
           <span>Progresso</span>
           <span class="num">${Math.min(atual, total)} / ${total}</span>
@@ -468,6 +489,8 @@
         </div>
       `;
       renderEtapas(config.etapas, 'keys');
+
+    // ===== ABA DOWNLOADS =====
     } else {
       const d = config.downloads || { titulo: '📦 Downloads', subtitulo: '', etapas: [], itens: [] };
       heroBadge.textContent = 'ÁREA DE DOWNLOADS';
@@ -475,7 +498,6 @@
       heroSub.textContent = d.subtitulo || 'Complete as etapas pra liberar';
 
       if (estado.downloads.jaResgatou) {
-        // Já resgatou — libera direto
         card.innerHTML = `
           <div class="resultado" style="display:block; margin-top:0">
             <div class="titulo-res">Downloads Liberados</div>
@@ -488,7 +510,12 @@
 
       const atual = estado.downloads.atual;
       const total = d.etapas.length;
+      const aviso = atual > 1 && estado.downloads.timers[`etapa_${atual}`] && !estado.downloads.timers[`feito_${atual}`]
+        ? `⚠️ Você não completou a etapa ${atual} ainda. Refaça pra continuar.`
+        : '';
+
       card.innerHTML = `
+        ${aviso ? `<div class="aviso-box show">${aviso}</div>` : ''}
         <div class="progresso">
           <span>Progresso</span>
           <span class="num">${Math.min(atual, total)} / ${total}</span>
@@ -505,38 +532,107 @@
     }
   }
 
+  // ==================== RENDER ETAPAS ====================
   function renderEtapas(etapas, tipo) {
     const box = document.getElementById('etapasBox');
+    if (!box) return;
     box.innerHTML = '';
+
     etapas.forEach((et, i) => {
       const stepNum = i + 1;
       const jaFeito = estado[tipo].atual > stepNum;
       const liberado = estado[tipo].atual === stepNum;
+      const temTimerAtivo = estado[tipo].timers[`etapa_${stepNum}`] && !estado[tipo].timers[`feito_${stepNum}`];
+
       const div = document.createElement('div');
-      div.className = 'step' + (jaFeito ? ' done' : (liberado ? '' : ' locked'));
+      div.className = 'step';
+      if (jaFeito) div.classList.add('done');
+      else if (!liberado) div.classList.add('locked');
+      else if (temTimerAtivo) div.classList.add('timer');
+
+      let extra = '';
+      if (temTimerAtivo) {
+        const restante = Math.max(0, TIMER_SEGUNDOS - Math.floor((Date.now() - estado[tipo].timers[`etapa_${stepNum}`]) / 1000));
+        extra = `<div class="timer-box"><span class="dot"></span><span id="timer_${tipo}_${stepNum}">${restante}s</span></div>`;
+      }
+
       div.innerHTML = `
         <div class="check">${jaFeito ? '✓' : stepNum}</div>
         <div class="step-txt">${et.texto}</div>
+        ${extra}
       `;
-      div.onclick = () => clicarEtapa(et.link, stepNum, tipo);
+
+      if (!jaFeito && liberado && !temTimerAtivo) {
+        div.onclick = () => iniciarEtapa(et.link, stepNum, tipo);
+      }
       box.appendChild(div);
     });
-    atualizarBotao(tipo);
+
+    // Se tem timer ativo, retoma
+    const atual = estado[tipo].atual;
+    if (estado[tipo].timers[`etapa_${atual}`] && !estado[tipo].timers[`feito_${atual}`]) {
+      retomarTimer(atual, tipo);
+    } else {
+      atualizarBotao(tipo);
+    }
   }
 
-  function clicarEtapa(link, stepNum, tipo) {
-    if (estado[tipo].atual !== stepNum) return;
+  // ==================== TIMER ====================
+  function iniciarEtapa(link, stepNum, tipo) {
+    // Abre o link
     window.open(link, '_blank');
-    estado[tipo].atual++;
+
+    // Marca o timestamp de início
+    estado[tipo].timers[`etapa_${stepNum}`] = Date.now();
+    salvarProgresso();
     render();
   }
 
+  function retomarTimer(stepNum, tipo) {
+    pararTimer();
+    const inicio = estado[tipo].timers[`etapa_${stepNum}`];
+    if (!inicio) return;
+
+    const tick = () => {
+      const decorrido = Math.floor((Date.now() - inicio) / 1000);
+      const restante = TIMER_SEGUNDOS - decorrido;
+
+      const el = document.getElementById(`timer_${tipo}_${stepNum}`);
+      if (el) el.textContent = Math.max(0, restante) + 's';
+
+      if (restante <= 0) {
+        // Conclui a etapa
+        concluirEtapa(stepNum, tipo);
+      }
+    };
+
+    tick(); // executa já
+    timerAtivo = setInterval(tick, 500);
+  }
+
+  function pararTimer() {
+    if (timerAtivo) {
+      clearInterval(timerAtivo);
+      timerAtivo = null;
+    }
+  }
+
+  function concluirEtapa(stepNum, tipo) {
+    pararTimer();
+    estado[tipo].timers[`feito_${stepNum}`] = true;
+    estado[tipo].atual = stepNum + 1;
+    salvarProgresso();
+    render();
+  }
+
+  // ==================== BOTÃO ====================
   function atualizarBotao(tipo) {
     const total = tipo === 'keys'
       ? config.etapas.length
       : (config.downloads?.etapas?.length || 0);
     const btn = document.getElementById('btnAcao');
     if (!btn) return;
+
     if (estado[tipo].atual > total) {
       btn.disabled = false;
       btn.textContent = tipo === 'keys'
@@ -546,6 +642,7 @@
     }
   }
 
+  // ==================== RESGATE ====================
   async function resgatar(tipo) {
     const btn = document.getElementById('btnAcao');
     if (btn) { btn.disabled = true; btn.textContent = '⏳ Processando...'; }
@@ -555,14 +652,11 @@
       const res = await fetch(url, { method: 'POST' });
       const data = await res.json();
 
-      if (res.status === 409) {
-        // Já resgatou
-        if (tipo === 'keys') {
-          estado.keys.jaResgatou = true;
-          document.getElementById('valorTxt').textContent = data.valor;
-          document.getElementById('resultadoBox').style.display = 'block';
-          if (btn) { btn.textContent = '⚠️ Você já tinha resgatado'; }
-        }
+      if (res.status === 409 && tipo === 'keys') {
+        estado.keys.jaResgatou = true;
+        document.getElementById('valorTxt').textContent = data.valor;
+        document.getElementById('resultadoBox').style.display = 'block';
+        if (btn) btn.textContent = '⚠️ Você já tinha resgatado';
         return;
       }
 
@@ -572,18 +666,21 @@
         estado.keys.jaResgatou = true;
         document.getElementById('valorTxt').textContent = data.valor;
         document.getElementById('resultadoBox').style.display = 'block';
-        if (btn) { btn.textContent = '✅ Key liberada'; }
+        if (btn) btn.textContent = '✅ Key liberada';
+        localStorage.removeItem(STORAGE_KEY);
       } else {
         estado.downloads.jaResgatou = true;
         renderDownloads(data.itens);
         document.getElementById('resultadoBox').style.display = 'block';
-        if (btn) { btn.textContent = '✅ Downloads liberados'; }
+        if (btn) btn.textContent = '✅ Downloads liberados';
+        localStorage.removeItem(STORAGE_KEY);
       }
     } catch (e) {
       if (btn) { btn.textContent = '❌ Erro. Tente novamente.'; btn.disabled = false; }
     }
   }
 
+  // ==================== DOWNLOADS ====================
   function renderDownloads(itens) {
     const box = document.getElementById('downloadsLista');
     if (!box) return;
@@ -596,6 +693,7 @@
     ).join('');
   }
 
+  // ==================== COPIAR ====================
   function copiar(id, e) {
     const txt = document.getElementById(id).textContent;
     navigator.clipboard.writeText(txt);
@@ -603,6 +701,16 @@
     setTimeout(() => e.target.textContent = 'Copiar Key', 1500);
   }
 
+  // ==================== AVISO AO VOLTAR ====================
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      // Quando a pessoa volta pra aba, re-renderiza pra atualizar timers
+      // e mostrar o aviso se estiver no meio de uma etapa
+      if (abaAtual) render();
+    }
+  });
+
+  // ==================== INICIA ====================
   carregar();
 </script>
 </body>
