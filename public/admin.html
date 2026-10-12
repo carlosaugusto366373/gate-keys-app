@@ -3,279 +3,321 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel Admin</title>
+<title>QZZ Community</title>
 <style>
-  * { box-sizing: border-box; font-family: system-ui, sans-serif; }
-  body { background: #0f0f13; color: #fff; margin: 0; padding: 24px; }
-  .wrap { max-width: 780px; margin: 0 auto; }
-  h1 { font-size: 22px; margin: 0 0 4px; }
-  .sub { color: #888; font-size: 14px; margin-bottom: 24px; }
-  .box {
-    background: #1a1a22; border: 1px solid #2a2a35;
-    border-radius: 14px; padding: 20px; margin-bottom: 18px;
+  * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
+  body {
+    background: radial-gradient(circle at 20% 0%, #1a0b2e 0%, #0a0a0f 45%, #05050a 100%);
+    color: #fff; min-height: 100vh; padding: 24px 16px;
+    display: flex; align-items: flex-start; justify-content: center;
   }
-  .box h2 { font-size: 15px; margin: 0 0 14px; color: #60a5fa; }
-  label { display: block; font-size: 13px; color: #aaa; margin-bottom: 6px; }
-  input, textarea {
-    width: 100%; padding: 10px 12px; border-radius: 8px;
-    border: 1px solid #2a2a35; background: #12121a; color: #fff;
-    font-size: 14px; margin-bottom: 12px; font-family: inherit;
-  }
-  input:focus, textarea:focus { outline: none; border-color: #3b82f6; }
-  textarea { min-height: 90px; resize: vertical; font-family: monospace; }
-  .row { display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: start; }
-  .row .num {
-    background: #2a2a35; border-radius: 8px; height: 40px;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; color: #888;
-  }
-  button {
-    padding: 10px 18px; border-radius: 10px; border: none;
-    background: #3b82f6; color: #fff; font-weight: 700;
-    cursor: pointer; font-size: 14px;
-  }
-  button:hover { background: #2563eb; }
-  button.danger { background: #dc2626; }
-  button.danger:hover { background: #b91c1c; }
-  button.ghost { background: #2a2a35; }
-  button.ghost:hover { background: #3a3a45; }
-  button:disabled { opacity: .5; cursor: not-allowed; }
-  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-  .toast {
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-    background: #22c55e; color: #000; padding: 12px 20px; border-radius: 10px;
-    font-weight: 700; opacity: 0; transition: .3s; pointer-events: none;
-  }
-  .toast.show { opacity: 1; }
-  .toast.erro { background: #dc2626; color: #fff; }
-  .header-actions { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-  small { color: #666; font-size: 12px; display: block; margin-top: -6px; margin-bottom: 12px; }
+  .wrap { width: 100%; max-width: 520px; }
 
-  /* Login */
-  #loginBox {
-    max-width: 360px; margin: 80px auto; text-align: center;
+  /* Header */
+  .brand {
+    text-align: center; margin-bottom: 24px;
   }
-  #loginBox input { text-align: center; }
+  .brand-logo {
+    display: inline-block;
+    font-size: 28px; font-weight: 900; letter-spacing: 1px;
+    background: linear-gradient(90deg, #a855f7, #ec4899, #f43f5e);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .brand-sub {
+    font-size: 12px; color: #7a7a8c; margin-top: 4px;
+    text-transform: uppercase; letter-spacing: 3px;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex; gap: 8px; background: #12121a;
+    padding: 6px; border-radius: 14px; border: 1px solid #23232e;
+    margin-bottom: 18px;
+  }
+  .tab {
+    flex: 1; padding: 12px; border-radius: 10px; border: none;
+    background: transparent; color: #888; font-weight: 700;
+    font-size: 14px; cursor: pointer; transition: .2s;
+  }
+  .tab.active {
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    color: #fff;
+  }
+  .tab:not(.active):hover { color: #ccc; }
+
+  /* Card */
+  .card {
+    background: #12121a; border: 1px solid #23232e;
+    border-radius: 18px; padding: 24px;
+    box-shadow: 0 20px 60px rgba(124,58,237,.12);
+  }
+  .card h2 { font-size: 20px; margin-bottom: 6px; }
+  .card .desc { color: #888; font-size: 14px; margin-bottom: 18px; }
+  .progresso {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: #666; margin-bottom: 12px;
+  }
+  .progresso .num { color: #a855f7; font-weight: 800; }
+
+  /* Barra de progresso */
+  .barra {
+    width: 100%; height: 4px; background: #1e1e28;
+    border-radius: 4px; overflow: hidden; margin-bottom: 20px;
+  }
+  .barra-fill {
+    height: 100%; width: 0%; transition: width .4s ease;
+    background: linear-gradient(90deg, #7c3aed, #db2777);
+  }
+
+  /* Etapas */
+  .step {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px; border-radius: 12px; margin-bottom: 10px;
+    background: #0e0e15; border: 1px solid #23232e;
+    transition: .25s; cursor: pointer; user-select: none;
+  }
+  .step.locked { opacity: .35; pointer-events: none; }
+  .step.done {
+    background: linear-gradient(135deg, rgba(124,58,237,.15), rgba(219,39,119,.1));
+    border-color: #7c3aed;
+  }
+  .step.done .check {
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    color: #fff;
+  }
+  .step:hover:not(.done):not(.locked) { border-color: #4c2c8f; }
+  .check {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #23232e; display: flex; align-items: center;
+    justify-content: center; font-size: 13px; font-weight: 800;
+    flex-shrink: 0; transition: .25s;
+  }
+  .step-txt { font-size: 14px; line-height: 1.4; }
+  .step-txt b { color: #fff; }
+
+  /* Botão */
+  .btn {
+    width: 100%; padding: 15px; border-radius: 12px; border: none;
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    color: #fff; font-weight: 800; font-size: 15px;
+    cursor: pointer; margin-top: 16px; transition: .2s;
+    letter-spacing: .3px;
+  }
+  .btn:disabled {
+    background: #23232e; color: #555; cursor: not-allowed;
+  }
+  .btn:not(:disabled):hover {
+    filter: brightness(1.15);
+    box-shadow: 0 10px 30px rgba(219,39,119,.35);
+  }
+
+  /* Box de resultado */
+  .resultado {
+    margin-top: 18px; padding: 18px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(124,58,237,.15), rgba(219,39,119,.08));
+    border: 1px solid #7c3aed;
+    text-align: center; display: none;
+  }
+  .resultado code {
+    display: block; font-size: 18px; letter-spacing: 2px;
+    margin: 12px 0; color: #d8b4fe; word-break: break-all;
+    font-family: 'Courier New', monospace; font-weight: 700;
+  }
+  .copy {
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    color: #fff; border: none; padding: 10px 20px;
+    border-radius: 8px; font-weight: 700; cursor: pointer;
+    font-size: 13px;
+  }
+  .copy:hover { filter: brightness(1.15); }
+  .download-btn {
+    display: inline-block; background: linear-gradient(135deg, #7c3aed, #db2777);
+    color: #fff; text-decoration: none; padding: 12px 24px;
+    border-radius: 10px; font-weight: 700; font-size: 14px;
+    margin-top: 8px;
+  }
+  .download-btn:hover { filter: brightness(1.15); }
+
+  .loading { text-align: center; color: #666; padding: 60px 0; }
+  .aviso { font-size: 12px; color: #555; margin-top: 14px; text-align: center; }
+
+  /* Footer */
+  .footer {
+    text-align: center; margin-top: 20px;
+    font-size: 12px; color: #444;
+  }
 </style>
 </head>
 <body>
-
-<!-- ===== TELA DE LOGIN ===== -->
-<div id="loginBox" style="display:none">
-  <h1>🔒 Painel Admin</h1>
-  <p class="sub">Digite a senha de administrador</p>
-  <input type="password" id="senhaInput" placeholder="Senha" onkeydown="if(event.key==='Enter')fazerLogin()">
-  <button onclick="fazerLogin()" style="width:100%">Entrar</button>
-</div>
-
-<!-- ===== PAINEL ===== -->
-<div class="wrap" id="painel" style="display:none">
-  <h1>🎛️ Painel Admin</h1>
-  <p class="sub">Edite tudo aqui. As mudanças aparecem na hora pra todo mundo.</p>
-
-  <div class="header-actions">
-    <button onclick="abrirPublico()" class="ghost">👁️ Ver página pública</button>
-    <button onclick="exportar()" class="ghost">⬇️ Exportar config</button>
-    <button onclick="importar()" class="ghost">⬆️ Importar config</button>
-    <button onclick="sair()" class="danger">🚪 Sair</button>
+<div class="wrap">
+  <div class="brand">
+    <div class="brand-logo">QZZ COMMUNITY</div>
+    <div class="brand-sub">Downloads & Keys</div>
   </div>
 
-  <div class="box">
-    <h2>📝 Geral</h2>
-    <label>Título da página</label>
-    <input id="titulo" placeholder="🔑 Resgatar Key">
-    <label>Subtítulo</label>
-    <input id="subtitulo" placeholder="Complete as etapas na ordem...">
-    <label>Mensagem final (depois de completar)</label>
-    <input id="mensagemFinal" placeholder="✅ Tudo certo! Clique para resgatar.">
-  </div>
+  <div id="loading" class="loading">Carregando...</div>
 
-  <div class="box">
-    <h2>🔗 Etapas</h2>
-    <div id="etapasContainer"></div>
-    <div class="actions">
-      <button onclick="adicionarEtapa()" class="ghost">➕ Adicionar etapa</button>
+  <div id="conteudo" style="display:none">
+    <div class="tabs">
+      <button class="tab active" id="tabKeys" onclick="trocarAba('keys')">🔑 Keys</button>
+      <button class="tab" id="tabDownloads" onclick="trocarAba('downloads')">📦 Downloads</button>
     </div>
+
+    <div class="card" id="cardConteudo"></div>
   </div>
 
-  <div class="box">
-    <h2>🔑 Keys (uma por linha)</h2>
-    <textarea id="keys" placeholder="A1B2-C3D4-E5F6-G7H8&#10;H8G7-F6E5-D4C3-B2A1"></textarea>
-    <small>Uma key por linha. O sistema sorteia uma aleatória a cada resgate.</small>
-  </div>
-
-  <button onclick="salvar()" style="width:100%; padding:14px; font-size:15px;">💾 Salvar tudo</button>
+  <p class="footer">QZZ Community © 2026</p>
 </div>
-
-<div class="toast" id="toast">Salvo com sucesso!</div>
 
 <script>
   let config = null;
-  let senhaAdmin = '';
+  let abaAtual = 'keys';
+  const estado = { keys: { atual: 1 }, downloads: { atual: 1 } };
 
-  // ===== LOGIN =====
-  async function fazerLogin() {
-    const senha = document.getElementById('senhaInput').value;
-    if (!senha) return;
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ senha })
-      });
-      if (!res.ok) throw new Error('Senha incorreta');
-      senhaAdmin = senha;
-      sessionStorage.setItem('admin_senha', senha);
-      entrarNoPainel();
-    } catch (e) {
-      toast('Senha incorreta', true);
-    }
-  }
-
-  function sair() {
-    sessionStorage.removeItem('admin_senha');
-    senhaAdmin = '';
-    document.getElementById('painel').style.display = 'none';
-    document.getElementById('loginBox').style.display = 'block';
-    document.getElementById('senhaInput').value = '';
-  }
-
-  async function entrarNoPainel() {
-    document.getElementById('loginBox').style.display = 'none';
-    document.getElementById('painel').style.display = 'block';
-    await carregarConfig();
-  }
-
-  // ===== CARREGAR CONFIG =====
-  async function carregarConfig() {
+  async function carregar() {
     try {
       const res = await fetch('/api/config');
       config = await res.json();
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('conteudo').style.display = 'block';
       render();
     } catch (e) {
-      toast('Erro ao carregar config', true);
+      document.getElementById('loading').textContent = '❌ Erro ao carregar. Recarregue.';
     }
   }
 
-  function render() {
-    document.getElementById('titulo').value = config.titulo || '';
-    document.getElementById('subtitulo').value = config.subtitulo || '';
-    document.getElementById('mensagemFinal').value = config.mensagemFinal || '';
-    document.getElementById('keys').value = (config.keys || []).join('\n');
-    renderEtapas();
+  function trocarAba(aba) {
+    abaAtual = aba;
+    document.getElementById('tabKeys').classList.toggle('active', aba === 'keys');
+    document.getElementById('tabDownloads').classList.toggle('active', aba === 'downloads');
+    render();
   }
 
-  function renderEtapas() {
-    const box = document.getElementById('etapasContainer');
-    box.innerHTML = '';
-    config.etapas.forEach((et, i) => {
-      const div = document.createElement('div');
-      div.className = 'row';
-      div.innerHTML = `
-        <div class="num">${i + 1}</div>
-        <div>
-          <label>Texto (aceita HTML como &lt;b&gt;)</label>
-          <input value="${escapeAttr(et.texto)}" oninput="mudarEtapa(${i}, 'texto', this.value)">
-          <label>Link</label>
-          <input value="${escapeAttr(et.link)}" oninput="mudarEtapa(${i}, 'link', this.value)">
-          <button class="danger" style="margin-bottom:12px" onclick="removerEtapa(${i})">🗑️ Remover etapa</button>
+  function render() {
+    const card = document.getElementById('cardConteudo');
+
+    if (abaAtual === 'keys') {
+      const atual = estado.keys.atual;
+      const total = config.etapas.length;
+      card.innerHTML = `
+        <h2>${config.titulo || '🔑 Resgatar Key'}</h2>
+        <p class="desc">${config.subtitulo || ''}</p>
+        <div class="progresso">
+          <span>Progresso</span>
+          <span class="num">${Math.min(atual, total)}/${total}</span>
+        </div>
+        <div class="barra"><div class="barra-fill" id="barraKeys" style="width:${((atual - 1) / total) * 100}%"></div></div>
+        <div id="etapasKeys"></div>
+        <button class="btn" id="btnKeys" disabled>🔒 Complete as etapas acima</button>
+        <div class="resultado" id="resultadoKeys">
+          <div>Sua key:</div>
+          <code id="keyTxt">XXXX-XXXX-XXXX-XXXX</code>
+          <button class="copy" onclick="copiar('keyTxt', event)">Copiar</button>
         </div>
       `;
+      renderEtapas('etapasKeys', config.etapas, 'keys');
+      verificarBotao('keys');
+    } else {
+      const d = config.downloads || { titulo: '📦 Downloads', subtitulo: '', etapas: [], itens: [] };
+      const atual = estado.downloads.atual;
+      const total = d.etapas.length;
+      card.innerHTML = `
+        <h2>${d.titulo}</h2>
+        <p class="desc">${d.subtitulo}</p>
+        <div class="progresso">
+          <span>Progresso</span>
+          <span class="num">${Math.min(atual, total)}/${total}</span>
+        </div>
+        <div class="barra"><div class="barra-fill" id="barraDownloads" style="width:${((atual - 1) / total) * 100}%"></div></div>
+        <div id="etapasDownloads"></div>
+        <button class="btn" id="btnDownloads" disabled>🔒 Complete as etapas acima</button>
+        <div class="resultado" id="resultadoDownloads"></div>
+      `;
+      renderEtapas('etapasDownloads', d.etapas, 'downloads');
+      verificarBotao('downloads');
+    }
+  }
+
+  function renderEtapas(containerId, etapas, tipo) {
+    const box = document.getElementById(containerId);
+    box.innerHTML = '';
+    etapas.forEach((et, i) => {
+      const div = document.createElement('div');
+      const stepNum = i + 1;
+      const jaFeito = estado[tipo].atual > stepNum;
+      const liberado = estado[tipo].atual === stepNum;
+      div.className = 'step' + (jaFeito ? ' done' : (liberado ? '' : ' locked'));
+      div.innerHTML = `
+        <div class="check">${jaFeito ? '✓' : stepNum}</div>
+        <div class="step-txt">${et.texto}</div>
+      `;
+      div.onclick = () => clicarEtapa(et.link, stepNum, tipo);
       box.appendChild(div);
     });
   }
 
-  function escapeAttr(s) {
-    return String(s || '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  function clicarEtapa(link, stepNum, tipo) {
+    if (estado[tipo].atual !== stepNum) return;
+    window.open(link, '_blank');
+    estado[tipo].atual++;
+    render();
   }
 
-  function mudarEtapa(i, campo, valor) {
-    config.etapas[i][campo] = valor;
-  }
-
-  function adicionarEtapa() {
-    if (!config.etapas) config.etapas = [];
-    config.etapas.push({ texto: 'Nova etapa', link: 'https://' });
-    renderEtapas();
-  }
-
-  function removerEtapa(i) {
-    if (config.etapas.length <= 1) return alert('Precisa ter pelo menos 1 etapa.');
-    config.etapas.splice(i, 1);
-    renderEtapas();
-  }
-
-  // ===== SALVAR NO SERVIDOR =====
-  async function salvar() {
-    config.titulo = document.getElementById('titulo').value;
-    config.subtitulo = document.getElementById('subtitulo').value;
-    config.mensagemFinal = document.getElementById('mensagemFinal').value;
-    config.keys = document.getElementById('keys').value
-      .split('\n').map(k => k.trim()).filter(Boolean);
-
-    try {
-      const res = await fetch('/api/config', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-password': senhaAdmin
-        },
-        body: JSON.stringify(config)
-      });
-      if (!res.ok) throw new Error('Falha ao salvar');
-      toast('Salvo com sucesso!');
-    } catch (e) {
-      toast('Erro ao salvar', true);
+  function verificarBotao(tipo) {
+    if (tipo === 'keys') {
+      const total = config.etapas.length;
+      const btn = document.getElementById('btnKeys');
+      if (estado.keys.atual > total) {
+        btn.disabled = false;
+        btn.textContent = config.mensagemFinal || '🎁 Resgatar minha key';
+      }
+    } else {
+      const d = config.downloads;
+      if (!d || !d.etapas) return;
+      const total = d.etapas.length;
+      const btn = document.getElementById('btnDownloads');
+      if (estado.downloads.atual > total) {
+        btn.disabled = false;
+        btn.textContent = '🎁 Liberar downloads';
+      }
     }
   }
 
-  // ===== EXPORTAR / IMPORTAR =====
-  function exportar() {
-    const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'gate-config.json';
-    a.click();
+  document.addEventListener('click', (e) => {
+    if (e.target.id === 'btnKeys') {
+      const keys = config.keys && config.keys.length ? config.keys : ['SEM-KEYS'];
+      const key = keys[Math.floor(Math.random() * keys.length)];
+      document.getElementById('keyTxt').textContent = key;
+      document.getElementById('resultadoKeys').style.display = 'block';
+      e.target.disabled = true;
+      e.target.textContent = '✅ Key liberada';
+    }
+    if (e.target.id === 'btnDownloads') {
+      const itens = (config.downloads && config.downloads.itens) || [];
+      const box = document.getElementById('resultadoDownloads');
+      if (!itens.length) {
+        box.innerHTML = '<div>Nenhum download cadastrado.</div>';
+      } else {
+        box.innerHTML = '<div style="margin-bottom:12px">Downloads liberados:</div>' +
+          itens.map(it =>
+            `<a class="download-btn" href="${it.link}" target="_blank" rel="noopener">⬇️ ${it.nome}</a>`
+          ).join('<br>');
+      }
+      box.style.display = 'block';
+      e.target.disabled = true;
+      e.target.textContent = '✅ Downloads liberados';
+    }
+  });
+
+  function copiar(id, e) {
+    const txt = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(txt);
+    e.target.textContent = 'Copiado!';
+    setTimeout(() => e.target.textContent = 'Copiar', 1500);
   }
 
-  function importar() {
-    const inp = document.createElement('input');
-    inp.type = 'file';
-    inp.accept = '.json';
-    inp.onchange = e => {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = ev => {
-        try {
-          config = JSON.parse(ev.target.result);
-          render();
-          toast('Importado! Clique em Salvar pra publicar.');
-        } catch { toast('JSON inválido', true); }
-      };
-      reader.readAsText(file);
-    };
-    inp.click();
-  }
-
-  function abrirPublico() {
-    window.open('/', '_blank');
-  }
-
-  function toast(msg, erro = false) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = 'toast show' + (erro ? ' erro' : '');
-    setTimeout(() => t.className = 'toast', 2000);
-  }
-
-  // ===== AUTO-LOGIN SE JÁ TIVER SENHA NA SESSÃO =====
-  const senhaSalva = sessionStorage.getItem('admin_senha');
-  if (senhaSalva) {
-    senhaAdmin = senhaSalva;
-    entrarNoPainel();
-  } else {
-    document.getElementById('loginBox').style.display = 'block';
-  }
+  carregar();
 </script>
 </body>
 </html>
