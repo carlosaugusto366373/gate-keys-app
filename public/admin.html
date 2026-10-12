@@ -3,321 +3,398 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QZZ Community</title>
+<title>QZZ Community — Admin</title>
 <style>
-  * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
+  * { box-sizing: border-box; font-family: system-ui, sans-serif; margin: 0; padding: 0; }
   body {
     background: radial-gradient(circle at 20% 0%, #1a0b2e 0%, #0a0a0f 45%, #05050a 100%);
     color: #fff; min-height: 100vh; padding: 24px 16px;
-    display: flex; align-items: flex-start; justify-content: center;
   }
-  .wrap { width: 100%; max-width: 520px; }
+  .wrap { max-width: 800px; margin: 0 auto; }
 
-  /* Header */
   .brand {
-    text-align: center; margin-bottom: 24px;
+    text-align: center; margin-bottom: 28px;
   }
   .brand-logo {
-    display: inline-block;
-    font-size: 28px; font-weight: 900; letter-spacing: 1px;
+    font-size: 26px; font-weight: 900; letter-spacing: 1px;
     background: linear-gradient(90deg, #a855f7, #ec4899, #f43f5e);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .brand-sub {
-    font-size: 12px; color: #7a7a8c; margin-top: 4px;
+    font-size: 11px; color: #7a7a8c; margin-top: 4px;
     text-transform: uppercase; letter-spacing: 3px;
   }
 
-  /* Tabs */
-  .tabs {
-    display: flex; gap: 8px; background: #12121a;
-    padding: 6px; border-radius: 14px; border: 1px solid #23232e;
-    margin-bottom: 18px;
-  }
-  .tab {
-    flex: 1; padding: 12px; border-radius: 10px; border: none;
-    background: transparent; color: #888; font-weight: 700;
-    font-size: 14px; cursor: pointer; transition: .2s;
-  }
-  .tab.active {
-    background: linear-gradient(135deg, #7c3aed, #db2777);
-    color: #fff;
-  }
-  .tab:not(.active):hover { color: #ccc; }
-
-  /* Card */
-  .card {
+  .box {
     background: #12121a; border: 1px solid #23232e;
-    border-radius: 18px; padding: 24px;
-    box-shadow: 0 20px 60px rgba(124,58,237,.12);
+    border-radius: 16px; padding: 20px; margin-bottom: 18px;
   }
-  .card h2 { font-size: 20px; margin-bottom: 6px; }
-  .card .desc { color: #888; font-size: 14px; margin-bottom: 18px; }
-  .progresso {
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 13px; color: #666; margin-bottom: 12px;
-  }
-  .progresso .num { color: #a855f7; font-weight: 800; }
-
-  /* Barra de progresso */
-  .barra {
-    width: 100%; height: 4px; background: #1e1e28;
-    border-radius: 4px; overflow: hidden; margin-bottom: 20px;
-  }
-  .barra-fill {
-    height: 100%; width: 0%; transition: width .4s ease;
-    background: linear-gradient(90deg, #7c3aed, #db2777);
+  .box h2 {
+    font-size: 15px; margin-bottom: 14px; color: #c084fc;
+    display: flex; align-items: center; gap: 8px;
   }
 
-  /* Etapas */
-  .step {
-    display: flex; align-items: center; gap: 12px;
-    padding: 14px; border-radius: 12px; margin-bottom: 10px;
-    background: #0e0e15; border: 1px solid #23232e;
-    transition: .25s; cursor: pointer; user-select: none;
+  label { display: block; font-size: 12px; color: #888; margin-bottom: 6px; }
+  input, textarea {
+    width: 100%; padding: 10px 12px; border-radius: 10px;
+    border: 1px solid #23232e; background: #0e0e15; color: #fff;
+    font-size: 14px; margin-bottom: 12px; font-family: inherit;
+    transition: .2s;
   }
-  .step.locked { opacity: .35; pointer-events: none; }
-  .step.done {
-    background: linear-gradient(135deg, rgba(124,58,237,.15), rgba(219,39,119,.1));
-    border-color: #7c3aed;
-  }
-  .step.done .check {
+  input:focus, textarea:focus { outline: none; border-color: #7c3aed; }
+  textarea { min-height: 90px; resize: vertical; font-family: monospace; }
+
+  .row { display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: start; margin-bottom: 12px; }
+  .row .num {
     background: linear-gradient(135deg, #7c3aed, #db2777);
-    color: #fff;
+    border-radius: 8px; height: 36px; display: flex;
+    align-items: center; justify-content: center;
+    font-weight: 800; color: #fff; font-size: 13px;
   }
-  .step:hover:not(.done):not(.locked) { border-color: #4c2c8f; }
-  .check {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: #23232e; display: flex; align-items: center;
-    justify-content: center; font-size: 13px; font-weight: 800;
-    flex-shrink: 0; transition: .25s;
-  }
-  .step-txt { font-size: 14px; line-height: 1.4; }
-  .step-txt b { color: #fff; }
 
-  /* Botão */
-  .btn {
-    width: 100%; padding: 15px; border-radius: 12px; border: none;
+  button {
+    padding: 10px 18px; border-radius: 10px; border: none;
     background: linear-gradient(135deg, #7c3aed, #db2777);
-    color: #fff; font-weight: 800; font-size: 15px;
-    cursor: pointer; margin-top: 16px; transition: .2s;
-    letter-spacing: .3px;
+    color: #fff; font-weight: 700; cursor: pointer; font-size: 13px;
+    transition: .2s;
   }
-  .btn:disabled {
-    background: #23232e; color: #555; cursor: not-allowed;
-  }
-  .btn:not(:disabled):hover {
-    filter: brightness(1.15);
-    box-shadow: 0 10px 30px rgba(219,39,119,.35);
-  }
+  button:hover { filter: brightness(1.15); }
+  button.ghost { background: #23232e; }
+  button.ghost:hover { background: #2e2e3a; }
+  button.danger { background: #dc2626; }
+  button.danger:hover { background: #b91c1c; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
 
-  /* Box de resultado */
-  .resultado {
-    margin-top: 18px; padding: 18px; border-radius: 14px;
-    background: linear-gradient(135deg, rgba(124,58,237,.15), rgba(219,39,119,.08));
-    border: 1px solid #7c3aed;
-    text-align: center; display: none;
-  }
-  .resultado code {
-    display: block; font-size: 18px; letter-spacing: 2px;
-    margin: 12px 0; color: #d8b4fe; word-break: break-all;
-    font-family: 'Courier New', monospace; font-weight: 700;
-  }
-  .copy {
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  .header-actions { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+  small { color: #666; font-size: 11px; display: block; margin-top: -6px; margin-bottom: 12px; }
+
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
     background: linear-gradient(135deg, #7c3aed, #db2777);
-    color: #fff; border: none; padding: 10px 20px;
-    border-radius: 8px; font-weight: 700; cursor: pointer;
-    font-size: 13px;
+    color: #fff; padding: 14px 24px; border-radius: 12px;
+    font-weight: 700; opacity: 0; transition: .3s; pointer-events: none;
+    box-shadow: 0 10px 40px rgba(124,58,237,.4); z-index: 999;
   }
-  .copy:hover { filter: brightness(1.15); }
-  .download-btn {
-    display: inline-block; background: linear-gradient(135deg, #7c3aed, #db2777);
-    color: #fff; text-decoration: none; padding: 12px 24px;
-    border-radius: 10px; font-weight: 700; font-size: 14px;
-    margin-top: 8px;
+  .toast.show { opacity: 1; bottom: 30px; }
+  .toast.erro { background: #dc2626; box-shadow: 0 10px 40px rgba(220,38,38,.4); }
+
+  #loginBox { max-width: 380px; margin: 60px auto; }
+  #loginBox .box { padding: 28px; }
+  #loginBox h1 { font-size: 20px; text-align: center; margin-bottom: 6px; }
+  #loginBox p { font-size: 13px; color: #888; text-align: center; margin-bottom: 20px; }
+  #loginBox input { text-align: center; }
+
+  .item-download {
+    display: grid; grid-template-columns: 1fr 1fr 40px; gap: 8px;
+    margin-bottom: 8px; align-items: center;
   }
-  .download-btn:hover { filter: brightness(1.15); }
-
-  .loading { text-align: center; color: #666; padding: 60px 0; }
-  .aviso { font-size: 12px; color: #555; margin-top: 14px; text-align: center; }
-
-  /* Footer */
-  .footer {
-    text-align: center; margin-top: 20px;
-    font-size: 12px; color: #444;
+  .item-download input { margin-bottom: 0; }
+  .item-download button {
+    padding: 0; height: 38px; width: 40px;
+    display: flex; align-items: center; justify-content: center;
+    background: #dc2626;
   }
 </style>
 </head>
 <body>
-<div class="wrap">
+
+<!-- LOGIN -->
+<div id="loginBox" style="display:none">
   <div class="brand">
     <div class="brand-logo">QZZ COMMUNITY</div>
-    <div class="brand-sub">Downloads & Keys</div>
+    <div class="brand-sub">Painel Admin</div>
   </div>
-
-  <div id="loading" class="loading">Carregando...</div>
-
-  <div id="conteudo" style="display:none">
-    <div class="tabs">
-      <button class="tab active" id="tabKeys" onclick="trocarAba('keys')">🔑 Keys</button>
-      <button class="tab" id="tabDownloads" onclick="trocarAba('downloads')">📦 Downloads</button>
-    </div>
-
-    <div class="card" id="cardConteudo"></div>
+  <div class="box">
+    <h1>🔒 Acesso restrito</h1>
+    <p>Digite a senha de administrador</p>
+    <input type="password" id="senhaInput" placeholder="Senha" onkeydown="if(event.key==='Enter')fazerLogin()">
+    <button onclick="fazerLogin()" style="width:100%; padding:14px; font-size:14px;">Entrar</button>
   </div>
-
-  <p class="footer">QZZ Community © 2026</p>
 </div>
+
+<!-- PAINEL -->
+<div class="wrap" id="painel" style="display:none">
+  <div class="brand">
+    <div class="brand-logo">QZZ COMMUNITY</div>
+    <div class="brand-sub">Painel Admin</div>
+  </div>
+
+  <div class="header-actions">
+    <button onclick="abrirPublico()" class="ghost">👁️ Ver página pública</button>
+    <button onclick="exportar()" class="ghost">⬇️ Exportar</button>
+    <button onclick="importar()" class="ghost">⬆️ Importar</button>
+    <button onclick="sair()" class="danger">🚪 Sair</button>
+  </div>
+
+  <!-- GERAL -->
+  <div class="box">
+    <h2>📝 Geral</h2>
+    <label>Nome da marca (aparece no topo)</label>
+    <input id="marca" placeholder="QZZ Community">
+    <label>Título da aba Keys</label>
+    <input id="titulo" placeholder="🔑 Resgatar Key">
+    <label>Subtítulo da aba Keys</label>
+    <input id="subtitulo" placeholder="Complete as etapas...">
+    <label>Mensagem final (botão depois de completar)</label>
+    <input id="mensagemFinal" placeholder="✅ Tudo certo! Clique para resgatar.">
+  </div>
+
+  <!-- ETAPAS DAS KEYS -->
+  <div class="box">
+    <h2>🔗 Etapas das Keys</h2>
+    <div id="etapasContainer"></div>
+    <div class="actions">
+      <button onclick="adicionarEtapa()" class="ghost">➕ Adicionar etapa</button>
+    </div>
+  </div>
+
+  <!-- KEYS -->
+  <div class="box">
+    <h2>🔑 Keys (uma por linha)</h2>
+    <textarea id="keys" placeholder="A1B2-C3D4-E5F6-G7H8&#10;H8G7-F6E5-D4C3-B2A1"></textarea>
+    <small>Uma key por linha. O sistema sorteia uma aleatória.</small>
+  </div>
+
+  <!-- DOWNLOADS -->
+  <div class="box">
+    <h2>📦 Downloads</h2>
+    <label>Título da aba Downloads</label>
+    <input id="dl-titulo" placeholder="📦 Downloads">
+    <label>Subtítulo da aba Downloads</label>
+    <input id="dl-subtitulo" placeholder="Complete as etapas pra liberar o download.">
+  </div>
+
+  <div class="box">
+    <h2>🔗 Etapas dos Downloads</h2>
+    <div id="etapasDlContainer"></div>
+    <div class="actions">
+      <button onclick="adicionarEtapaDl()" class="ghost">➕ Adicionar etapa</button>
+    </div>
+  </div>
+
+  <div class="box">
+    <h2>⬇️ Itens para Download</h2>
+    <div id="itensDlContainer"></div>
+    <div class="actions">
+      <button onclick="adicionarItemDl()" class="ghost">➕ Adicionar item</button>
+    </div>
+  </div>
+
+  <button onclick="salvar()" style="width:100%; padding:16px; font-size:15px; margin-top:10px;">💾 Salvar tudo</button>
+</div>
+
+<div class="toast" id="toast">Salvo com sucesso!</div>
 
 <script>
   let config = null;
-  let abaAtual = 'keys';
-  const estado = { keys: { atual: 1 }, downloads: { atual: 1 } };
+  let senhaAdmin = '';
 
-  async function carregar() {
+  async function fazerLogin() {
+    const senha = document.getElementById('senhaInput').value;
+    if (!senha) return;
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ senha })
+      });
+      if (!res.ok) throw new Error();
+      senhaAdmin = senha;
+      sessionStorage.setItem('admin_senha', senha);
+      entrarNoPainel();
+    } catch { toast('Senha incorreta', true); }
+  }
+
+  function sair() {
+    sessionStorage.removeItem('admin_senha');
+    senhaAdmin = '';
+    document.getElementById('painel').style.display = 'none';
+    document.getElementById('loginBox').style.display = 'block';
+  }
+
+  async function entrarNoPainel() {
+    document.getElementById('loginBox').style.display = 'none';
+    document.getElementById('painel').style.display = 'block';
+    await carregarConfig();
+  }
+
+  async function carregarConfig() {
     try {
       const res = await fetch('/api/config');
       config = await res.json();
-      document.getElementById('loading').style.display = 'none';
-      document.getElementById('conteudo').style.display = 'block';
+      if (!config.downloads) {
+        config.downloads = {
+          titulo: '📦 Downloads', subtitulo: '', etapas: [], itens: []
+        };
+      }
       render();
-    } catch (e) {
-      document.getElementById('loading').textContent = '❌ Erro ao carregar. Recarregue.';
-    }
-  }
-
-  function trocarAba(aba) {
-    abaAtual = aba;
-    document.getElementById('tabKeys').classList.toggle('active', aba === 'keys');
-    document.getElementById('tabDownloads').classList.toggle('active', aba === 'downloads');
-    render();
+    } catch { toast('Erro ao carregar', true); }
   }
 
   function render() {
-    const card = document.getElementById('cardConteudo');
-
-    if (abaAtual === 'keys') {
-      const atual = estado.keys.atual;
-      const total = config.etapas.length;
-      card.innerHTML = `
-        <h2>${config.titulo || '🔑 Resgatar Key'}</h2>
-        <p class="desc">${config.subtitulo || ''}</p>
-        <div class="progresso">
-          <span>Progresso</span>
-          <span class="num">${Math.min(atual, total)}/${total}</span>
-        </div>
-        <div class="barra"><div class="barra-fill" id="barraKeys" style="width:${((atual - 1) / total) * 100}%"></div></div>
-        <div id="etapasKeys"></div>
-        <button class="btn" id="btnKeys" disabled>🔒 Complete as etapas acima</button>
-        <div class="resultado" id="resultadoKeys">
-          <div>Sua key:</div>
-          <code id="keyTxt">XXXX-XXXX-XXXX-XXXX</code>
-          <button class="copy" onclick="copiar('keyTxt', event)">Copiar</button>
-        </div>
-      `;
-      renderEtapas('etapasKeys', config.etapas, 'keys');
-      verificarBotao('keys');
-    } else {
-      const d = config.downloads || { titulo: '📦 Downloads', subtitulo: '', etapas: [], itens: [] };
-      const atual = estado.downloads.atual;
-      const total = d.etapas.length;
-      card.innerHTML = `
-        <h2>${d.titulo}</h2>
-        <p class="desc">${d.subtitulo}</p>
-        <div class="progresso">
-          <span>Progresso</span>
-          <span class="num">${Math.min(atual, total)}/${total}</span>
-        </div>
-        <div class="barra"><div class="barra-fill" id="barraDownloads" style="width:${((atual - 1) / total) * 100}%"></div></div>
-        <div id="etapasDownloads"></div>
-        <button class="btn" id="btnDownloads" disabled>🔒 Complete as etapas acima</button>
-        <div class="resultado" id="resultadoDownloads"></div>
-      `;
-      renderEtapas('etapasDownloads', d.etapas, 'downloads');
-      verificarBotao('downloads');
-    }
+    document.getElementById('marca').value = config.marca || 'QZZ Community';
+    document.getElementById('titulo').value = config.titulo || '';
+    document.getElementById('subtitulo').value = config.subtitulo || '';
+    document.getElementById('mensagemFinal').value = config.mensagemFinal || '';
+    document.getElementById('keys').value = (config.keys || []).join('\n');
+    document.getElementById('dl-titulo').value = config.downloads.titulo || '';
+    document.getElementById('dl-subtitulo').value = config.downloads.subtitulo || '';
+    renderEtapas();
+    renderEtapasDl();
+    renderItensDl();
   }
 
-  function renderEtapas(containerId, etapas, tipo) {
-    const box = document.getElementById(containerId);
+  function escapeAttr(s) {
+    return String(s || '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function renderEtapas() {
+    const box = document.getElementById('etapasContainer');
     box.innerHTML = '';
-    etapas.forEach((et, i) => {
+    config.etapas.forEach((et, i) => {
       const div = document.createElement('div');
-      const stepNum = i + 1;
-      const jaFeito = estado[tipo].atual > stepNum;
-      const liberado = estado[tipo].atual === stepNum;
-      div.className = 'step' + (jaFeito ? ' done' : (liberado ? '' : ' locked'));
+      div.className = 'row';
       div.innerHTML = `
-        <div class="check">${jaFeito ? '✓' : stepNum}</div>
-        <div class="step-txt">${et.texto}</div>
+        <div class="num">${i + 1}</div>
+        <div>
+          <input value="${escapeAttr(et.texto)}" oninput="mudarEtapa(${i}, 'texto', this.value)" placeholder="Texto (aceita <b>negrito</b>)">
+          <input value="${escapeAttr(et.link)}" oninput="mudarEtapa(${i}, 'link', this.value)" placeholder="Link">
+          <button class="danger" onclick="removerEtapa(${i})">🗑️ Remover</button>
+        </div>
       `;
-      div.onclick = () => clicarEtapa(et.link, stepNum, tipo);
       box.appendChild(div);
     });
   }
 
-  function clicarEtapa(link, stepNum, tipo) {
-    if (estado[tipo].atual !== stepNum) return;
-    window.open(link, '_blank');
-    estado[tipo].atual++;
-    render();
+  function mudarEtapa(i, campo, valor) { config.etapas[i][campo] = valor; }
+  function adicionarEtapa() {
+    config.etapas.push({ texto: 'Nova etapa', link: 'https://' });
+    renderEtapas();
+  }
+  function removerEtapa(i) {
+    if (config.etapas.length <= 1) return alert('Precisa ter pelo menos 1 etapa.');
+    config.etapas.splice(i, 1); renderEtapas();
   }
 
-  function verificarBotao(tipo) {
-    if (tipo === 'keys') {
-      const total = config.etapas.length;
-      const btn = document.getElementById('btnKeys');
-      if (estado.keys.atual > total) {
-        btn.disabled = false;
-        btn.textContent = config.mensagemFinal || '🎁 Resgatar minha key';
-      }
-    } else {
-      const d = config.downloads;
-      if (!d || !d.etapas) return;
-      const total = d.etapas.length;
-      const btn = document.getElementById('btnDownloads');
-      if (estado.downloads.atual > total) {
-        btn.disabled = false;
-        btn.textContent = '🎁 Liberar downloads';
-      }
-    }
+  function renderEtapasDl() {
+    const box = document.getElementById('etapasDlContainer');
+    box.innerHTML = '';
+    config.downloads.etapas.forEach((et, i) => {
+      const div = document.createElement('div');
+      div.className = 'row';
+      div.innerHTML = `
+        <div class="num">${i + 1}</div>
+        <div>
+          <input value="${escapeAttr(et.texto)}" oninput="mudarEtapaDl(${i}, 'texto', this.value)" placeholder="Texto">
+          <input value="${escapeAttr(et.link)}" oninput="mudarEtapaDl(${i}, 'link', this.value)" placeholder="Link">
+          <button class="danger" onclick="removerEtapaDl(${i})">🗑️ Remover</button>
+        </div>
+      `;
+      box.appendChild(div);
+    });
   }
 
-  document.addEventListener('click', (e) => {
-    if (e.target.id === 'btnKeys') {
-      const keys = config.keys && config.keys.length ? config.keys : ['SEM-KEYS'];
-      const key = keys[Math.floor(Math.random() * keys.length)];
-      document.getElementById('keyTxt').textContent = key;
-      document.getElementById('resultadoKeys').style.display = 'block';
-      e.target.disabled = true;
-      e.target.textContent = '✅ Key liberada';
-    }
-    if (e.target.id === 'btnDownloads') {
-      const itens = (config.downloads && config.downloads.itens) || [];
-      const box = document.getElementById('resultadoDownloads');
-      if (!itens.length) {
-        box.innerHTML = '<div>Nenhum download cadastrado.</div>';
-      } else {
-        box.innerHTML = '<div style="margin-bottom:12px">Downloads liberados:</div>' +
-          itens.map(it =>
-            `<a class="download-btn" href="${it.link}" target="_blank" rel="noopener">⬇️ ${it.nome}</a>`
-          ).join('<br>');
-      }
-      box.style.display = 'block';
-      e.target.disabled = true;
-      e.target.textContent = '✅ Downloads liberados';
-    }
-  });
-
-  function copiar(id, e) {
-    const txt = document.getElementById(id).textContent;
-    navigator.clipboard.writeText(txt);
-    e.target.textContent = 'Copiado!';
-    setTimeout(() => e.target.textContent = 'Copiar', 1500);
+  function mudarEtapaDl(i, campo, valor) { config.downloads.etapas[i][campo] = valor; }
+  function adicionarEtapaDl() {
+    config.downloads.etapas.push({ texto: 'Nova etapa', link: 'https://' });
+    renderEtapasDl();
+  }
+  function removerEtapaDl(i) {
+    if (config.downloads.etapas.length <= 1) return alert('Precisa ter pelo menos 1 etapa.');
+    config.downloads.etapas.splice(i, 1); renderEtapasDl();
   }
 
-  carregar();
+  function renderItensDl() {
+    const box = document.getElementById('itensDlContainer');
+    box.innerHTML = '';
+    if (!config.downloads.itens.length) {
+      box.innerHTML = '<small>Nenhum item cadastrado ainda.</small>';
+      return;
+    }
+    config.downloads.itens.forEach((it, i) => {
+      const div = document.createElement('div');
+      div.className = 'item-download';
+      div.innerHTML = `
+        <input value="${escapeAttr(it.nome)}" oninput="mudarItemDl(${i}, 'nome', this.value)" placeholder="Nome do arquivo/programa">
+        <input value="${escapeAttr(it.link)}" oninput="mudarItemDl(${i}, 'link', this.value)" placeholder="Link do download">
+        <button onclick="removerItemDl(${i})">🗑️</button>
+      `;
+      box.appendChild(div);
+    });
+  }
+
+  function mudarItemDl(i, campo, valor) { config.downloads.itens[i][campo] = valor; }
+  function adicionarItemDl() {
+    config.downloads.itens.push({ nome: 'Novo item', link: 'https://' });
+    renderItensDl();
+  }
+  function removerItemDl(i) {
+    config.downloads.itens.splice(i, 1); renderItensDl();
+  }
+
+  async function salvar() {
+    config.marca = document.getElementById('marca').value;
+    config.titulo = document.getElementById('titulo').value;
+    config.subtitulo = document.getElementById('subtitulo').value;
+    config.mensagemFinal = document.getElementById('mensagemFinal').value;
+    config.keys = document.getElementById('keys').value.split('\n').map(k => k.trim()).filter(Boolean);
+    config.downloads.titulo = document.getElementById('dl-titulo').value;
+    config.downloads.subtitulo = document.getElementById('dl-subtitulo').value;
+
+    try {
+      const res = await fetch('/api/config', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-password': senhaAdmin
+        },
+        body: JSON.stringify(config)
+      });
+      if (!res.ok) throw new Error();
+      toast('Salvo com sucesso!');
+    } catch { toast('Erro ao salvar', true); }
+  }
+
+  function exportar() {
+    const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'qzz-config.json';
+    a.click();
+  }
+
+  function importar() {
+    const inp = document.createElement('input');
+    inp.type = 'file'; inp.accept = '.json';
+    inp.onchange = e => {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        try {
+          config = JSON.parse(ev.target.result);
+          if (!config.downloads) config.downloads = { titulo: '📦 Downloads', subtitulo: '', etapas: [], itens: [] };
+          render();
+          toast('Importado! Clique em Salvar pra publicar.');
+        } catch { toast('JSON inválido', true); }
+      };
+      reader.readAsText(e.target.files[0]);
+    };
+    inp.click();
+  }
+
+  function abrirPublico() { window.open('/', '_blank'); }
+
+  function toast(msg, erro = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast show' + (erro ? ' erro' : '');
+    setTimeout(() => t.className = 'toast', 2000);
+  }
+
+  const senhaSalva = sessionStorage.getItem('admin_senha');
+  if (senhaSalva) { senhaAdmin = senhaSalva; entrarNoPainel(); }
+  else { document.getElementById('loginBox').style.display = 'block'; }
 </script>
 </body>
 </html>
