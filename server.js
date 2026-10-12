@@ -6,7 +6,6 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ===== Conexão com o PostgreSQL do Render =====
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.DATABASE_URL?.includes('render.com')
@@ -14,8 +13,8 @@ const pool = new Pool({
     : false
 });
 
-// ===== Config padrão (usado se o banco estiver vazio) =====
 const CONFIG_PADRAO = {
+  marca: 'QZZ Community',
   titulo: '🔑 Resgatar Key',
   subtitulo: 'Complete as etapas na ordem pra liberar sua key.',
   mensagemFinal: '✅ Tudo certo! Clique para resgatar.',
@@ -26,10 +25,21 @@ const CONFIG_PADRAO = {
     { texto: 'Entre no <b>GRUPO DO WHATSAPP</b>', link: 'https://chat.whatsapp.com' },
     { texto: 'Entre no <b>DISCORD</b>', link: 'https://discord.gg' }
   ],
-  keys: ['DEMO-KEY1-XXXX-YYYY']
+  keys: ['DEMO-KEY1-XXXX-YYYY'],
+  downloads: {
+    titulo: '📦 Downloads',
+    subtitulo: 'Complete as etapas pra liberar o download.',
+    etapas: [
+      { texto: 'Deixe o <b>LIKE</b> no vídeo', link: 'https://youtube.com' },
+      { texto: '<b>INSCREVA-SE</b> no canal', link: 'https://youtube.com' },
+      { texto: 'Entre no <b>DISCORD</b>', link: 'https://discord.gg' }
+    ],
+    itens: [
+      { nome: 'Programa Exemplo', link: 'https://exemplo.com/arquivo.zip' }
+    ]
+  }
 };
 
-// ===== Cria a tabela se não existir e insere padrão =====
 async function initDB() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS config (
@@ -41,21 +51,28 @@ async function initDB() {
 
   const { rows } = await pool.query('SELECT * FROM config WHERE id = 1');
   if (rows.length === 0) {
-    await pool.query(
-      'INSERT INTO config (id, dados) VALUES (1, $1)',
-      [CONFIG_PADRAO]
-    );
+    await pool.query('INSERT INTO config (id, dados) VALUES (1, $1)', [CONFIG_PADRAO]);
     console.log('✅ Config padrão inserida no banco.');
   } else {
-    console.log('✅ Config já existe no banco.');
+    // Migração: se já existe config mas não tem downloads, mescla
+    const atual = rows[0].dados;
+    let precisaAtualizar = false;
+
+    if (!atual.marca) { atual.marca = CONFIG_PADRAO.marca; precisaAtualizar = true; }
+    if (!atual.downloads) { atual.downloads = CONFIG_PADRAO.downloads; precisaAtualizar = true; }
+
+    if (precisaAtualizar) {
+      await pool.query('UPDATE config SET dados = $1 WHERE id = 1', [atual]);
+      console.log('✅ Config atualizada com novos campos (downloads / marca).');
+    } else {
+      console.log('✅ Config já existe no banco.');
+    }
   }
 }
 
-// ===== Middlewares =====
-app.use(express.json({ limit: '1mb' }));
+app.use(express.json({ limit: '2mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ===== Middleware de autenticação do admin =====
 function authAdmin(req, res, next) {
   const senha = req.headers['x-admin-password'];
   if (!senha || senha !== process.env.ADMIN_PASSWORD) {
@@ -64,9 +81,6 @@ function authAdmin(req, res, next) {
   next();
 }
 
-// ===== Rotas da API =====
-
-// Público: retorna a config atual
 app.get('/api/config', async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT dados FROM config WHERE id = 1');
@@ -78,17 +92,12 @@ app.get('/api/config', async (req, res) => {
   }
 });
 
-// Admin: verifica a senha
 app.post('/api/login', (req, res) => {
   const { senha } = req.body;
-  if (senha === process.env.ADMIN_PASSWORD) {
-    res.json({ ok: true });
-  } else {
-    res.status(401).json({ ok: false, erro: 'Senha incorreta' });
-  }
+  if (senha === process.env.ADMIN_PASSWORD) res.json({ ok: true });
+  else res.status(401).json({ ok: false, erro: 'Senha incorreta' });
 });
 
-// Admin: salva a config
 app.post('/api/config', authAdmin, async (req, res) => {
   try {
     const nova = req.body;
@@ -106,12 +115,9 @@ app.post('/api/config', authAdmin, async (req, res) => {
   }
 });
 
-// ===== Sobe o servidor =====
 initDB()
   .then(() => {
-    app.listen(PORT, () => {
-      console.log(`🚀 Servidor rodando na porta ${PORT}`);
-    });
+    app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
   })
   .catch(err => {
     console.error('❌ Erro ao iniciar banco:', err);
