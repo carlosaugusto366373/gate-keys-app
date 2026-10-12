@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resgatar Key</title>
+<style>
+  * { box-sizing: border-box; font-family: system-ui, sans-serif; }
+  body {
+    background: #0f0f13; color: #fff; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px; margin: 0;
+  }
+  .card {
+    background: #1a1a22; border: 1px solid #2a2a35;
+    border-radius: 16px; padding: 28px; max-width: 480px; width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  .sub { color: #888; font-size: 14px; margin-bottom: 22px; }
+  .step {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px; border-radius: 12px; margin-bottom: 10px;
+    background: #12121a; border: 1px solid #24242e;
+    transition: .25s; cursor: pointer; user-select: none;
+  }
+  .step.locked { opacity: .4; pointer-events: none; }
+  .step.done { background: #10261a; border-color: #1f6b3d; }
+  .step.done .check { background: #22c55e; color: #000; }
+  .check {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: #2a2a35; display: flex; align-items: center;
+    justify-content: center; font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step-txt { font-size: 14px; line-height: 1.4; }
+  .step-txt b { color: #fff; }
+  .btn {
+    width: 100%; padding: 14px; border-radius: 12px; border: none;
+    background: #3b82f6; color: #fff; font-weight: 700; font-size: 15px;
+    cursor: pointer; margin-top: 14px; transition: .2s;
+  }
+  .btn:disabled { background: #2a2a35; color: #666; cursor: not-allowed; }
+  .btn:not(:disabled):hover { background: #2563eb; }
+  #keyBox {
+    margin-top: 16px; padding: 16px; border-radius: 12px;
+    background: #10261a; border: 1px solid #1f6b3d;
+    text-align: center; display: none;
+  }
+  #keyBox code {
+    display: block; font-size: 18px; letter-spacing: 2px;
+    margin: 10px 0; color: #4ade80; word-break: break-all;
+    font-family: monospace;
+  }
+  .copy {
+    background: #22c55e; color: #000; border: none; padding: 8px 16px;
+    border-radius: 8px; font-weight: 700; cursor: pointer;
+  }
+  .prog { color: #60a5fa; font-weight: 700; }
+  .loading { text-align: center; color: #666; padding: 40px 0; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div id="loading" class="loading">Carregando...</div>
+
+  <div id="conteudo" style="display:none">
+    <h1 id="titulo"></h1>
+    <p class="sub" id="subtitulo"></p>
+    <p class="sub">Progresso: <span class="prog" id="prog">1/1</span></p>
+
+    <div id="etapasBox"></div>
+
+    <button class="btn" id="btnKey" disabled>🔒 Complete as etapas acima</button>
+
+    <div id="keyBox">
+      <div>Sua key:</div>
+      <code id="keyTxt">XXXX-XXXX-XXXX-XXXX</code>
+      <button class="copy" onclick="copiarKey(event)">Copiar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let config = null;
+  let currentStep = 1;
+  let TOTAL = 0;
+
+  async function carregar() {
+    try {
+      const res = await fetch('/api/config');
+      config = await res.json();
+      TOTAL = config.etapas.length;
+      render();
+    } catch (err) {
+      document.getElementById('loading').textContent = '❌ Erro ao carregar. Recarregue a página.';
+    }
+  }
+
+  function render() {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('conteudo').style.display = 'block';
+
+    document.getElementById('titulo').innerHTML = config.titulo;
+    document.getElementById('subtitulo').textContent = config.subtitulo;
+    document.getElementById('prog').textContent = `1/${TOTAL}`;
+
+    const box = document.getElementById('etapasBox');
+    box.innerHTML = '';
+    config.etapas.forEach((et, i) => {
+      const div = document.createElement('div');
+      div.className = 'step' + (i === 0 ? '' : ' locked');
+      div.dataset.step = i + 1;
+      div.innerHTML = `
+        <div class="check">${i + 1}</div>
+        <div class="step-txt">${et.texto}</div>
+      `;
+      div.onclick = () => openLink(div, et.link);
+      box.appendChild(div);
+    });
+  }
+
+  function openLink(el, url) {
+    window.open(url, '_blank');
+    el.classList.add('done');
+    el.querySelector('.check').textContent = '✓';
+
+    currentStep++;
+    document.getElementById('prog').textContent =
+      `${Math.min(currentStep, TOTAL)}/${TOTAL}`;
+
+    const next = document.querySelector(`.step[data-step="${currentStep}"]`);
+    if (next) next.classList.remove('locked');
+
+    if (currentStep > TOTAL) {
+      const btn = document.getElementById('btnKey');
+      btn.disabled = false;
+      btn.textContent = config.mensagemFinal || '🎁 Resgatar minha key';
+    }
+  }
+
+  document.getElementById('btnKey').addEventListener('click', () => {
+    const keys = config.keys && config.keys.length
+      ? config.keys
+      : ['SEM-KEYS-CADASTRADAS'];
+    const key = keys[Math.floor(Math.random() * keys.length)];
+    document.getElementById('keyTxt').textContent = key;
+    document.getElementById('keyBox').style.display = 'block';
+
+    const btn = document.getElementById('btnKey');
+    btn.disabled = true;
+    btn.textContent = '✅ Key liberada';
+  });
+
+  function copiarKey(e) {
+    const txt = document.getElementById('keyTxt').textContent;
+    navigator.clipboard.writeText(txt);
+    e.target.textContent = 'Copiado!';
+    setTimeout(() => e.target.textContent = 'Copiar', 1500);
+  }
+
+  carregar();
+</script>
+</body>
+</html>
