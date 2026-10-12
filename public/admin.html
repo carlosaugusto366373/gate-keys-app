@@ -4,67 +4,94 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QZZ Community — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; font-family: system-ui, sans-serif; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --vermelho: #e11d2a;
+    --vermelho-escuro: #8b0f18;
+    --vermelho-brilho: #ff2d3d;
+    --preto: #0a0a0a;
+    --preto-card: #121214;
+    --preto-borda: #26262b;
+    --cinza-txt: #8a8a92;
+  }
   body {
-    background: radial-gradient(circle at 20% 0%, #1a0b2e 0%, #0a0a0f 45%, #05050a 100%);
-    color: #fff; min-height: 100vh; padding: 24px 16px;
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--preto);
+    color: #fff;
+    min-height: 100vh;
+    padding: 24px 16px;
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(225, 29, 42, 0.12) 0%, transparent 50%),
+      linear-gradient(rgba(225, 29, 42, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(225, 29, 42, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 40px 40px, 40px 40px;
   }
-  .wrap { max-width: 800px; margin: 0 auto; }
+  .wrap { max-width: 900px; margin: 0 auto; }
 
-  .brand {
-    text-align: center; margin-bottom: 28px;
-  }
+  .brand { text-align: center; margin-bottom: 24px; }
   .brand-logo {
-    font-size: 26px; font-weight: 900; letter-spacing: 1px;
-    background: linear-gradient(90deg, #a855f7, #ec4899, #f43f5e);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 28px; font-weight: 800; letter-spacing: 1px;
+    background: linear-gradient(90deg, #fff, var(--vermelho-brilho));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .brand-sub {
     font-size: 11px; color: #7a7a8c; margin-top: 4px;
-    text-transform: uppercase; letter-spacing: 3px;
+    text-transform: uppercase; letter-spacing: 4px; font-weight: 700;
   }
 
   .box {
-    background: #12121a; border: 1px solid #23232e;
+    background: var(--preto-card); border: 1px solid var(--preto-borda);
     border-radius: 16px; padding: 20px; margin-bottom: 18px;
+    box-shadow: 0 0 40px rgba(225, 29, 42, 0.06);
   }
   .box h2 {
-    font-size: 15px; margin-bottom: 14px; color: #c084fc;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px; margin-bottom: 14px; color: var(--vermelho-brilho);
     display: flex; align-items: center; gap: 8px;
+    text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800;
   }
 
-  label { display: block; font-size: 12px; color: #888; margin-bottom: 6px; }
+  label { display: block; font-size: 12px; color: var(--cinza-txt); margin-bottom: 6px; font-weight: 600; letter-spacing: .5px; }
   input, textarea {
     width: 100%; padding: 10px 12px; border-radius: 10px;
-    border: 1px solid #23232e; background: #0e0e15; color: #fff;
+    border: 1px solid var(--preto-borda); background: #0e0e10; color: #fff;
     font-size: 14px; margin-bottom: 12px; font-family: inherit;
     transition: .2s;
   }
-  input:focus, textarea:focus { outline: none; border-color: #7c3aed; }
+  input:focus, textarea:focus { outline: none; border-color: var(--vermelho); box-shadow: 0 0 0 3px rgba(225, 29, 42, 0.15); }
   textarea { min-height: 90px; resize: vertical; font-family: monospace; }
 
   .row { display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: start; margin-bottom: 12px; }
   .row .num {
-    background: linear-gradient(135deg, #7c3aed, #db2777);
+    background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
     border-radius: 8px; height: 36px; display: flex;
     align-items: center; justify-content: center;
-    font-weight: 800; color: #fff; font-size: 13px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 800; color: #fff; font-size: 14px;
+    box-shadow: 0 0 12px rgba(225, 29, 42, 0.4);
   }
 
   button {
     padding: 10px 18px; border-radius: 10px; border: none;
-    background: linear-gradient(135deg, #7c3aed, #db2777);
-    color: #fff; font-weight: 700; cursor: pointer; font-size: 13px;
+    background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
+    color: #fff; font-weight: 800; cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 1px; text-transform: uppercase; font-size: 13px;
     transition: .2s;
   }
-  button:hover { filter: brightness(1.15); }
-  button.ghost { background: #23232e; }
-  button.ghost:hover { background: #2e2e3a; }
+  button:hover { filter: brightness(1.15); transform: translateY(-1px); }
+  button.ghost { background: #23232b; }
+  button.ghost:hover { background: #2e2e38; }
   button.danger { background: #dc2626; }
   button.danger:hover { background: #b91c1c; }
-  button:disabled { opacity: .5; cursor: not-allowed; }
+  button.mini { padding: 6px 10px; font-size: 11px; letter-spacing: .5px; }
+  button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 
   .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
   .header-actions { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
@@ -72,18 +99,19 @@
 
   .toast {
     position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-    background: linear-gradient(135deg, #7c3aed, #db2777);
+    background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
     color: #fff; padding: 14px 24px; border-radius: 12px;
     font-weight: 700; opacity: 0; transition: .3s; pointer-events: none;
-    box-shadow: 0 10px 40px rgba(124,58,237,.4); z-index: 999;
+    box-shadow: 0 0 40px rgba(225, 29, 42, 0.5); z-index: 999;
+    font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; text-transform: uppercase;
   }
   .toast.show { opacity: 1; bottom: 30px; }
-  .toast.erro { background: #dc2626; box-shadow: 0 10px 40px rgba(220,38,38,.4); }
+  .toast.erro { background: #dc2626; }
 
   #loginBox { max-width: 380px; margin: 60px auto; }
   #loginBox .box { padding: 28px; }
-  #loginBox h1 { font-size: 20px; text-align: center; margin-bottom: 6px; }
-  #loginBox p { font-size: 13px; color: #888; text-align: center; margin-bottom: 20px; }
+  #loginBox h1 { font-size: 20px; text-align: center; margin-bottom: 6px; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; }
+  #loginBox p { font-size: 13px; color: var(--cinza-txt); text-align: center; margin-bottom: 20px; }
   #loginBox input { text-align: center; }
 
   .item-download {
@@ -96,6 +124,65 @@
     display: flex; align-items: center; justify-content: center;
     background: #dc2626;
   }
+
+  /* ===== Painel de resgates ===== */
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px;
+  }
+  .stat {
+    background: #0e0e10; border: 1px solid var(--preto-borda);
+    border-radius: 12px; padding: 14px; text-align: center;
+  }
+  .stat .num {
+    font-family: 'Rajdhani', sans-serif; font-size: 26px; font-weight: 800;
+    color: var(--vermelho-brilho); line-height: 1;
+  }
+  .stat .lbl {
+    font-size: 10px; color: var(--cinza-txt); text-transform: uppercase;
+    letter-spacing: 1.5px; margin-top: 6px; font-weight: 700;
+  }
+
+  .resgate-lista {
+    max-height: 380px; overflow-y: auto;
+    border: 1px solid var(--preto-borda); border-radius: 12px;
+    background: #0a0a0c;
+  }
+  .resgate-lista::-webkit-scrollbar { width: 8px; }
+  .resgate-lista::-webkit-scrollbar-track { background: #0a0a0c; }
+  .resgate-lista::-webkit-scrollbar-thumb { background: var(--preto-borda); border-radius: 4px; }
+  .resgate-lista::-webkit-scrollbar-thumb:hover { background: var(--vermelho-escuro); }
+
+  .resgate-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: 10px; align-items: center;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--preto-borda);
+    font-size: 13px;
+  }
+  .resgate-item:last-child { border-bottom: none; }
+  .resgate-item:hover { background: rgba(225, 29, 42, 0.03); }
+
+  .resgate-tipo {
+    display: inline-block; padding: 3px 8px; border-radius: 6px;
+    font-size: 10px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; font-family: 'Rajdhani', sans-serif;
+  }
+  .resgate-tipo.keys { background: rgba(225, 29, 42, 0.2); color: var(--vermelho-brilho); }
+  .resgate-tipo.downloads { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+
+  .resgate-ip { font-family: 'Courier New', monospace; color: #ddd; font-size: 12px; }
+  .resgate-data { color: #555; font-size: 11px; }
+
+  .vazio {
+    padding: 40px 20px; text-align: center; color: #555; font-size: 13px;
+  }
+
+  .reset-ip-form {
+    display: grid; grid-template-columns: 1fr auto; gap: 8px;
+    margin-bottom: 12px;
+  }
+  .reset-ip-form input { margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -122,23 +209,61 @@
   </div>
 
   <div class="header-actions">
-    <button onclick="abrirPublico()" class="ghost">👁️ Ver página pública</button>
+    <button onclick="abrirPublico()" class="ghost">👁️ Ver página</button>
     <button onclick="exportar()" class="ghost">⬇️ Exportar</button>
     <button onclick="importar()" class="ghost">⬆️ Importar</button>
     <button onclick="sair()" class="danger">🚪 Sair</button>
   </div>
 
+  <!-- ===== PAINEL DE RESGATES ===== -->
+  <div class="box">
+    <h2>📊 Resgates</h2>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num" id="statTotal">0</div>
+        <div class="lbl">Total</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="statKeys">0</div>
+        <div class="lbl">Keys</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="statDownloads">0</div>
+        <div class="lbl">Downloads</div>
+      </div>
+    </div>
+
+    <div class="actions" style="margin-bottom:14px">
+      <button class="ghost" onclick="carregarResgates()">🔄 Atualizar</button>
+      <button class="danger" onclick="resetarTudo()">🧹 Limpar TUDO</button>
+      <button class="ghost" onclick="resetarTipo('keys')">🗑️ Só Keys</button>
+      <button class="ghost" onclick="resetarTipo('downloads')">🗑️ Só Downloads</button>
+    </div>
+
+    <label>Resetar IP específico</label>
+    <div class="reset-ip-form">
+      <input id="ipReset" placeholder="ex: 189.45.12.34">
+      <button onclick="resetarIP()">🗑️ Resetar IP</button>
+    </div>
+    <small>Quando você soltar novas keys no dia, clique em "🧹 Limpar TUDO" pra liberar geral de novo.</small>
+
+    <div class="resgate-lista" id="resgateLista">
+      <div class="vazio">Carregando...</div>
+    </div>
+  </div>
+
   <!-- GERAL -->
   <div class="box">
     <h2>📝 Geral</h2>
-    <label>Nome da marca (aparece no topo)</label>
+    <label>Nome da marca</label>
     <input id="marca" placeholder="QZZ Community">
     <label>Título da aba Keys</label>
     <input id="titulo" placeholder="🔑 Resgatar Key">
     <label>Subtítulo da aba Keys</label>
     <input id="subtitulo" placeholder="Complete as etapas...">
-    <label>Mensagem final (botão depois de completar)</label>
-    <input id="mensagemFinal" placeholder="✅ Tudo certo! Clique para resgatar.">
+    <label>Mensagem final</label>
+    <input id="mensagemFinal" placeholder="✅ Tudo certo!">
   </div>
 
   <!-- ETAPAS DAS KEYS -->
@@ -153,7 +278,7 @@
   <!-- KEYS -->
   <div class="box">
     <h2>🔑 Keys (uma por linha)</h2>
-    <textarea id="keys" placeholder="A1B2-C3D4-E5F6-G7H8&#10;H8G7-F6E5-D4C3-B2A1"></textarea>
+    <textarea id="keys" placeholder="A1B2-C3D4-E5F6-G7H8"></textarea>
     <small>Uma key por linha. O sistema sorteia uma aleatória.</small>
   </div>
 
@@ -162,8 +287,8 @@
     <h2>📦 Downloads</h2>
     <label>Título da aba Downloads</label>
     <input id="dl-titulo" placeholder="📦 Downloads">
-    <label>Subtítulo da aba Downloads</label>
-    <input id="dl-subtitulo" placeholder="Complete as etapas pra liberar o download.">
+    <label>Subtítulo</label>
+    <input id="dl-subtitulo" placeholder="Complete as etapas pra liberar.">
   </div>
 
   <div class="box">
@@ -191,6 +316,7 @@
   let config = null;
   let senhaAdmin = '';
 
+  // ===== LOGIN =====
   async function fazerLogin() {
     const senha = document.getElementById('senhaInput').value;
     if (!senha) return;
@@ -217,17 +343,110 @@
   async function entrarNoPainel() {
     document.getElementById('loginBox').style.display = 'none';
     document.getElementById('painel').style.display = 'block';
-    await carregarConfig();
+    await Promise.all([carregarConfig(), carregarResgates()]);
   }
 
+  // ===== RESGATES =====
+  async function carregarResgates() {
+    try {
+      const res = await fetch('/api/admin/resgates', {
+        headers: { 'x-admin-password': senhaAdmin }
+      });
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      renderResgates(data);
+    } catch {
+      document.getElementById('resgateLista').innerHTML =
+        '<div class="vazio">Erro ao carregar</div>';
+    }
+  }
+
+  function renderResgates(data) {
+    document.getElementById('statTotal').textContent = data.stats.total;
+    document.getElementById('statKeys').textContent = data.stats.keys;
+    document.getElementById('statDownloads').textContent = data.stats.downloads;
+
+    const box = document.getElementById('resgateLista');
+    if (!data.resgates.length) {
+      box.innerHTML = '<div class="vazio">Nenhum resgate ainda.</div>';
+      return;
+    }
+    box.innerHTML = data.resgates.map(r => `
+      <div class="resgate-item">
+        <div>
+          <span class="resgate-tipo ${r.tipo}">${r.tipo === 'keys' ? 'KEY' : 'DOWNLOAD'}</span>
+          <span class="resgate-ip" style="margin-left:8px">${r.ip}</span>
+        </div>
+        <div class="resgate-data">${formatarData(r.criado_em)}</div>
+        <div class="resgate-ip" style="font-size:11px;color:#666">${r.valor ? r.valor.substring(0, 16) : '—'}</div>
+        <button class="danger mini" onclick="resetarIPEspecifico('${r.ip}')">🗑️</button>
+      </div>
+    `).join('');
+  }
+
+  function formatarData(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    const dia = String(d.getDate()).padStart(2, '0');
+    const mes = String(d.getMonth() + 1).padStart(2, '0');
+    const hora = String(d.getHours()).padStart(2, '0');
+    const min = String(d.getMinutes()).padStart(2, '0');
+    return `${dia}/${mes} ${hora}:${min}`;
+  }
+
+  async function resetarTudo() {
+    if (!confirm('Isso vai liberar TODOS os IPs pra resgatar de novo. Continuar?')) return;
+    try {
+      const res = await fetch('/api/admin/resgates', {
+        method: 'DELETE',
+        headers: { 'x-admin-password': senhaAdmin }
+      });
+      const data = await res.json();
+      toast(`${data.deletados} resgates apagados`);
+      carregarResgates();
+    } catch { toast('Erro ao limpar', true); }
+  }
+
+  async function resetarTipo(tipo) {
+    if (!confirm(`Apagar todos os resgates de ${tipo}?`)) return;
+    try {
+      const res = await fetch(`/api/admin/resgates/tipo/${tipo}`, {
+        method: 'DELETE',
+        headers: { 'x-admin-password': senhaAdmin }
+      });
+      const data = await res.json();
+      toast(`${data.deletados} apagados`);
+      carregarResgates();
+    } catch { toast('Erro', true); }
+  }
+
+  async function resetarIP() {
+    const ip = document.getElementById('ipReset').value.trim();
+    if (!ip) return toast('Digite um IP', true);
+    await resetarIPEspecifico(ip);
+    document.getElementById('ipReset').value = '';
+  }
+
+  async function resetarIPEspecifico(ip) {
+    if (!confirm(`Resetar IP ${ip}?`)) return;
+    try {
+      const res = await fetch(`/api/admin/resgates/ip/${encodeURIComponent(ip)}`, {
+        method: 'DELETE',
+        headers: { 'x-admin-password': senhaAdmin }
+      });
+      const data = await res.json();
+      toast(data.deletados ? `${data.deletados} apagados` : 'Nada encontrado');
+      carregarResgates();
+    } catch { toast('Erro', true); }
+  }
+
+  // ===== CONFIG =====
   async function carregarConfig() {
     try {
       const res = await fetch('/api/config');
       config = await res.json();
       if (!config.downloads) {
-        config.downloads = {
-          titulo: '📦 Downloads', subtitulo: '', etapas: [], itens: []
-        };
+        config.downloads = { titulo: '📦 Downloads', subtitulo: '', etapas: [], itens: [] };
       }
       render();
     } catch { toast('Erro ao carregar', true); }
@@ -259,9 +478,9 @@
       div.innerHTML = `
         <div class="num">${i + 1}</div>
         <div>
-          <input value="${escapeAttr(et.texto)}" oninput="mudarEtapa(${i}, 'texto', this.value)" placeholder="Texto (aceita <b>negrito</b>)">
+          <input value="${escapeAttr(et.texto)}" oninput="mudarEtapa(${i}, 'texto', this.value)" placeholder="Texto">
           <input value="${escapeAttr(et.link)}" oninput="mudarEtapa(${i}, 'link', this.value)" placeholder="Link">
-          <button class="danger" onclick="removerEtapa(${i})">🗑️ Remover</button>
+          <button class="danger mini" onclick="removerEtapa(${i})">🗑️ Remover</button>
         </div>
       `;
       box.appendChild(div);
@@ -269,12 +488,9 @@
   }
 
   function mudarEtapa(i, campo, valor) { config.etapas[i][campo] = valor; }
-  function adicionarEtapa() {
-    config.etapas.push({ texto: 'Nova etapa', link: 'https://' });
-    renderEtapas();
-  }
+  function adicionarEtapa() { config.etapas.push({ texto: 'Nova etapa', link: 'https://' }); renderEtapas(); }
   function removerEtapa(i) {
-    if (config.etapas.length <= 1) return alert('Precisa ter pelo menos 1 etapa.');
+    if (config.etapas.length <= 1) return alert('Mínimo 1 etapa.');
     config.etapas.splice(i, 1); renderEtapas();
   }
 
@@ -289,7 +505,7 @@
         <div>
           <input value="${escapeAttr(et.texto)}" oninput="mudarEtapaDl(${i}, 'texto', this.value)" placeholder="Texto">
           <input value="${escapeAttr(et.link)}" oninput="mudarEtapaDl(${i}, 'link', this.value)" placeholder="Link">
-          <button class="danger" onclick="removerEtapaDl(${i})">🗑️ Remover</button>
+          <button class="danger mini" onclick="removerEtapaDl(${i})">🗑️ Remover</button>
         </div>
       `;
       box.appendChild(div);
@@ -297,12 +513,9 @@
   }
 
   function mudarEtapaDl(i, campo, valor) { config.downloads.etapas[i][campo] = valor; }
-  function adicionarEtapaDl() {
-    config.downloads.etapas.push({ texto: 'Nova etapa', link: 'https://' });
-    renderEtapasDl();
-  }
+  function adicionarEtapaDl() { config.downloads.etapas.push({ texto: 'Nova etapa', link: 'https://' }); renderEtapasDl(); }
   function removerEtapaDl(i) {
-    if (config.downloads.etapas.length <= 1) return alert('Precisa ter pelo menos 1 etapa.');
+    if (config.downloads.etapas.length <= 1) return alert('Mínimo 1 etapa.');
     config.downloads.etapas.splice(i, 1); renderEtapasDl();
   }
 
@@ -310,15 +523,15 @@
     const box = document.getElementById('itensDlContainer');
     box.innerHTML = '';
     if (!config.downloads.itens.length) {
-      box.innerHTML = '<small>Nenhum item cadastrado ainda.</small>';
+      box.innerHTML = '<small>Nenhum item cadastrado.</small>';
       return;
     }
     config.downloads.itens.forEach((it, i) => {
       const div = document.createElement('div');
       div.className = 'item-download';
       div.innerHTML = `
-        <input value="${escapeAttr(it.nome)}" oninput="mudarItemDl(${i}, 'nome', this.value)" placeholder="Nome do arquivo/programa">
-        <input value="${escapeAttr(it.link)}" oninput="mudarItemDl(${i}, 'link', this.value)" placeholder="Link do download">
+        <input value="${escapeAttr(it.nome)}" oninput="mudarItemDl(${i}, 'nome', this.value)" placeholder="Nome">
+        <input value="${escapeAttr(it.link)}" oninput="mudarItemDl(${i}, 'link', this.value)" placeholder="Link">
         <button onclick="removerItemDl(${i})">🗑️</button>
       `;
       box.appendChild(div);
@@ -326,13 +539,8 @@
   }
 
   function mudarItemDl(i, campo, valor) { config.downloads.itens[i][campo] = valor; }
-  function adicionarItemDl() {
-    config.downloads.itens.push({ nome: 'Novo item', link: 'https://' });
-    renderItensDl();
-  }
-  function removerItemDl(i) {
-    config.downloads.itens.splice(i, 1); renderItensDl();
-  }
+  function adicionarItemDl() { config.downloads.itens.push({ nome: 'Novo item', link: 'https://' }); renderItensDl(); }
+  function removerItemDl(i) { config.downloads.itens.splice(i, 1); renderItensDl(); }
 
   async function salvar() {
     config.marca = document.getElementById('marca').value;
@@ -353,7 +561,7 @@
         body: JSON.stringify(config)
       });
       if (!res.ok) throw new Error();
-      toast('Salvo com sucesso!');
+      toast('Salvo!');
     } catch { toast('Erro ao salvar', true); }
   }
 
@@ -375,7 +583,7 @@
           config = JSON.parse(ev.target.result);
           if (!config.downloads) config.downloads = { titulo: '📦 Downloads', subtitulo: '', etapas: [], itens: [] };
           render();
-          toast('Importado! Clique em Salvar pra publicar.');
+          toast('Importado! Clique em Salvar.');
         } catch { toast('JSON inválido', true); }
       };
       reader.readAsText(e.target.files[0]);
@@ -389,7 +597,7 @@
     const t = document.getElementById('toast');
     t.textContent = msg;
     t.className = 'toast show' + (erro ? ' erro' : '');
-    setTimeout(() => t.className = 'toast', 2000);
+    setTimeout(() => t.className = 'toast', 2500);
   }
 
   const senhaSalva = sessionStorage.getItem('admin_senha');
