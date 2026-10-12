@@ -23,7 +23,6 @@
     background: var(--preto);
     color: #fff;
     min-height: 100vh;
-    padding: 0;
     background-image:
       radial-gradient(circle at 50% 0%, rgba(225, 29, 42, 0.15) 0%, transparent 50%),
       linear-gradient(rgba(225, 29, 42, 0.04) 1px, transparent 1px),
@@ -31,19 +30,13 @@
     background-size: 100% 100%, 40px 40px, 40px 40px;
   }
 
-  /* ===== HEADER ===== */
   .header {
     background: rgba(10,10,10,.9);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(225, 29, 42, 0.25);
     padding: 14px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    position: sticky;
-    top: 0;
-    z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; position: sticky; top: 0; z-index: 50;
   }
   .logo {
     display: flex; align-items: center; gap: 10px;
@@ -73,18 +66,15 @@
   }
   .tab.active {
     background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
-    color: #fff;
-    box-shadow: 0 0 20px rgba(225, 29, 42, 0.5);
+    color: #fff; box-shadow: 0 0 20px rgba(225, 29, 42, 0.5);
   }
   .tab:not(.active):hover { color: #ccc; }
 
-  /* ===== CONTAINER ===== */
   .container {
     max-width: 720px; margin: 0 auto;
     padding: 40px 20px 60px;
   }
 
-  /* ===== HERO ===== */
   .hero { text-align: center; margin-bottom: 32px; }
   .hero-badge {
     display: inline-block; padding: 6px 16px;
@@ -114,7 +104,6 @@
     max-width: 420px; margin: 0 auto;
   }
 
-  /* ===== CARD ===== */
   .card {
     background: var(--preto-card);
     border: 1px solid var(--preto-borda);
@@ -143,7 +132,6 @@
     box-shadow: 0 0 12px var(--vermelho);
   }
 
-  /* ===== STEP ===== */
   .step {
     display: flex; align-items: center; gap: 14px;
     padding: 16px; border-radius: 12px;
@@ -151,7 +139,6 @@
     border: 1px solid var(--preto-borda);
     margin-bottom: 10px; transition: .25s;
     cursor: pointer; user-select: none;
-    position: relative;
   }
   .step.locked { opacity: .35; pointer-events: none; }
   .step.done {
@@ -163,14 +150,14 @@
     background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
     color: #fff; box-shadow: 0 0 12px var(--vermelho);
   }
-  .step.timer {
-    background: linear-gradient(135deg, rgba(225, 29, 42, 0.08), rgba(225, 29, 42, 0.02));
-    border-color: var(--vermelho-escuro);
-    cursor: wait;
-  }
-  .step:not(.done):not(.locked):not(.timer):hover {
+  .step:not(.done):not(.locked):hover {
     border-color: var(--vermelho-escuro);
     background: #14141a;
+  }
+  .step.aguardando {
+    opacity: .6;
+    cursor: wait;
+    border-color: var(--vermelho-escuro);
   }
   .check {
     width: 32px; height: 32px; border-radius: 8px;
@@ -183,45 +170,6 @@
   .step-txt { font-size: 14px; line-height: 1.4; flex: 1; }
   .step-txt b { color: var(--vermelho-brilho); font-weight: 800; }
 
-  /* Timer circular */
-  .timer-box {
-    display: flex; align-items: center; gap: 8px;
-    padding: 6px 12px; border-radius: 8px;
-    background: rgba(225, 29, 42, 0.12);
-    border: 1px solid var(--vermelho-escuro);
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 800; font-size: 14px;
-    color: var(--vermelho-brilho);
-    flex-shrink: 0;
-  }
-  .timer-box .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--vermelho-brilho);
-    animation: pulse 1s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: .4; transform: scale(.8); }
-  }
-
-  /* ===== AVISO ===== */
-  .aviso-box {
-    padding: 14px 16px; border-radius: 12px;
-    background: rgba(225, 29, 42, 0.08);
-    border: 1px solid rgba(225, 29, 42, 0.4);
-    color: #fbb;
-    font-size: 13px; margin-bottom: 16px;
-    display: none; align-items: center; gap: 10px;
-    animation: shake .4s;
-  }
-  .aviso-box.show { display: flex; }
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-  }
-
-  /* ===== BOTÃO ===== */
   .btn {
     width: 100%; padding: 16px; border-radius: 12px; border: none;
     background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
@@ -241,7 +189,6 @@
     box-shadow: 0 0 40px rgba(225, 29, 42, 0.6);
   }
 
-  /* ===== RESULTADO ===== */
   .resultado {
     margin-top: 20px; padding: 22px; border-radius: 14px;
     background: linear-gradient(135deg, rgba(225, 29, 42, 0.12), rgba(225, 29, 42, 0.02));
@@ -277,7 +224,6 @@
   }
   .copy:hover { filter: brightness(1.15); }
 
-  /* ===== DOWNLOADS ===== */
   .download-btn {
     display: block;
     background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
@@ -294,7 +240,6 @@
     box-shadow: 0 0 30px rgba(225, 29, 42, 0.6);
   }
 
-  /* ===== AVISO JÁ RESGATOU ===== */
   .aviso-resgatou {
     padding: 24px 20px; border-radius: 12px;
     background: rgba(225, 29, 42, 0.08);
@@ -322,13 +267,73 @@
   }
   .footer span { color: var(--vermelho-brilho); font-weight: 700; }
 
+  /* ===== MODAL DE AVISO ===== */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 1000; padding: 20px;
+    animation: fadeIn .2s ease;
+  }
+  .modal-overlay.show { display: flex; }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .modal {
+    background: var(--preto-card);
+    border: 1px solid var(--vermelho);
+    border-radius: 18px;
+    padding: 32px 28px;
+    max-width: 400px; width: 100%;
+    text-align: center;
+    box-shadow: 0 0 60px rgba(225, 29, 42, 0.4);
+    animation: slideUp .3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal-icon {
+    width: 64px; height: 64px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(225, 29, 42, 0.2), rgba(225, 29, 42, 0.05));
+    border: 2px solid var(--vermelho);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 0 30px rgba(225, 29, 42, 0.3);
+  }
+  .modal h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 22px; font-weight: 800;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--vermelho-brilho);
+    margin-bottom: 12px;
+  }
+  .modal p {
+    color: #bbb; font-size: 14px;
+    line-height: 1.6; margin-bottom: 22px;
+  }
+  .modal button {
+    width: 100%; padding: 14px;
+    border-radius: 10px; border: none;
+    background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
+    color: #fff; font-weight: 800;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px; letter-spacing: 1.5px;
+    text-transform: uppercase; cursor: pointer;
+    transition: .2s;
+  }
+  .modal button:hover { filter: brightness(1.15); }
+
   @media (max-width: 640px) {
     .header { padding: 12px 16px; flex-wrap: wrap; }
     .tabs { width: 100%; order: 3; }
     .container { padding: 24px 14px 40px; }
     .card { padding: 18px; }
-    .step { padding: 14px 12px; gap: 10px; }
-    .step-txt { font-size: 13px; }
   }
 </style>
 </head>
@@ -352,8 +357,8 @@
 
   <div id="conteudo" style="display:none">
     <div class="hero">
-      <div class="hero-badge" id="heroBadge">DESTAQUES DA LOJA</div>
-      <h1 id="heroTitulo">Produtos Mais Vendidos</h1>
+      <div class="hero-badge" id="heroBadge">RESGATE DE KEYS</div>
+      <h1 id="heroTitulo">RESGATAR KEY</h1>
       <div class="linha"></div>
       <p id="heroSub">Complete as etapas pra liberar</p>
     </div>
@@ -364,28 +369,63 @@
 
 <div class="footer">QZZ <span>COMMUNITY</span> © 2026</div>
 
+<!-- MODAL DE AVISO -->
+<div class="modal-overlay" id="modalAviso">
+  <div class="modal">
+    <div class="modal-icon" id="modalIcon">⚠️</div>
+    <h3 id="modalTitulo">Você não deixou o LIKE</h3>
+    <p id="modalMensagem">Volte ao vídeo, deixe o like e espere alguns segundos antes de voltar aqui.</p>
+    <button onclick="fecharModal()">Entendi</button>
+  </div>
+</div>
+
 <script>
   // ==================== CONFIG ====================
-  const TIMER_SEGUNDOS = 30;
+  const TEMPO_MINIMO = 30; // segundos mínimos na outra aba
   const STORAGE_KEY = 'qzz_progresso_v1';
 
   // ==================== ESTADO ====================
   let config = null;
   let abaAtual = 'keys';
-  let timerAtivo = null;
+  let timers = {}; // { tipo: { etapa: { inicio, timeout, concluida } } }
+  let saidaTimestamp = null; // quando a pessoa saiu da aba (visibilitychange)
 
-  // Estado do progresso (persistido no localStorage)
   const estado = {
-    keys: { atual: 1, jaResgatou: false, timers: {} },
-    downloads: { atual: 1, jaResgatou: false, timers: {} }
+    keys: { atual: 1, jaResgatou: false },
+    downloads: { atual: 1, jaResgatou: false }
   };
+
+  // ==================== MENSAGENS POR ETAPA ====================
+  function gerarMensagem(textoEtapa) {
+    const t = (textoEtapa || '').toUpperCase();
+    if (t.includes('LIKE')) return { icone: '👍', titulo: 'Você não deixou o LIKE', msg: 'Volte ao vídeo, deixe o like e espere alguns segundos antes de voltar aqui.' };
+    if (t.includes('INSCREV')) return { icone: '🔔', titulo: 'Você não se inscreveu', msg: 'Volte ao canal, clique em se inscrever e espere alguns segundos antes de voltar aqui.' };
+    if (t.includes('COMENT')) return { icone: '💬', titulo: 'Você não comentou', msg: 'Volte ao vídeo, deixe um comentário positivo e espere alguns segundos antes de voltar.' };
+    if (t.includes('WHATSAPP') || t.includes('GRUPO')) return { icone: '📱', titulo: 'Você não entrou no grupo', msg: 'Entre no grupo do WhatsApp e espere alguns segundos antes de voltar aqui.' };
+    if (t.includes('DISCORD')) return { icone: '🎮', titulo: 'Você não entrou no Discord', msg: 'Entre no servidor do Discord e espere alguns segundos antes de voltar aqui.' };
+    if (t.includes('INSTAGRAM')) return { icone: '📸', titulo: 'Você não seguiu no Instagram', msg: 'Siga o perfil no Instagram e espere alguns segundos antes de voltar aqui.' };
+    if (t.includes('TIKTOK')) return { icone: '🎵', titulo: 'Você não seguiu no TikTok', msg: 'Siga o perfil no TikTok e espere alguns segundos antes de voltar aqui.' };
+    return { icone: '⚠️', titulo: 'Você não completou a etapa', msg: 'Volte, complete a etapa e espere alguns segundos antes de retornar.' };
+  }
+
+  function mostrarModal(textoEtapa) {
+    const info = gerarMensagem(textoEtapa);
+    document.getElementById('modalIcon').textContent = info.icone;
+    document.getElementById('modalTitulo').textContent = info.titulo;
+    document.getElementById('modalMensagem').textContent = info.msg;
+    document.getElementById('modalAviso').classList.add('show');
+  }
+
+  function fecharModal() {
+    document.getElementById('modalAviso').classList.remove('show');
+  }
 
   // ==================== LOCALSTORAGE ====================
   function salvarProgresso() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        keys: { atual: estado.keys.atual, timers: estado.keys.timers },
-        downloads: { atual: estado.downloads.atual, timers: estado.downloads.timers },
+        keys: { atual: estado.keys.atual },
+        downloads: { atual: estado.downloads.atual },
         ts: Date.now()
       }));
     } catch(e) {}
@@ -396,19 +436,12 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
       const dados = JSON.parse(raw);
-      // Expira em 24h
       if (Date.now() - (dados.ts || 0) > 24 * 60 * 60 * 1000) {
         localStorage.removeItem(STORAGE_KEY);
         return;
       }
-      if (dados.keys) {
-        estado.keys.atual = dados.keys.atual || 1;
-        estado.keys.timers = dados.keys.timers || {};
-      }
-      if (dados.downloads) {
-        estado.downloads.atual = dados.downloads.atual || 1;
-        estado.downloads.timers = dados.downloads.timers || {};
-      }
+      if (dados.keys) estado.keys.atual = dados.keys.atual || 1;
+      if (dados.downloads) estado.downloads.atual = dados.downloads.atual || 1;
     } catch(e) {}
   }
 
@@ -435,9 +468,8 @@
     }
   }
 
-  // ==================== NAVEGAÇÃO DE ABAS ====================
+  // ==================== NAVEGAÇÃO ====================
   function trocarAba(aba) {
-    pararTimer();
     abaAtual = aba;
     document.getElementById('tabKeys').classList.toggle('active', aba === 'keys');
     document.getElementById('tabDownloads').classList.toggle('active', aba === 'downloads');
@@ -451,7 +483,6 @@
     const heroTitulo = document.getElementById('heroTitulo');
     const heroSub = document.getElementById('heroSub');
 
-    // ===== ABA KEYS =====
     if (abaAtual === 'keys') {
       heroBadge.textContent = 'RESGATE DE KEYS';
       heroTitulo.textContent = 'RESGATAR KEY';
@@ -469,12 +500,7 @@
 
       const atual = estado.keys.atual;
       const total = config.etapas.length;
-      const aviso = atual > 1 && estado.keys.timers[`etapa_${atual}`] && !estado.keys.timers[`feito_${atual}`]
-        ? `⚠️ Você não completou a etapa ${atual} ainda. Refaça pra continuar.`
-        : '';
-
       card.innerHTML = `
-        ${aviso ? `<div class="aviso-box show">${aviso}</div>` : ''}
         <div class="progresso">
           <span>Progresso</span>
           <span class="num">${Math.min(atual, total)} / ${total}</span>
@@ -490,7 +516,6 @@
       `;
       renderEtapas(config.etapas, 'keys');
 
-    // ===== ABA DOWNLOADS =====
     } else {
       const d = config.downloads || { titulo: '📦 Downloads', subtitulo: '', etapas: [], itens: [] };
       heroBadge.textContent = 'ÁREA DE DOWNLOADS';
@@ -510,12 +535,7 @@
 
       const atual = estado.downloads.atual;
       const total = d.etapas.length;
-      const aviso = atual > 1 && estado.downloads.timers[`etapa_${atual}`] && !estado.downloads.timers[`feito_${atual}`]
-        ? `⚠️ Você não completou a etapa ${atual} ainda. Refaça pra continuar.`
-        : '';
-
       card.innerHTML = `
-        ${aviso ? `<div class="aviso-box show">${aviso}</div>` : ''}
         <div class="progresso">
           <span>Progresso</span>
           <span class="num">${Math.min(atual, total)} / ${total}</span>
@@ -542,88 +562,87 @@
       const stepNum = i + 1;
       const jaFeito = estado[tipo].atual > stepNum;
       const liberado = estado[tipo].atual === stepNum;
-      const temTimerAtivo = estado[tipo].timers[`etapa_${stepNum}`] && !estado[tipo].timers[`feito_${stepNum}`];
+      const aguardando = timers[tipo] && timers[tipo][stepNum] && !timers[tipo][stepNum].concluida;
 
       const div = document.createElement('div');
       div.className = 'step';
       if (jaFeito) div.classList.add('done');
       else if (!liberado) div.classList.add('locked');
-      else if (temTimerAtivo) div.classList.add('timer');
-
-      let extra = '';
-      if (temTimerAtivo) {
-        const restante = Math.max(0, TIMER_SEGUNDOS - Math.floor((Date.now() - estado[tipo].timers[`etapa_${stepNum}`]) / 1000));
-        extra = `<div class="timer-box"><span class="dot"></span><span id="timer_${tipo}_${stepNum}">${restante}s</span></div>`;
-      }
+      else if (aguardando) div.classList.add('aguardando');
 
       div.innerHTML = `
         <div class="check">${jaFeito ? '✓' : stepNum}</div>
         <div class="step-txt">${et.texto}</div>
-        ${extra}
       `;
 
-      if (!jaFeito && liberado && !temTimerAtivo) {
-        div.onclick = () => iniciarEtapa(et.link, stepNum, tipo);
+      if (!jaFeito && liberado && !aguardando) {
+        div.onclick = () => clicarEtapa(et.link, stepNum, tipo, et.texto);
       }
       box.appendChild(div);
     });
 
-    // Se tem timer ativo, retoma
-    const atual = estado[tipo].atual;
-    if (estado[tipo].timers[`etapa_${atual}`] && !estado[tipo].timers[`feito_${atual}`]) {
-      retomarTimer(atual, tipo);
-    } else {
-      atualizarBotao(tipo);
-    }
+    atualizarBotao(tipo);
   }
 
-  // ==================== TIMER ====================
-  function iniciarEtapa(link, stepNum, tipo) {
-    // Abre o link
+  // ==================== CLIQUE NA ETAPA ====================
+  function clicarEtapa(link, stepNum, tipo, textoEtapa) {
+    // Abre o link em nova aba
     window.open(link, '_blank');
 
-    // Marca o timestamp de início
-    estado[tipo].timers[`etapa_${stepNum}`] = Date.now();
-    salvarProgresso();
+    // Registra que começou a etapa
+    if (!timers[tipo]) timers[tipo] = {};
+    const agora = Date.now();
+    timers[tipo][stepNum] = {
+      inicio: agora,
+      concluida: false,
+      textoEtapa: textoEtapa
+    };
+
+    // Agenda conclusão após TEMPO_MINIMO
+    timers[tipo][stepNum].timeout = setTimeout(() => {
+      if (timers[tipo] && timers[tipo][stepNum]) {
+        timers[tipo][stepNum].concluida = true;
+        concluirEtapa(stepNum, tipo);
+      }
+    }, TEMPO_MINIMO * 1000);
+
     render();
   }
 
-  function retomarTimer(stepNum, tipo) {
-    pararTimer();
-    const inicio = estado[tipo].timers[`etapa_${stepNum}`];
-    if (!inicio) return;
-
-    const tick = () => {
-      const decorrido = Math.floor((Date.now() - inicio) / 1000);
-      const restante = TIMER_SEGUNDOS - decorrido;
-
-      const el = document.getElementById(`timer_${tipo}_${stepNum}`);
-      if (el) el.textContent = Math.max(0, restante) + 's';
-
-      if (restante <= 0) {
-        // Conclui a etapa
-        concluirEtapa(stepNum, tipo);
-      }
-    };
-
-    tick(); // executa já
-    timerAtivo = setInterval(tick, 500);
-  }
-
-  function pararTimer() {
-    if (timerAtivo) {
-      clearInterval(timerAtivo);
-      timerAtivo = null;
-    }
-  }
-
   function concluirEtapa(stepNum, tipo) {
-    pararTimer();
-    estado[tipo].timers[`feito_${stepNum}`] = true;
     estado[tipo].atual = stepNum + 1;
     salvarProgresso();
     render();
   }
+
+  // ==================== DETECÇÃO DE VOLTA ====================
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      // Pessoa saiu da aba — guarda o timestamp
+      saidaTimestamp = Date.now();
+    } else if (document.visibilityState === 'visible') {
+      // Pessoa voltou — verifica se completou o tempo
+      const tipo = abaAtual;
+      const stepNum = estado[tipo].atual;
+
+      if (timers[tipo] && timers[tipo][stepNum]) {
+        const info = timers[tipo][stepNum];
+        const decorrido = (Date.now() - info.inicio) / 1000;
+
+        if (decorrido < TEMPO_MINIMO && !info.concluida) {
+          // Voltou rápido demais — mostra modal
+          mostrarModal(info.textoEtapa);
+
+          // Cancela o timeout anterior
+          if (info.timeout) clearTimeout(info.timeout);
+          // Limpa o timer (não avança a etapa)
+          delete timers[tipo][stepNum];
+          render();
+        }
+        // Se já completou, o timeout já vai concluir — não faz nada
+      }
+    }
+  });
 
   // ==================== BOTÃO ====================
   function atualizarBotao(tipo) {
@@ -700,15 +719,6 @@
     e.target.textContent = 'Copiado!';
     setTimeout(() => e.target.textContent = 'Copiar Key', 1500);
   }
-
-  // ==================== AVISO AO VOLTAR ====================
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-      // Quando a pessoa volta pra aba, re-renderiza pra atualizar timers
-      // e mostrar o aviso se estiver no meio de uma etapa
-      if (abaAtual) render();
-    }
-  });
 
   // ==================== INICIA ====================
   carregar();
