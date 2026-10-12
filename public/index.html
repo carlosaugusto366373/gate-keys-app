@@ -150,14 +150,23 @@
     background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
     color: #fff; box-shadow: 0 0 12px var(--vermelho);
   }
-  .step:not(.done):not(.locked):hover {
+  .step:not(.done):not(.locked):not(.aguardando):hover {
     border-color: var(--vermelho-escuro);
     background: #14141a;
   }
   .step.aguardando {
-    opacity: .6;
-    cursor: wait;
+    background: linear-gradient(135deg, rgba(225, 29, 42, 0.06), rgba(225, 29, 42, 0.02));
     border-color: var(--vermelho-escuro);
+    cursor: wait;
+  }
+  .step.aguardando .check {
+    background: linear-gradient(135deg, var(--vermelho-escuro), #5a0a10);
+    color: #fff;
+    animation: pulsa 1.5s infinite;
+  }
+  @keyframes pulsa {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
   }
   .check {
     width: 32px; height: 32px; border-radius: 8px;
@@ -169,6 +178,19 @@
   }
   .step-txt { font-size: 14px; line-height: 1.4; flex: 1; }
   .step-txt b { color: var(--vermelho-brilho); font-weight: 800; }
+
+  .aguardando-tag {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px; font-weight: 800;
+    color: var(--vermelho-brilho);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: rgba(225, 29, 42, 0.15);
+    border: 1px solid var(--vermelho-escuro);
+    flex-shrink: 0;
+  }
 
   .btn {
     width: 100%; padding: 16px; border-radius: 12px; border: none;
@@ -267,7 +289,6 @@
   }
   .footer span { color: var(--vermelho-brilho); font-weight: 700; }
 
-  /* ===== MODAL DE AVISO ===== */
   .modal-overlay {
     position: fixed; inset: 0;
     background: rgba(0, 0, 0, 0.85);
@@ -339,7 +360,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
   <div class="logo">
     <div class="logo-badge">QZZ</div>
@@ -351,10 +371,8 @@
   </div>
 </header>
 
-<!-- CONTEÚDO -->
 <div class="container">
   <div id="loading" class="loading">Carregando...</div>
-
   <div id="conteudo" style="display:none">
     <div class="hero">
       <div class="hero-badge" id="heroBadge">RESGATE DE KEYS</div>
@@ -362,14 +380,12 @@
       <div class="linha"></div>
       <p id="heroSub">Complete as etapas pra liberar</p>
     </div>
-
     <div class="card" id="cardConteudo"></div>
   </div>
 </div>
 
 <div class="footer">QZZ <span>COMMUNITY</span> © 2026</div>
 
-<!-- MODAL DE AVISO -->
 <div class="modal-overlay" id="modalAviso">
   <div class="modal">
     <div class="modal-icon" id="modalIcon">⚠️</div>
@@ -381,21 +397,23 @@
 
 <script>
   // ==================== CONFIG ====================
-  const TEMPO_MINIMO = 30; // segundos mínimos na outra aba
-  const STORAGE_KEY = 'qzz_progresso_v1';
+  const TEMPO_MINIMO = 30; // segundos
+  const STORAGE_KEY = 'qzz_progresso_v2';
 
   // ==================== ESTADO ====================
   let config = null;
   let abaAtual = 'keys';
-  let timers = {}; // { tipo: { etapa: { inicio, timeout, concluida } } }
-  let saidaTimestamp = null; // quando a pessoa saiu da aba (visibilitychange)
+  let tickInterval = null;
+
+  // timers[tipo][etapa] = { inicio, concluida, textoEtapa, jaAvisou }
+  let timers = { keys: {}, downloads: {} };
 
   const estado = {
     keys: { atual: 1, jaResgatou: false },
     downloads: { atual: 1, jaResgatou: false }
   };
 
-  // ==================== MENSAGENS POR ETAPA ====================
+  // ==================== MENSAGENS ====================
   function gerarMensagem(textoEtapa) {
     const t = (textoEtapa || '').toUpperCase();
     if (t.includes('LIKE')) return { icone: '👍', titulo: 'Você não deixou o LIKE', msg: 'Volte ao vídeo, deixe o like e espere alguns segundos antes de voltar aqui.' };
@@ -420,7 +438,7 @@
     document.getElementById('modalAviso').classList.remove('show');
   }
 
-  // ==================== LOCALSTORAGE ====================
+  // ==================== PROGRESSO ====================
   function salvarProgresso() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
@@ -463,9 +481,37 @@
       document.getElementById('loading').style.display = 'none';
       document.getElementById('conteudo').style.display = 'block';
       render();
+      iniciarTicker();
     } catch (e) {
       document.getElementById('loading').textContent = '❌ Erro ao carregar. Recarregue.';
     }
+  }
+
+  // ==================== TICKER GLOBAL ====================
+  // Roda a cada 1s e verifica se algum timer já completou
+  function iniciarTicker() {
+    if (tickInterval) clearInterval(tickInterval);
+    tickInterval = setInterval(() => {
+      let mudou = false;
+      ['keys', 'downloads'].forEach(tipo => {
+        Object.keys(timers[tipo]).forEach(stepNum => {
+          const info = timers[tipo][stepNum];
+          if (!info.concluida) {
+            const decorrido = (Date.now() - info.inicio) / 1000;
+            if (decorrido >= TEMPO_MINIMO) {
+              info.concluida = true;
+              // Se essa é a etapa atual, avança
+              if (estado[tipo].atual === parseInt(stepNum)) {
+                estado[tipo].atual = parseInt(stepNum) + 1;
+                salvarProgresso();
+                mudou = true;
+              }
+            }
+          }
+        });
+      });
+      if (mudou) render();
+    }, 1000);
   }
 
   // ==================== NAVEGAÇÃO ====================
@@ -562,7 +608,8 @@
       const stepNum = i + 1;
       const jaFeito = estado[tipo].atual > stepNum;
       const liberado = estado[tipo].atual === stepNum;
-      const aguardando = timers[tipo] && timers[tipo][stepNum] && !timers[tipo][stepNum].concluida;
+      const info = timers[tipo][stepNum];
+      const aguardando = info && !info.concluida;
 
       const div = document.createElement('div');
       div.className = 'step';
@@ -570,9 +617,15 @@
       else if (!liberado) div.classList.add('locked');
       else if (aguardando) div.classList.add('aguardando');
 
+      let extra = '';
+      if (aguardando) {
+        extra = `<div class="aguardando-tag">⏳ Aguardando</div>`;
+      }
+
       div.innerHTML = `
-        <div class="check">${jaFeito ? '✓' : stepNum}</div>
+        <div class="check">${jaFeito ? '✓' : (aguardando ? '⏳' : stepNum)}</div>
         <div class="step-txt">${et.texto}</div>
+        ${extra}
       `;
 
       if (!jaFeito && liberado && !aguardando) {
@@ -586,61 +639,37 @@
 
   // ==================== CLIQUE NA ETAPA ====================
   function clicarEtapa(link, stepNum, tipo, textoEtapa) {
-    // Abre o link em nova aba
     window.open(link, '_blank');
-
-    // Registra que começou a etapa
-    if (!timers[tipo]) timers[tipo] = {};
-    const agora = Date.now();
     timers[tipo][stepNum] = {
-      inicio: agora,
+      inicio: Date.now(),
       concluida: false,
-      textoEtapa: textoEtapa
+      textoEtapa: textoEtapa,
+      jaAvisou: false
     };
-
-    // Agenda conclusão após TEMPO_MINIMO
-    timers[tipo][stepNum].timeout = setTimeout(() => {
-      if (timers[tipo] && timers[tipo][stepNum]) {
-        timers[tipo][stepNum].concluida = true;
-        concluirEtapa(stepNum, tipo);
-      }
-    }, TEMPO_MINIMO * 1000);
-
     render();
   }
 
-  function concluirEtapa(stepNum, tipo) {
-    estado[tipo].atual = stepNum + 1;
-    salvarProgresso();
-    render();
-  }
-
-  // ==================== DETECÇÃO DE VOLTA ====================
+  // ==================== VISIBILITY ====================
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') {
-      // Pessoa saiu da aba — guarda o timestamp
-      saidaTimestamp = Date.now();
-    } else if (document.visibilityState === 'visible') {
-      // Pessoa voltou — verifica se completou o tempo
+    if (document.visibilityState === 'visible') {
+      // Ao voltar, verifica se algum timer ativo ainda não passou do tempo
       const tipo = abaAtual;
       const stepNum = estado[tipo].atual;
+      const info = timers[tipo][stepNum];
 
-      if (timers[tipo] && timers[tipo][stepNum]) {
-        const info = timers[tipo][stepNum];
+      if (info && !info.concluida) {
         const decorrido = (Date.now() - info.inicio) / 1000;
-
-        if (decorrido < TEMPO_MINIMO && !info.concluida) {
+        if (decorrido < TEMPO_MINIMO) {
           // Voltou rápido demais — mostra modal
           mostrarModal(info.textoEtapa);
-
-          // Cancela o timeout anterior
-          if (info.timeout) clearTimeout(info.timeout);
-          // Limpa o timer (não avança a etapa)
-          delete timers[tipo][stepNum];
-          render();
+          // Marca que já avisou (não fica repetindo)
+          info.jaAvisou = true;
+          // Reinicia o timer (dá mais 30s pra pessoa)
+          info.inicio = Date.now();
         }
-        // Se já completou, o timeout já vai concluir — não faz nada
+        // Se decorrido >= TEMPO_MINIMO, o ticker já vai concluir
       }
+      render();
     }
   });
 
