@@ -3,157 +3,315 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resgatar Key</title>
+<title>QZZ Community</title>
 <style>
-  * { box-sizing: border-box; font-family: system-ui, sans-serif; }
+  * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
   body {
-    background: #0f0f13; color: #fff; min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    padding: 20px; margin: 0;
+    background: radial-gradient(circle at 20% 0%, #1a0b2e 0%, #0a0a0f 45%, #05050a 100%);
+    color: #fff; min-height: 100vh; padding: 24px 16px;
+    display: flex; align-items: flex-start; justify-content: center;
   }
+  .wrap { width: 100%; max-width: 520px; }
+
+  /* Header */
+  .brand {
+    text-align: center; margin-bottom: 24px;
+  }
+  .brand-logo {
+    display: inline-block;
+    font-size: 28px; font-weight: 900; letter-spacing: 1px;
+    background: linear-gradient(90deg, #a855f7, #ec4899, #f43f5e);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .brand-sub {
+    font-size: 12px; color: #7a7a8c; margin-top: 4px;
+    text-transform: uppercase; letter-spacing: 3px;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex; gap: 8px; background: #12121a;
+    padding: 6px; border-radius: 14px; border: 1px solid #23232e;
+    margin-bottom: 18px;
+  }
+  .tab {
+    flex: 1; padding: 12px; border-radius: 10px; border: none;
+    background: transparent; color: #888; font-weight: 700;
+    font-size: 14px; cursor: pointer; transition: .2s;
+  }
+  .tab.active {
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    color: #fff;
+  }
+  .tab:not(.active):hover { color: #ccc; }
+
+  /* Card */
   .card {
-    background: #1a1a22; border: 1px solid #2a2a35;
-    border-radius: 16px; padding: 28px; max-width: 480px; width: 100%;
-    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    background: #12121a; border: 1px solid #23232e;
+    border-radius: 18px; padding: 24px;
+    box-shadow: 0 20px 60px rgba(124,58,237,.12);
   }
-  h1 { font-size: 22px; margin: 0 0 6px; }
-  .sub { color: #888; font-size: 14px; margin-bottom: 22px; }
+  .card h2 { font-size: 20px; margin-bottom: 6px; }
+  .card .desc { color: #888; font-size: 14px; margin-bottom: 18px; }
+  .progresso {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: #666; margin-bottom: 12px;
+  }
+  .progresso .num { color: #a855f7; font-weight: 800; }
+
+  /* Barra de progresso */
+  .barra {
+    width: 100%; height: 4px; background: #1e1e28;
+    border-radius: 4px; overflow: hidden; margin-bottom: 20px;
+  }
+  .barra-fill {
+    height: 100%; width: 0%; transition: width .4s ease;
+    background: linear-gradient(90deg, #7c3aed, #db2777);
+  }
+
+  /* Etapas */
   .step {
     display: flex; align-items: center; gap: 12px;
     padding: 14px; border-radius: 12px; margin-bottom: 10px;
-    background: #12121a; border: 1px solid #24242e;
+    background: #0e0e15; border: 1px solid #23232e;
     transition: .25s; cursor: pointer; user-select: none;
   }
-  .step.locked { opacity: .4; pointer-events: none; }
-  .step.done { background: #10261a; border-color: #1f6b3d; }
-  .step.done .check { background: #22c55e; color: #000; }
+  .step.locked { opacity: .35; pointer-events: none; }
+  .step.done {
+    background: linear-gradient(135deg, rgba(124,58,237,.15), rgba(219,39,119,.1));
+    border-color: #7c3aed;
+  }
+  .step.done .check {
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    color: #fff;
+  }
+  .step:hover:not(.done):not(.locked) { border-color: #4c2c8f; }
   .check {
-    width: 26px; height: 26px; border-radius: 50%;
-    background: #2a2a35; display: flex; align-items: center;
-    justify-content: center; font-size: 13px; font-weight: 700;
-    flex-shrink: 0;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #23232e; display: flex; align-items: center;
+    justify-content: center; font-size: 13px; font-weight: 800;
+    flex-shrink: 0; transition: .25s;
   }
   .step-txt { font-size: 14px; line-height: 1.4; }
   .step-txt b { color: #fff; }
+
+  /* Botão */
   .btn {
-    width: 100%; padding: 14px; border-radius: 12px; border: none;
-    background: #3b82f6; color: #fff; font-weight: 700; font-size: 15px;
-    cursor: pointer; margin-top: 14px; transition: .2s;
+    width: 100%; padding: 15px; border-radius: 12px; border: none;
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    color: #fff; font-weight: 800; font-size: 15px;
+    cursor: pointer; margin-top: 16px; transition: .2s;
+    letter-spacing: .3px;
   }
-  .btn:disabled { background: #2a2a35; color: #666; cursor: not-allowed; }
-  .btn:not(:disabled):hover { background: #2563eb; }
-  #keyBox {
-    margin-top: 16px; padding: 16px; border-radius: 12px;
-    background: #10261a; border: 1px solid #1f6b3d;
+  .btn:disabled {
+    background: #23232e; color: #555; cursor: not-allowed;
+  }
+  .btn:not(:disabled):hover {
+    filter: brightness(1.15);
+    box-shadow: 0 10px 30px rgba(219,39,119,.35);
+  }
+
+  /* Box de resultado */
+  .resultado {
+    margin-top: 18px; padding: 18px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(124,58,237,.15), rgba(219,39,119,.08));
+    border: 1px solid #7c3aed;
     text-align: center; display: none;
   }
-  #keyBox code {
+  .resultado code {
     display: block; font-size: 18px; letter-spacing: 2px;
-    margin: 10px 0; color: #4ade80; word-break: break-all;
-    font-family: monospace;
+    margin: 12px 0; color: #d8b4fe; word-break: break-all;
+    font-family: 'Courier New', monospace; font-weight: 700;
   }
   .copy {
-    background: #22c55e; color: #000; border: none; padding: 8px 16px;
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    color: #fff; border: none; padding: 10px 20px;
     border-radius: 8px; font-weight: 700; cursor: pointer;
+    font-size: 13px;
   }
-  .prog { color: #60a5fa; font-weight: 700; }
-  .loading { text-align: center; color: #666; padding: 40px 0; }
+  .copy:hover { filter: brightness(1.15); }
+  .download-btn {
+    display: inline-block; background: linear-gradient(135deg, #7c3aed, #db2777);
+    color: #fff; text-decoration: none; padding: 12px 24px;
+    border-radius: 10px; font-weight: 700; font-size: 14px;
+    margin-top: 8px;
+  }
+  .download-btn:hover { filter: brightness(1.15); }
+
+  .loading { text-align: center; color: #666; padding: 60px 0; }
+  .aviso { font-size: 12px; color: #555; margin-top: 14px; text-align: center; }
+
+  /* Footer */
+  .footer {
+    text-align: center; margin-top: 20px;
+    font-size: 12px; color: #444;
+  }
 </style>
 </head>
 <body>
-<div class="card">
+<div class="wrap">
+  <div class="brand">
+    <div class="brand-logo">QZZ COMMUNITY</div>
+    <div class="brand-sub">Downloads & Keys</div>
+  </div>
+
   <div id="loading" class="loading">Carregando...</div>
 
   <div id="conteudo" style="display:none">
-    <h1 id="titulo"></h1>
-    <p class="sub" id="subtitulo"></p>
-    <p class="sub">Progresso: <span class="prog" id="prog">1/1</span></p>
-
-    <div id="etapasBox"></div>
-
-    <button class="btn" id="btnKey" disabled>🔒 Complete as etapas acima</button>
-
-    <div id="keyBox">
-      <div>Sua key:</div>
-      <code id="keyTxt">XXXX-XXXX-XXXX-XXXX</code>
-      <button class="copy" onclick="copiarKey(event)">Copiar</button>
+    <div class="tabs">
+      <button class="tab active" id="tabKeys" onclick="trocarAba('keys')">🔑 Keys</button>
+      <button class="tab" id="tabDownloads" onclick="trocarAba('downloads')">📦 Downloads</button>
     </div>
+
+    <div class="card" id="cardConteudo"></div>
   </div>
+
+  <p class="footer">QZZ Community © 2026</p>
 </div>
 
 <script>
   let config = null;
-  let currentStep = 1;
-  let TOTAL = 0;
+  let abaAtual = 'keys';
+  const estado = { keys: { atual: 1 }, downloads: { atual: 1 } };
 
   async function carregar() {
     try {
       const res = await fetch('/api/config');
       config = await res.json();
-      TOTAL = config.etapas.length;
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('conteudo').style.display = 'block';
       render();
-    } catch (err) {
-      document.getElementById('loading').textContent = '❌ Erro ao carregar. Recarregue a página.';
+    } catch (e) {
+      document.getElementById('loading').textContent = '❌ Erro ao carregar. Recarregue.';
     }
   }
 
+  function trocarAba(aba) {
+    abaAtual = aba;
+    document.getElementById('tabKeys').classList.toggle('active', aba === 'keys');
+    document.getElementById('tabDownloads').classList.toggle('active', aba === 'downloads');
+    render();
+  }
+
   function render() {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('conteudo').style.display = 'block';
+    const card = document.getElementById('cardConteudo');
 
-    document.getElementById('titulo').innerHTML = config.titulo;
-    document.getElementById('subtitulo').textContent = config.subtitulo;
-    document.getElementById('prog').textContent = `1/${TOTAL}`;
+    if (abaAtual === 'keys') {
+      const atual = estado.keys.atual;
+      const total = config.etapas.length;
+      card.innerHTML = `
+        <h2>${config.titulo || '🔑 Resgatar Key'}</h2>
+        <p class="desc">${config.subtitulo || ''}</p>
+        <div class="progresso">
+          <span>Progresso</span>
+          <span class="num">${Math.min(atual, total)}/${total}</span>
+        </div>
+        <div class="barra"><div class="barra-fill" id="barraKeys" style="width:${((atual - 1) / total) * 100}%"></div></div>
+        <div id="etapasKeys"></div>
+        <button class="btn" id="btnKeys" disabled>🔒 Complete as etapas acima</button>
+        <div class="resultado" id="resultadoKeys">
+          <div>Sua key:</div>
+          <code id="keyTxt">XXXX-XXXX-XXXX-XXXX</code>
+          <button class="copy" onclick="copiar('keyTxt', event)">Copiar</button>
+        </div>
+      `;
+      renderEtapas('etapasKeys', config.etapas, 'keys');
+      verificarBotao('keys');
+    } else {
+      const d = config.downloads || { titulo: '📦 Downloads', subtitulo: '', etapas: [], itens: [] };
+      const atual = estado.downloads.atual;
+      const total = d.etapas.length;
+      card.innerHTML = `
+        <h2>${d.titulo}</h2>
+        <p class="desc">${d.subtitulo}</p>
+        <div class="progresso">
+          <span>Progresso</span>
+          <span class="num">${Math.min(atual, total)}/${total}</span>
+        </div>
+        <div class="barra"><div class="barra-fill" id="barraDownloads" style="width:${((atual - 1) / total) * 100}%"></div></div>
+        <div id="etapasDownloads"></div>
+        <button class="btn" id="btnDownloads" disabled>🔒 Complete as etapas acima</button>
+        <div class="resultado" id="resultadoDownloads"></div>
+      `;
+      renderEtapas('etapasDownloads', d.etapas, 'downloads');
+      verificarBotao('downloads');
+    }
+  }
 
-    const box = document.getElementById('etapasBox');
+  function renderEtapas(containerId, etapas, tipo) {
+    const box = document.getElementById(containerId);
     box.innerHTML = '';
-    config.etapas.forEach((et, i) => {
+    etapas.forEach((et, i) => {
       const div = document.createElement('div');
-      div.className = 'step' + (i === 0 ? '' : ' locked');
-      div.dataset.step = i + 1;
+      const stepNum = i + 1;
+      const jaFeito = estado[tipo].atual > stepNum;
+      const liberado = estado[tipo].atual === stepNum;
+      div.className = 'step' + (jaFeito ? ' done' : (liberado ? '' : ' locked'));
       div.innerHTML = `
-        <div class="check">${i + 1}</div>
+        <div class="check">${jaFeito ? '✓' : stepNum}</div>
         <div class="step-txt">${et.texto}</div>
       `;
-      div.onclick = () => openLink(div, et.link);
+      div.onclick = () => clicarEtapa(et.link, stepNum, tipo);
       box.appendChild(div);
     });
   }
 
-  function openLink(el, url) {
-    window.open(url, '_blank');
-    el.classList.add('done');
-    el.querySelector('.check').textContent = '✓';
+  function clicarEtapa(link, stepNum, tipo) {
+    if (estado[tipo].atual !== stepNum) return;
+    window.open(link, '_blank');
+    estado[tipo].atual++;
+    render();
+  }
 
-    currentStep++;
-    document.getElementById('prog').textContent =
-      `${Math.min(currentStep, TOTAL)}/${TOTAL}`;
-
-    const next = document.querySelector(`.step[data-step="${currentStep}"]`);
-    if (next) next.classList.remove('locked');
-
-    if (currentStep > TOTAL) {
-      const btn = document.getElementById('btnKey');
-      btn.disabled = false;
-      btn.textContent = config.mensagemFinal || '🎁 Resgatar minha key';
+  function verificarBotao(tipo) {
+    if (tipo === 'keys') {
+      const total = config.etapas.length;
+      const btn = document.getElementById('btnKeys');
+      if (estado.keys.atual > total) {
+        btn.disabled = false;
+        btn.textContent = config.mensagemFinal || '🎁 Resgatar minha key';
+      }
+    } else {
+      const d = config.downloads;
+      if (!d || !d.etapas) return;
+      const total = d.etapas.length;
+      const btn = document.getElementById('btnDownloads');
+      if (estado.downloads.atual > total) {
+        btn.disabled = false;
+        btn.textContent = '🎁 Liberar downloads';
+      }
     }
   }
 
-  document.getElementById('btnKey').addEventListener('click', () => {
-    const keys = config.keys && config.keys.length
-      ? config.keys
-      : ['SEM-KEYS-CADASTRADAS'];
-    const key = keys[Math.floor(Math.random() * keys.length)];
-    document.getElementById('keyTxt').textContent = key;
-    document.getElementById('keyBox').style.display = 'block';
-
-    const btn = document.getElementById('btnKey');
-    btn.disabled = true;
-    btn.textContent = '✅ Key liberada';
+  document.addEventListener('click', (e) => {
+    if (e.target.id === 'btnKeys') {
+      const keys = config.keys && config.keys.length ? config.keys : ['SEM-KEYS'];
+      const key = keys[Math.floor(Math.random() * keys.length)];
+      document.getElementById('keyTxt').textContent = key;
+      document.getElementById('resultadoKeys').style.display = 'block';
+      e.target.disabled = true;
+      e.target.textContent = '✅ Key liberada';
+    }
+    if (e.target.id === 'btnDownloads') {
+      const itens = (config.downloads && config.downloads.itens) || [];
+      const box = document.getElementById('resultadoDownloads');
+      if (!itens.length) {
+        box.innerHTML = '<div>Nenhum download cadastrado.</div>';
+      } else {
+        box.innerHTML = '<div style="margin-bottom:12px">Downloads liberados:</div>' +
+          itens.map(it =>
+            `<a class="download-btn" href="${it.link}" target="_blank" rel="noopener">⬇️ ${it.nome}</a>`
+          ).join('<br>');
+      }
+      box.style.display = 'block';
+      e.target.disabled = true;
+      e.target.textContent = '✅ Downloads liberados';
+    }
   });
 
-  function copiarKey(e) {
-    const txt = document.getElementById('keyTxt').textContent;
+  function copiar(id, e) {
+    const txt = document.getElementById(id).textContent;
     navigator.clipboard.writeText(txt);
     e.target.textContent = 'Copiado!';
     setTimeout(() => e.target.textContent = 'Copiar', 1500);
