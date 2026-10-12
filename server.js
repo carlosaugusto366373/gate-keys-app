@@ -6,6 +6,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ===== Conexão com o PostgreSQL do Render =====
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.DATABASE_URL?.includes('render.com')
@@ -16,6 +17,7 @@ const pool = new Pool({
 // Confia no proxy do Render pra pegar o IP real
 app.set('trust proxy', true);
 
+// ===== Config padrão (usado se o banco estiver vazio) =====
 const CONFIG_PADRAO = {
   marca: 'QZZ Community',
   titulo: '🔑 Resgatar Key',
@@ -43,6 +45,7 @@ const CONFIG_PADRAO = {
   }
 };
 
+// ===== Cria tabelas se não existirem =====
 async function initDB() {
   // Tabela de config
   await pool.query(`
@@ -63,31 +66,37 @@ async function initDB() {
       criado_em TIMESTAMP DEFAULT NOW()
     );
   `);
+
   await pool.query(`
     CREATE INDEX IF NOT EXISTS idx_resgates_ip_tipo ON resgates (ip, tipo);
   `);
 
+  // Verifica se já tem config
   const { rows } = await pool.query('SELECT * FROM config WHERE id = 1');
   if (rows.length === 0) {
     await pool.query('INSERT INTO config (id, dados) VALUES (1, $1)', [CONFIG_PADRAO]);
-    console.log('✅ Config padrão inserida.');
+    console.log('✅ Config padrão inserida no banco.');
   } else {
+    // Migração: adiciona campos novos sem perder dados antigos
     const atual = rows[0].dados;
     let precisa = false;
     if (!atual.marca) { atual.marca = CONFIG_PADRAO.marca; precisa = true; }
     if (!atual.downloads) { atual.downloads = CONFIG_PADRAO.downloads; precisa = true; }
+
     if (precisa) {
       await pool.query('UPDATE config SET dados = $1 WHERE id = 1', [atual]);
-      console.log('✅ Config migrada com novos campos.');
+      console.log('✅ Config migrada com novos campos (marca / downloads).');
     } else {
-      console.log('✅ Config já existe.');
+      console.log('✅ Config já existe no banco.');
     }
   }
 }
 
+// ===== Middlewares =====
 app.use(express.json({ limit: '2mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Autenticação do admin
 function authAdmin(req, res, next) {
   const senha = req.headers['x-admin-password'];
   if (!senha || senha !== process.env.ADMIN_PASSWORD) {
@@ -96,13 +105,18 @@ function authAdmin(req, res, next) {
   next();
 }
 
-// Pega IP real do cliente (funciona atrás do proxy do Render)
+// Pega o IP real do cliente (funciona atrás do proxy do Render)
 function pegarIP(req) {
   const fwd = req.headers['x-forwarded-for'];
   if (fwd) return fwd.split(',')[0].trim();
   return req.ip || req.connection?.remoteAddress || 'desconhecido';
 }
 
+// ============================================================
+// ===== ROTAS PÚBLICAS =====
+// ============================================================
+
+// Retorna config atual
 app.get('/api/config', async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT dados FROM config WHERE id = 1');
@@ -114,29 +128,20 @@ app.get('/api/config', async (req, res) => {
   }
 });
 
+// Login do admin
 app.post('/api/login', (req, res) => {
   const { senha } = req.body;
   if (senha === process.env.ADMIN_PASSWORD) res.json({ ok: true });
   else res.status(401).json({ ok: false, erro: 'Senha incorreta' });
 });
 
-app.post('/api/config', authAdmin, async (req, res) => {
-  try {
-    const nova = req.body;
-    if (!nova || typeof nova !== 'object') return res.status(400).json({ erro: 'Inválida' });
-    await pool.query('UPDATE config SET dados = $1, atualizado_em = NOW() WHERE id = 1', [nova]);
-    res.json({ ok: true });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ erro: 'Erro ao salvar' });
-  }
-});
-
-// Verifica se o IP já resgatou key ou download
+// Verifica se o IP já resgatou (keys ou downloads)
 app.get('/api/status/:tipo', async (req, res) => {
   try {
-    const tipo = req.params.tipo; // "keys" ou "downloads"
-    if (!['keys', 'downloads'].includes(tipo)) return res.status(400).json({ erro: 'Tipo inválido' });
+    const tipo = req.params.tipo;
+    if (!['keys', 'downloads'].includes(tipo)) {
+      return res.status(400).json({ erro: 'Tipo inválido' });
+    }
     const ip = pegarIP(req);
     const { rows } = await pool.query(
       'SELECT valor, criado_em FROM resgates WHERE ip = $1 AND tipo = $2 ORDER BY criado_em DESC LIMIT 1',
@@ -154,6 +159,8 @@ app.get('/api/status/:tipo', async (req, res) => {
 app.post('/api/resgatar/key', async (req, res) => {
   try {
     const ip = pegarIP(req);
+
+    // Verifica se já resgatou
     const { rows: ja } = await pool.query(
       'SELECT valor FROM resgates WHERE ip = $1 AND tipo = $2 LIMIT 1',
       [ip, 'keys']
@@ -162,12 +169,20 @@ app.post('/api/resgatar/key', async (req, res) => {
       return res.status(409).json({ erro: 'Você já resgatou uma key.', valor: ja[0].valor });
     }
 
+    // Pega lista de keys
     const { rows: cfg } = await pool.query('SELECT dados FROM config WHERE id = 1');
     const keys = (cfg[0]?.dados?.keys || []).filter(Boolean);
     if (!keys.length) return res.status(500).json({ erro: 'Nenhuma key cadastrada' });
 
+    // Sorteia
     const key = keys[Math.floor(Math.random() * keys.length)];
-    await pool.query('INSERT INTO resgates (ip, tipo, valor) VALUES ($1, $2, $3)', [ip, 'keys', key]);
+
+    // Registra
+    await pool.query(
+      'INSERT INTO resgates (ip, tipo, valor) VALUES ($1, $2, $3)',
+      [ip, 'keys', key]
+    );
+
     res.json({ ok: true, valor: key });
   } catch (err) {
     console.error(err);
@@ -179,22 +194,29 @@ app.post('/api/resgatar/key', async (req, res) => {
 app.post('/api/resgatar/downloads', async (req, res) => {
   try {
     const ip = pegarIP(req);
+
+    // Verifica se já liberou
     const { rows: ja } = await pool.query(
       'SELECT id FROM resgates WHERE ip = $1 AND tipo = $2 LIMIT 1',
       [ip, 'downloads']
     );
-    if (ja.length > 0) {
-      // Já liberou antes — devolve os links de novo (não é problema)
-      const { rows: cfg } = await pool.query('SELECT dados FROM config WHERE id = 1');
-      const itens = cfg[0]?.dados?.downloads?.itens || [];
-      return res.json({ ok: true, jaResgatou: true, itens });
-    }
 
+    // Pega itens
     const { rows: cfg } = await pool.query('SELECT dados FROM config WHERE id = 1');
     const itens = cfg[0]?.dados?.downloads?.itens || [];
     if (!itens.length) return res.status(500).json({ erro: 'Nenhum download cadastrado' });
 
-    await pool.query('INSERT INTO resgates (ip, tipo, valor) VALUES ($1, $2, $3)', [ip, 'downloads', 'ok']);
+    if (ja.length > 0) {
+      // Já liberou antes — devolve os links de novo
+      return res.json({ ok: true, jaResgatou: true, itens });
+    }
+
+    // Registra
+    await pool.query(
+      'INSERT INTO resgates (ip, tipo, valor) VALUES ($1, $2, $3)',
+      [ip, 'downloads', 'ok']
+    );
+
     res.json({ ok: true, itens });
   } catch (err) {
     console.error(err);
@@ -202,20 +224,91 @@ app.post('/api/resgatar/downloads', async (req, res) => {
   }
 });
 
-// Admin: ver quantos resgates já rolaram
-app.get('/api/admin/resgates', authAdmin, async (req, res) => {
+// ============================================================
+// ===== ROTAS ADMIN =====
+// ============================================================
+
+// Salvar config
+app.post('/api/config', authAdmin, async (req, res) => {
   try {
-    const { rows } = await pool.query(
-      'SELECT tipo, COUNT(*) as total FROM resgates GROUP BY tipo'
+    const nova = req.body;
+    if (!nova || typeof nova !== 'object') {
+      return res.status(400).json({ erro: 'Config inválida' });
+    }
+    await pool.query(
+      'UPDATE config SET dados = $1, atualizado_em = NOW() WHERE id = 1',
+      [nova]
     );
-    res.json(rows);
+    res.json({ ok: true });
   } catch (err) {
-    res.status(500).json({ erro: 'Erro' });
+    console.error(err);
+    res.status(500).json({ erro: 'Erro ao salvar' });
   }
 });
 
+// Lista todos os resgates + estatísticas
+app.get('/api/admin/resgates', authAdmin, async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      'SELECT id, ip, tipo, valor, criado_em FROM resgates ORDER BY criado_em DESC'
+    );
+    const stats = {
+      total: rows.length,
+      keys: rows.filter(r => r.tipo === 'keys').length,
+      downloads: rows.filter(r => r.tipo === 'downloads').length
+    };
+    res.json({ resgates: rows, stats });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ erro: 'Erro ao listar' });
+  }
+});
+
+// Reseta UM IP específico (apaga todos os resgates dele)
+app.delete('/api/admin/resgates/ip/:ip', authAdmin, async (req, res) => {
+  try {
+    const ip = decodeURIComponent(req.params.ip);
+    const result = await pool.query('DELETE FROM resgates WHERE ip = $1', [ip]);
+    res.json({ ok: true, deletados: result.rowCount });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ erro: 'Erro ao resetar IP' });
+  }
+});
+
+// Reseta TUDO (limpa todos os resgates)
+app.delete('/api/admin/resgates', authAdmin, async (req, res) => {
+  try {
+    const result = await pool.query('DELETE FROM resgates');
+    res.json({ ok: true, deletados: result.rowCount });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ erro: 'Erro ao limpar' });
+  }
+});
+
+// Reseta só de um tipo (keys ou downloads)
+app.delete('/api/admin/resgates/tipo/:tipo', authAdmin, async (req, res) => {
+  try {
+    const tipo = req.params.tipo;
+    if (!['keys', 'downloads'].includes(tipo)) {
+      return res.status(400).json({ erro: 'Tipo inválido' });
+    }
+    const result = await pool.query('DELETE FROM resgates WHERE tipo = $1', [tipo]);
+    res.json({ ok: true, deletados: result.rowCount });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ erro: 'Erro ao limpar tipo' });
+  }
+});
+
+// ===== Sobe o servidor =====
 initDB()
-  .then(() => app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`)))
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 Servidor rodando na porta ${PORT}`);
+    });
+  })
   .catch(err => {
     console.error('❌ Erro ao iniciar banco:', err);
     process.exit(1);
