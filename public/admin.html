@@ -3,311 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QZZ Community — Admin</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Painel Admin</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --vermelho: #e11d2a;
-    --vermelho-escuro: #8b0f18;
-    --vermelho-brilho: #ff2d3d;
-    --preto: #0a0a0a;
-    --preto-card: #121214;
-    --preto-borda: #26262b;
-    --cinza-txt: #8a8a92;
-  }
-  body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: var(--preto);
-    color: #fff;
-    min-height: 100vh;
-    padding: 24px 16px;
-    background-image:
-      radial-gradient(circle at 50% 0%, rgba(225, 29, 42, 0.12) 0%, transparent 50%),
-      linear-gradient(rgba(225, 29, 42, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(225, 29, 42, 0.04) 1px, transparent 1px);
-    background-size: 100% 100%, 40px 40px, 40px 40px;
-  }
-  .wrap { max-width: 900px; margin: 0 auto; }
-
-  .brand { text-align: center; margin-bottom: 24px; }
-  .brand-logo {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 28px; font-weight: 800; letter-spacing: 1px;
-    background: linear-gradient(90deg, #fff, var(--vermelho-brilho));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .brand-sub {
-    font-size: 11px; color: #7a7a8c; margin-top: 4px;
-    text-transform: uppercase; letter-spacing: 4px; font-weight: 700;
-  }
-
+  * { box-sizing: border-box; font-family: system-ui, sans-serif; }
+  body { background: #0f0f13; color: #fff; margin: 0; padding: 24px; }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: #888; font-size: 14px; margin-bottom: 24px; }
   .box {
-    background: var(--preto-card); border: 1px solid var(--preto-borda);
-    border-radius: 16px; padding: 20px; margin-bottom: 18px;
-    box-shadow: 0 0 40px rgba(225, 29, 42, 0.06);
+    background: #1a1a22; border: 1px solid #2a2a35;
+    border-radius: 14px; padding: 20px; margin-bottom: 18px;
   }
-  .box h2 {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 16px; margin-bottom: 14px; color: var(--vermelho-brilho);
-    display: flex; align-items: center; gap: 8px;
-    text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800;
-  }
-
-  label { display: block; font-size: 12px; color: var(--cinza-txt); margin-bottom: 6px; font-weight: 600; letter-spacing: .5px; }
+  .box h2 { font-size: 15px; margin: 0 0 14px; color: #60a5fa; }
+  label { display: block; font-size: 13px; color: #aaa; margin-bottom: 6px; }
   input, textarea {
-    width: 100%; padding: 10px 12px; border-radius: 10px;
-    border: 1px solid var(--preto-borda); background: #0e0e10; color: #fff;
+    width: 100%; padding: 10px 12px; border-radius: 8px;
+    border: 1px solid #2a2a35; background: #12121a; color: #fff;
     font-size: 14px; margin-bottom: 12px; font-family: inherit;
-    transition: .2s;
   }
-  input:focus, textarea:focus { outline: none; border-color: var(--vermelho); box-shadow: 0 0 0 3px rgba(225, 29, 42, 0.15); }
+  input:focus, textarea:focus { outline: none; border-color: #3b82f6; }
   textarea { min-height: 90px; resize: vertical; font-family: monospace; }
-
-  .row { display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: start; margin-bottom: 12px; }
+  .row { display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: start; }
   .row .num {
-    background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
-    border-radius: 8px; height: 36px; display: flex;
-    align-items: center; justify-content: center;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 800; color: #fff; font-size: 14px;
-    box-shadow: 0 0 12px rgba(225, 29, 42, 0.4);
+    background: #2a2a35; border-radius: 8px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: #888;
   }
-
   button {
     padding: 10px 18px; border-radius: 10px; border: none;
-    background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
-    color: #fff; font-weight: 800; cursor: pointer;
-    font-family: 'Rajdhani', sans-serif;
-    letter-spacing: 1px; text-transform: uppercase; font-size: 13px;
-    transition: .2s;
+    background: #3b82f6; color: #fff; font-weight: 700;
+    cursor: pointer; font-size: 14px;
   }
-  button:hover { filter: brightness(1.15); transform: translateY(-1px); }
-  button.ghost { background: #23232b; }
-  button.ghost:hover { background: #2e2e38; }
+  button:hover { background: #2563eb; }
   button.danger { background: #dc2626; }
   button.danger:hover { background: #b91c1c; }
-  button.mini { padding: 6px 10px; font-size: 11px; letter-spacing: .5px; }
-  button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-
+  button.ghost { background: #2a2a35; }
+  button.ghost:hover { background: #3a3a45; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
   .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-  .header-actions { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
-  small { color: #666; font-size: 11px; display: block; margin-top: -6px; margin-bottom: 12px; }
-
   .toast {
     position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-    background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
-    color: #fff; padding: 14px 24px; border-radius: 12px;
+    background: #22c55e; color: #000; padding: 12px 20px; border-radius: 10px;
     font-weight: 700; opacity: 0; transition: .3s; pointer-events: none;
-    box-shadow: 0 0 40px rgba(225, 29, 42, 0.5); z-index: 999;
-    font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; text-transform: uppercase;
   }
-  .toast.show { opacity: 1; bottom: 30px; }
-  .toast.erro { background: #dc2626; }
+  .toast.show { opacity: 1; }
+  .toast.erro { background: #dc2626; color: #fff; }
+  .header-actions { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  small { color: #666; font-size: 12px; display: block; margin-top: -6px; margin-bottom: 12px; }
 
-  #loginBox { max-width: 380px; margin: 60px auto; }
-  #loginBox .box { padding: 28px; }
-  #loginBox h1 { font-size: 20px; text-align: center; margin-bottom: 6px; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; }
-  #loginBox p { font-size: 13px; color: var(--cinza-txt); text-align: center; margin-bottom: 20px; }
+  /* Login */
+  #loginBox {
+    max-width: 360px; margin: 80px auto; text-align: center;
+  }
   #loginBox input { text-align: center; }
-
-  .item-download {
-    display: grid; grid-template-columns: 1fr 1fr 40px; gap: 8px;
-    margin-bottom: 8px; align-items: center;
-  }
-  .item-download input { margin-bottom: 0; }
-  .item-download button {
-    padding: 0; height: 38px; width: 40px;
-    display: flex; align-items: center; justify-content: center;
-    background: #dc2626;
-  }
-
-  /* ===== Painel de resgates ===== */
-  .stats {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px;
-  }
-  .stat {
-    background: #0e0e10; border: 1px solid var(--preto-borda);
-    border-radius: 12px; padding: 14px; text-align: center;
-  }
-  .stat .num {
-    font-family: 'Rajdhani', sans-serif; font-size: 26px; font-weight: 800;
-    color: var(--vermelho-brilho); line-height: 1;
-  }
-  .stat .lbl {
-    font-size: 10px; color: var(--cinza-txt); text-transform: uppercase;
-    letter-spacing: 1.5px; margin-top: 6px; font-weight: 700;
-  }
-
-  .resgate-lista {
-    max-height: 380px; overflow-y: auto;
-    border: 1px solid var(--preto-borda); border-radius: 12px;
-    background: #0a0a0c;
-  }
-  .resgate-lista::-webkit-scrollbar { width: 8px; }
-  .resgate-lista::-webkit-scrollbar-track { background: #0a0a0c; }
-  .resgate-lista::-webkit-scrollbar-thumb { background: var(--preto-borda); border-radius: 4px; }
-  .resgate-lista::-webkit-scrollbar-thumb:hover { background: var(--vermelho-escuro); }
-
-  .resgate-item {
-    display: grid;
-    grid-template-columns: 1fr auto auto auto;
-    gap: 10px; align-items: center;
-    padding: 12px 14px;
-    border-bottom: 1px solid var(--preto-borda);
-    font-size: 13px;
-  }
-  .resgate-item:last-child { border-bottom: none; }
-  .resgate-item:hover { background: rgba(225, 29, 42, 0.03); }
-
-  .resgate-tipo {
-    display: inline-block; padding: 3px 8px; border-radius: 6px;
-    font-size: 10px; font-weight: 800; letter-spacing: 1px;
-    text-transform: uppercase; font-family: 'Rajdhani', sans-serif;
-  }
-  .resgate-tipo.keys { background: rgba(225, 29, 42, 0.2); color: var(--vermelho-brilho); }
-  .resgate-tipo.downloads { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
-
-  .resgate-ip { font-family: 'Courier New', monospace; color: #ddd; font-size: 12px; }
-  .resgate-data { color: #555; font-size: 11px; }
-
-  .vazio {
-    padding: 40px 20px; text-align: center; color: #555; font-size: 13px;
-  }
-
-  .reset-ip-form {
-    display: grid; grid-template-columns: 1fr auto; gap: 8px;
-    margin-bottom: 12px;
-  }
-  .reset-ip-form input { margin-bottom: 0; }
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ===== TELA DE LOGIN ===== -->
 <div id="loginBox" style="display:none">
-  <div class="brand">
-    <div class="brand-logo">QZZ COMMUNITY</div>
-    <div class="brand-sub">Painel Admin</div>
-  </div>
-  <div class="box">
-    <h1>🔒 Acesso restrito</h1>
-    <p>Digite a senha de administrador</p>
-    <input type="password" id="senhaInput" placeholder="Senha" onkeydown="if(event.key==='Enter')fazerLogin()">
-    <button onclick="fazerLogin()" style="width:100%; padding:14px; font-size:14px;">Entrar</button>
-  </div>
+  <h1>🔒 Painel Admin</h1>
+  <p class="sub">Digite a senha de administrador</p>
+  <input type="password" id="senhaInput" placeholder="Senha" onkeydown="if(event.key==='Enter')fazerLogin()">
+  <button onclick="fazerLogin()" style="width:100%">Entrar</button>
 </div>
 
-<!-- PAINEL -->
+<!-- ===== PAINEL ===== -->
 <div class="wrap" id="painel" style="display:none">
-  <div class="brand">
-    <div class="brand-logo">QZZ COMMUNITY</div>
-    <div class="brand-sub">Painel Admin</div>
-  </div>
+  <h1>🎛️ Painel Admin</h1>
+  <p class="sub">Edite tudo aqui. As mudanças aparecem na hora pra todo mundo.</p>
 
   <div class="header-actions">
-    <button onclick="abrirPublico()" class="ghost">👁️ Ver página</button>
-    <button onclick="exportar()" class="ghost">⬇️ Exportar</button>
-    <button onclick="importar()" class="ghost">⬆️ Importar</button>
+    <button onclick="abrirPublico()" class="ghost">👁️ Ver página pública</button>
+    <button onclick="exportar()" class="ghost">⬇️ Exportar config</button>
+    <button onclick="importar()" class="ghost">⬆️ Importar config</button>
     <button onclick="sair()" class="danger">🚪 Sair</button>
   </div>
 
-  <!-- ===== PAINEL DE RESGATES ===== -->
-  <div class="box">
-    <h2>📊 Resgates</h2>
-
-    <div class="stats">
-      <div class="stat">
-        <div class="num" id="statTotal">0</div>
-        <div class="lbl">Total</div>
-      </div>
-      <div class="stat">
-        <div class="num" id="statKeys">0</div>
-        <div class="lbl">Keys</div>
-      </div>
-      <div class="stat">
-        <div class="num" id="statDownloads">0</div>
-        <div class="lbl">Downloads</div>
-      </div>
-    </div>
-
-    <div class="actions" style="margin-bottom:14px">
-      <button class="ghost" onclick="carregarResgates()">🔄 Atualizar</button>
-      <button class="danger" onclick="resetarTudo()">🧹 Limpar TUDO</button>
-      <button class="ghost" onclick="resetarTipo('keys')">🗑️ Só Keys</button>
-      <button class="ghost" onclick="resetarTipo('downloads')">🗑️ Só Downloads</button>
-    </div>
-
-    <label>Resetar IP específico</label>
-    <div class="reset-ip-form">
-      <input id="ipReset" placeholder="ex: 189.45.12.34">
-      <button onclick="resetarIP()">🗑️ Resetar IP</button>
-    </div>
-    <small>Quando você soltar novas keys no dia, clique em "🧹 Limpar TUDO" pra liberar geral de novo.</small>
-
-    <div class="resgate-lista" id="resgateLista">
-      <div class="vazio">Carregando...</div>
-    </div>
-  </div>
-
-  <!-- GERAL -->
   <div class="box">
     <h2>📝 Geral</h2>
-    <label>Nome da marca</label>
-    <input id="marca" placeholder="QZZ Community">
-    <label>Título da aba Keys</label>
-    <input id="titulo" placeholder="🔑 Resgatar Key">
-    <label>Subtítulo da aba Keys</label>
-    <input id="subtitulo" placeholder="Complete as etapas...">
-    <label>Mensagem final</label>
-    <input id="mensagemFinal" placeholder="✅ Tudo certo!">
+    <label>Título da página</label>
+    <input id="titulo" placeholder="⬇️ Download">
+    <label>Subtítulo</label>
+    <input id="subtitulo" placeholder="Complete as etapas na ordem...">
+    <label>Mensagem final (depois de completar)</label>
+    <input id="mensagemFinal" placeholder="✅ Tudo certo! Clique para baixar.">
   </div>
 
-  <!-- ETAPAS DAS KEYS -->
   <div class="box">
-    <h2>🔗 Etapas das Keys</h2>
+    <h2>⬇️ Download</h2>
+    <label>Link do arquivo para download</label>
+    <input id="downloadUrl" placeholder="https://seusite.com/arquivo.zip">
+    <small>Quando o usuário completar todas as etapas, esse link será aberto.</small>
+  </div>
+
+  <div class="box">
+    <h2>🔗 Etapas</h2>
     <div id="etapasContainer"></div>
     <div class="actions">
       <button onclick="adicionarEtapa()" class="ghost">➕ Adicionar etapa</button>
     </div>
   </div>
 
-  <!-- KEYS -->
-  <div class="box">
-    <h2>🔑 Keys (uma por linha)</h2>
-    <textarea id="keys" placeholder="A1B2-C3D4-E5F6-G7H8"></textarea>
-    <small>Uma key por linha. O sistema sorteia uma aleatória.</small>
-  </div>
-
-  <!-- DOWNLOADS -->
-  <div class="box">
-    <h2>📦 Downloads</h2>
-    <label>Título da aba Downloads</label>
-    <input id="dl-titulo" placeholder="📦 Downloads">
-    <label>Subtítulo</label>
-    <input id="dl-subtitulo" placeholder="Complete as etapas pra liberar.">
-  </div>
-
-  <div class="box">
-    <h2>🔗 Etapas dos Downloads</h2>
-    <div id="etapasDlContainer"></div>
-    <div class="actions">
-      <button onclick="adicionarEtapaDl()" class="ghost">➕ Adicionar etapa</button>
-    </div>
-  </div>
-
-  <div class="box">
-    <h2>⬇️ Itens para Download</h2>
-    <div id="itensDlContainer"></div>
-    <div class="actions">
-      <button onclick="adicionarItemDl()" class="ghost">➕ Adicionar item</button>
-    </div>
-  </div>
-
-  <button onclick="salvar()" style="width:100%; padding:16px; font-size:15px; margin-top:10px;">💾 Salvar tudo</button>
+  <button onclick="salvar()" style="width:100%; padding:14px; font-size:15px;">💾 Salvar tudo</button>
 </div>
 
 <div class="toast" id="toast">Salvo com sucesso!</div>
@@ -326,11 +124,13 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ senha })
       });
-      if (!res.ok) throw new Error();
+      if (!res.ok) throw new Error('Senha incorreta');
       senhaAdmin = senha;
       sessionStorage.setItem('admin_senha', senha);
       entrarNoPainel();
-    } catch { toast('Senha incorreta', true); }
+    } catch (e) {
+      toast('Senha incorreta', true);
+    }
   }
 
   function sair() {
@@ -338,135 +138,32 @@
     senhaAdmin = '';
     document.getElementById('painel').style.display = 'none';
     document.getElementById('loginBox').style.display = 'block';
+    document.getElementById('senhaInput').value = '';
   }
 
   async function entrarNoPainel() {
     document.getElementById('loginBox').style.display = 'none';
     document.getElementById('painel').style.display = 'block';
-    await Promise.all([carregarConfig(), carregarResgates()]);
+    await carregarConfig();
   }
 
-  // ===== RESGATES =====
-  async function carregarResgates() {
-    try {
-      const res = await fetch('/api/admin/resgates', {
-        headers: { 'x-admin-password': senhaAdmin }
-      });
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      renderResgates(data);
-    } catch {
-      document.getElementById('resgateLista').innerHTML =
-        '<div class="vazio">Erro ao carregar</div>';
-    }
-  }
-
-  function renderResgates(data) {
-    document.getElementById('statTotal').textContent = data.stats.total;
-    document.getElementById('statKeys').textContent = data.stats.keys;
-    document.getElementById('statDownloads').textContent = data.stats.downloads;
-
-    const box = document.getElementById('resgateLista');
-    if (!data.resgates.length) {
-      box.innerHTML = '<div class="vazio">Nenhum resgate ainda.</div>';
-      return;
-    }
-    box.innerHTML = data.resgates.map(r => `
-      <div class="resgate-item">
-        <div>
-          <span class="resgate-tipo ${r.tipo}">${r.tipo === 'keys' ? 'KEY' : 'DOWNLOAD'}</span>
-          <span class="resgate-ip" style="margin-left:8px">${r.ip}</span>
-        </div>
-        <div class="resgate-data">${formatarData(r.criado_em)}</div>
-        <div class="resgate-ip" style="font-size:11px;color:#666">${r.valor ? r.valor.substring(0, 16) : '—'}</div>
-        <button class="danger mini" onclick="resetarIPEspecifico('${r.ip}')">🗑️</button>
-      </div>
-    `).join('');
-  }
-
-  function formatarData(iso) {
-    if (!iso) return '—';
-    const d = new Date(iso);
-    const dia = String(d.getDate()).padStart(2, '0');
-    const mes = String(d.getMonth() + 1).padStart(2, '0');
-    const hora = String(d.getHours()).padStart(2, '0');
-    const min = String(d.getMinutes()).padStart(2, '0');
-    return `${dia}/${mes} ${hora}:${min}`;
-  }
-
-  async function resetarTudo() {
-    if (!confirm('Isso vai liberar TODOS os IPs pra resgatar de novo. Continuar?')) return;
-    try {
-      const res = await fetch('/api/admin/resgates', {
-        method: 'DELETE',
-        headers: { 'x-admin-password': senhaAdmin }
-      });
-      const data = await res.json();
-      toast(`${data.deletados} resgates apagados`);
-      carregarResgates();
-    } catch { toast('Erro ao limpar', true); }
-  }
-
-  async function resetarTipo(tipo) {
-    if (!confirm(`Apagar todos os resgates de ${tipo}?`)) return;
-    try {
-      const res = await fetch(`/api/admin/resgates/tipo/${tipo}`, {
-        method: 'DELETE',
-        headers: { 'x-admin-password': senhaAdmin }
-      });
-      const data = await res.json();
-      toast(`${data.deletados} apagados`);
-      carregarResgates();
-    } catch { toast('Erro', true); }
-  }
-
-  async function resetarIP() {
-    const ip = document.getElementById('ipReset').value.trim();
-    if (!ip) return toast('Digite um IP', true);
-    await resetarIPEspecifico(ip);
-    document.getElementById('ipReset').value = '';
-  }
-
-  async function resetarIPEspecifico(ip) {
-    if (!confirm(`Resetar IP ${ip}?`)) return;
-    try {
-      const res = await fetch(`/api/admin/resgates/ip/${encodeURIComponent(ip)}`, {
-        method: 'DELETE',
-        headers: { 'x-admin-password': senhaAdmin }
-      });
-      const data = await res.json();
-      toast(data.deletados ? `${data.deletados} apagados` : 'Nada encontrado');
-      carregarResgates();
-    } catch { toast('Erro', true); }
-  }
-
-  // ===== CONFIG =====
+  // ===== CARREGAR CONFIG =====
   async function carregarConfig() {
     try {
       const res = await fetch('/api/config');
       config = await res.json();
-      if (!config.downloads) {
-        config.downloads = { titulo: '📦 Downloads', subtitulo: '', etapas: [], itens: [] };
-      }
       render();
-    } catch { toast('Erro ao carregar', true); }
+    } catch (e) {
+      toast('Erro ao carregar config', true);
+    }
   }
 
   function render() {
-    document.getElementById('marca').value = config.marca || 'QZZ Community';
     document.getElementById('titulo').value = config.titulo || '';
     document.getElementById('subtitulo').value = config.subtitulo || '';
     document.getElementById('mensagemFinal').value = config.mensagemFinal || '';
-    document.getElementById('keys').value = (config.keys || []).join('\n');
-    document.getElementById('dl-titulo').value = config.downloads.titulo || '';
-    document.getElementById('dl-subtitulo').value = config.downloads.subtitulo || '';
+    document.getElementById('downloadUrl').value = config.downloadUrl || '';
     renderEtapas();
-    renderEtapasDl();
-    renderItensDl();
-  }
-
-  function escapeAttr(s) {
-    return String(s || '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
   function renderEtapas() {
@@ -478,78 +175,43 @@
       div.innerHTML = `
         <div class="num">${i + 1}</div>
         <div>
-          <input value="${escapeAttr(et.texto)}" oninput="mudarEtapa(${i}, 'texto', this.value)" placeholder="Texto">
-          <input value="${escapeAttr(et.link)}" oninput="mudarEtapa(${i}, 'link', this.value)" placeholder="Link">
-          <button class="danger mini" onclick="removerEtapa(${i})">🗑️ Remover</button>
+          <label>Texto (aceita HTML como &lt;b&gt;)</label>
+          <input value="${escapeAttr(et.texto)}" oninput="mudarEtapa(${i}, 'texto', this.value)">
+          <label>Link</label>
+          <input value="${escapeAttr(et.link)}" oninput="mudarEtapa(${i}, 'link', this.value)">
+          <button class="danger" style="margin-bottom:12px" onclick="removerEtapa(${i})">🗑️ Remover etapa</button>
         </div>
       `;
       box.appendChild(div);
     });
   }
 
-  function mudarEtapa(i, campo, valor) { config.etapas[i][campo] = valor; }
-  function adicionarEtapa() { config.etapas.push({ texto: 'Nova etapa', link: 'https://' }); renderEtapas(); }
+  function escapeAttr(s) {
+    return String(s || '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function mudarEtapa(i, campo, valor) {
+    config.etapas[i][campo] = valor;
+  }
+
+  function adicionarEtapa() {
+    if (!config.etapas) config.etapas = [];
+    config.etapas.push({ texto: 'Nova etapa', link: 'https://' });
+    renderEtapas();
+  }
+
   function removerEtapa(i) {
-    if (config.etapas.length <= 1) return alert('Mínimo 1 etapa.');
-    config.etapas.splice(i, 1); renderEtapas();
+    if (config.etapas.length <= 1) return alert('Precisa ter pelo menos 1 etapa.');
+    config.etapas.splice(i, 1);
+    renderEtapas();
   }
 
-  function renderEtapasDl() {
-    const box = document.getElementById('etapasDlContainer');
-    box.innerHTML = '';
-    config.downloads.etapas.forEach((et, i) => {
-      const div = document.createElement('div');
-      div.className = 'row';
-      div.innerHTML = `
-        <div class="num">${i + 1}</div>
-        <div>
-          <input value="${escapeAttr(et.texto)}" oninput="mudarEtapaDl(${i}, 'texto', this.value)" placeholder="Texto">
-          <input value="${escapeAttr(et.link)}" oninput="mudarEtapaDl(${i}, 'link', this.value)" placeholder="Link">
-          <button class="danger mini" onclick="removerEtapaDl(${i})">🗑️ Remover</button>
-        </div>
-      `;
-      box.appendChild(div);
-    });
-  }
-
-  function mudarEtapaDl(i, campo, valor) { config.downloads.etapas[i][campo] = valor; }
-  function adicionarEtapaDl() { config.downloads.etapas.push({ texto: 'Nova etapa', link: 'https://' }); renderEtapasDl(); }
-  function removerEtapaDl(i) {
-    if (config.downloads.etapas.length <= 1) return alert('Mínimo 1 etapa.');
-    config.downloads.etapas.splice(i, 1); renderEtapasDl();
-  }
-
-  function renderItensDl() {
-    const box = document.getElementById('itensDlContainer');
-    box.innerHTML = '';
-    if (!config.downloads.itens.length) {
-      box.innerHTML = '<small>Nenhum item cadastrado.</small>';
-      return;
-    }
-    config.downloads.itens.forEach((it, i) => {
-      const div = document.createElement('div');
-      div.className = 'item-download';
-      div.innerHTML = `
-        <input value="${escapeAttr(it.nome)}" oninput="mudarItemDl(${i}, 'nome', this.value)" placeholder="Nome">
-        <input value="${escapeAttr(it.link)}" oninput="mudarItemDl(${i}, 'link', this.value)" placeholder="Link">
-        <button onclick="removerItemDl(${i})">🗑️</button>
-      `;
-      box.appendChild(div);
-    });
-  }
-
-  function mudarItemDl(i, campo, valor) { config.downloads.itens[i][campo] = valor; }
-  function adicionarItemDl() { config.downloads.itens.push({ nome: 'Novo item', link: 'https://' }); renderItensDl(); }
-  function removerItemDl(i) { config.downloads.itens.splice(i, 1); renderItensDl(); }
-
+  // ===== SALVAR NO SERVIDOR =====
   async function salvar() {
-    config.marca = document.getElementById('marca').value;
     config.titulo = document.getElementById('titulo').value;
     config.subtitulo = document.getElementById('subtitulo').value;
     config.mensagemFinal = document.getElementById('mensagemFinal').value;
-    config.keys = document.getElementById('keys').value.split('\n').map(k => k.trim()).filter(Boolean);
-    config.downloads.titulo = document.getElementById('dl-titulo').value;
-    config.downloads.subtitulo = document.getElementById('dl-subtitulo').value;
+    config.downloadUrl = document.getElementById('downloadUrl').value;
 
     try {
       const res = await fetch('/api/config', {
@@ -560,49 +222,60 @@
         },
         body: JSON.stringify(config)
       });
-      if (!res.ok) throw new Error();
-      toast('Salvo!');
-    } catch { toast('Erro ao salvar', true); }
+      if (!res.ok) throw new Error('Falha ao salvar');
+      toast('Salvo com sucesso!');
+    } catch (e) {
+      toast('Erro ao salvar', true);
+    }
   }
 
+  // ===== EXPORTAR / IMPORTAR =====
   function exportar() {
     const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'qzz-config.json';
+    a.download = 'gate-config.json';
     a.click();
   }
 
   function importar() {
     const inp = document.createElement('input');
-    inp.type = 'file'; inp.accept = '.json';
+    inp.type = 'file';
+    inp.accept = '.json';
     inp.onchange = e => {
+      const file = e.target.files[0];
       const reader = new FileReader();
       reader.onload = ev => {
         try {
           config = JSON.parse(ev.target.result);
-          if (!config.downloads) config.downloads = { titulo: '📦 Downloads', subtitulo: '', etapas: [], itens: [] };
           render();
-          toast('Importado! Clique em Salvar.');
+          toast('Importado! Clique em Salvar pra publicar.');
         } catch { toast('JSON inválido', true); }
       };
-      reader.readAsText(e.target.files[0]);
+      reader.readAsText(file);
     };
     inp.click();
   }
 
-  function abrirPublico() { window.open('/', '_blank'); }
+  function abrirPublico() {
+    window.open('/', '_blank');
+  }
 
   function toast(msg, erro = false) {
     const t = document.getElementById('toast');
     t.textContent = msg;
     t.className = 'toast show' + (erro ? ' erro' : '');
-    setTimeout(() => t.className = 'toast', 2500);
+    setTimeout(() => t.className = 'toast', 2000);
   }
 
+  // ===== AUTO-LOGIN SE JÁ TIVER SENHA NA SESSÃO =====
   const senhaSalva = sessionStorage.getItem('admin_senha');
-  if (senhaSalva) { senhaAdmin = senhaSalva; entrarNoPainel(); }
-  else { document.getElementById('loginBox').style.display = 'block'; }
+  if (senhaSalva) {
+    senhaAdmin = senhaSalva;
+    entrarNoPainel();
+  } else {
+    document.getElementById('loginBox').style.display = 'block';
+  }
 </script>
 </body>
 </html>
