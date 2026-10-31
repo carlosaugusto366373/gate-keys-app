@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Download</title>
+<title>QZZ Community Download</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
 
@@ -22,10 +22,10 @@
   .card {
     background: #0a0a0a;
     border: 1px solid #1f1f1f;
-    border-top: 1px solid rgba(220, 38, 38, 0.3);
+    border-top: 1px solid rgba(220, 38, 38, 0.4);
     border-radius: 16px; padding: 32px; max-width: 460px; width: 100%;
     box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9), 
-                0 0 40px -10px rgba(220, 38, 38, 0.1);
+                0 0 40px -10px rgba(220, 38, 38, 0.15);
     animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
   }
@@ -38,6 +38,9 @@
   h1 { 
     font-size: 24px; font-weight: 900; margin: 0 0 8px; 
     letter-spacing: -0.5px; line-height: 1.2;
+    color: #ef4444;
+    text-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+    text-transform: uppercase;
   }
   
   .sub { color: #a1a1aa; font-size: 14px; line-height: 1.5; margin-bottom: 24px; }
@@ -90,7 +93,7 @@
   }
 
   .check {
-    width: 28px; height: 28px; border-radius: 8px; /* Quadrado arredondado é mais "tech" */
+    width: 28px; height: 28px; border-radius: 8px;
     background: #1f1f1f; border: 1px solid #3f3f46; 
     display: flex; align-items: center; justify-content: center; 
     font-size: 13px; font-weight: 800; flex-shrink: 0;
@@ -137,7 +140,7 @@
   <div id="loading" class="loading">Carregando...</div>
 
   <div id="conteudo" style="display:none">
-    <h1 id="titulo"></h1>
+    <h1>QZZ COMMUNITY DOWNLOAD</h1>
     <p class="sub" id="subtitulo"></p>
     
     <div class="progress-container">
@@ -178,8 +181,8 @@
     document.getElementById('loading').style.display = 'none';
     document.getElementById('conteudo').style.display = 'block';
 
-    document.getElementById('titulo').innerHTML = config.titulo;
-    document.getElementById('subtitulo').textContent = config.subtitulo;
+    // O título agora é fixo no HTML, então não puxamos mais do config.titulo
+    document.getElementById('subtitulo').textContent = config.subtitulo || 'Complete as etapas abaixo para liberar o download.';
     
     atualizarProgresso();
 
