@@ -5,45 +5,123 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Download</title>
 <style>
-  * { box-sizing: border-box; font-family: system-ui, sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+  * { box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+  
   body {
-    background: #0f0f13; color: #fff; min-height: 100vh;
+    background: #09090b;
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(34, 197, 94, 0.08), transparent 25%);
+    color: #fff; min-height: 100vh;
     display: flex; align-items: center; justify-content: center;
     padding: 20px; margin: 0;
   }
+
   .card {
-    background: #1a1a22; border: 1px solid #2a2a35;
-    border-radius: 16px; padding: 28px; max-width: 480px; width: 100%;
-    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    background: rgba(24, 24, 27, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px; padding: 32px; max-width: 460px; width: 100%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+    animation: fadeIn 0.5s ease-out;
   }
-  h1 { font-size: 22px; margin: 0 0 6px; }
-  .sub { color: #888; font-size: 14px; margin-bottom: 22px; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 { font-size: 24px; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.5px; }
+  .sub { color: #a1a1aa; font-size: 14px; line-height: 1.5; margin-bottom: 24px; }
+  
+  .progress-bar {
+    background: #27272a; border-radius: 8px; height: 6px; width: 100%;
+    margin-bottom: 24px; overflow: hidden;
+  }
+  .progress-fill {
+    background: #3b82f6; height: 100%; width: 20%;
+    transition: width 0.4s ease, background 0.4s;
+    border-radius: 8px;
+  }
+
   .step {
-    display: flex; align-items: center; gap: 12px;
-    padding: 14px; border-radius: 12px; margin-bottom: 10px;
-    background: #12121a; border: 1px solid #24242e;
-    transition: .25s; cursor: pointer; user-select: none;
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px; border-radius: 14px; margin-bottom: 12px;
+    background: #18181b; border: 1px solid #27272a;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
+    cursor: pointer; user-select: none;
+    position: relative; overflow: hidden;
   }
-  .step.locked { opacity: .4; pointer-events: none; }
-  .step.done { background: #10261a; border-color: #1f6b3d; }
-  .step.done .check { background: #22c55e; color: #000; }
+  
+  .step:not(.locked):not(.done):hover {
+    background: #27272a; border-color: #52525b; transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px rgba(0,0,0,0.5);
+  }
+
+  .step.locked { opacity: 0.4; pointer-events: none; filter: grayscale(1); }
+  
+  .step.done { 
+    background: rgba(16, 38, 26, 0.5); 
+    border-color: rgba(34, 197, 94, 0.3); 
+  }
+  
+  .step.done .check { 
+    background: #22c55e; color: #000; 
+    border-color: #22c55e;
+    animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
   .check {
-    width: 26px; height: 26px; border-radius: 50%;
-    background: #2a2a35; display: flex; align-items: center;
-    justify-content: center; font-size: 13px; font-weight: 700;
-    flex-shrink: 0;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #27272a; border: 2px solid #3f3f46; 
+    display: flex; align-items: center; justify-content: center; 
+    font-size: 13px; font-weight: 800; flex-shrink: 0;
+    transition: all 0.3s;
   }
-  .step-txt { font-size: 14px; line-height: 1.4; }
-  .step-txt b { color: #fff; }
+  
+  .step.done .check {
+    border: none;
+  }
+
+  .step-txt { font-size: 14px; font-weight: 600; line-height: 1.4; color: #e4e4e7; }
+  .step.done .step-txt { color: #86efac; }
+  .step-txt b { color: #fff; font-weight: 800; }
+
   .btn {
-    width: 100%; padding: 14px; border-radius: 12px; border: none;
-    background: #3b82f6; color: #fff; font-weight: 700; font-size: 15px;
-    cursor: pointer; margin-top: 14px; transition: .2s;
+    width: 100%; padding: 16px; border-radius: 14px; border: none;
+    background: #27272a; color: #71717a; font-weight: 800; font-size: 15px;
+    cursor: not-allowed; margin-top: 18px; transition: all 0.3s;
+    display: flex; justify-content: center; align-items: center; gap: 8px;
+    font-family: inherit;
   }
-  .btn:disabled { background: #2a2a35; color: #666; cursor: not-allowed; }
-  .btn:not(:disabled):hover { background: #2563eb; }
-  .prog { color: #60a5fa; font-weight: 700; }
-  .loading { text-align: center; color: #666; padding: 40px 0; }
+
+  .btn:not(:disabled) {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: #fff; cursor: pointer;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  }
+
+  .btn:not(:disabled):hover {
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+  }
+
+  .btn:not(:disabled):active {
+    transform: translateY(0);
+  }
+
+  .loading { text-align: center; color: #a1a1aa; padding: 40px 0; font-weight: 600; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 </style>
 </head>
 <body>
@@ -53,11 +131,16 @@
   <div id="conteudo" style="display:none">
     <h1 id="titulo"></h1>
     <p class="sub" id="subtitulo"></p>
-    <p class="sub">Progresso: <span class="prog" id="prog">1/1</span></p>
+    
+    <div class="progress-bar">
+      <div class="progress-fill" id="progFill"></div>
+    </div>
 
     <div id="etapasBox"></div>
 
-    <button class="btn" id="btnDownload" disabled>🔒 Complete as etapas acima</button>
+    <button class="btn" id="btnDownload" disabled>
+      <span id="btnIcon">🔒</span> <span id="btnText">Complete as etapas</span>
+    </button>
   </div>
 </div>
 
@@ -83,7 +166,8 @@
 
     document.getElementById('titulo').innerHTML = config.titulo;
     document.getElementById('subtitulo').textContent = config.subtitulo;
-    document.getElementById('prog').textContent = `1/${TOTAL}`;
+    
+    atualizarProgresso();
 
     const box = document.getElementById('etapasBox');
     box.innerHTML = '';
@@ -100,14 +184,20 @@
     });
   }
 
+  function atualizarProgresso() {
+    const pct = Math.min(((currentStep - 1) / TOTAL) * 100, 100);
+    const fill = document.getElementById('progFill');
+    fill.style.width = pct + '%';
+    if (pct === 100) fill.style.background = '#22c55e';
+  }
+
   function openLink(el, url) {
     window.open(url, '_blank');
     el.classList.add('done');
     el.querySelector('.check').textContent = '✓';
 
     currentStep++;
-    document.getElementById('prog').textContent =
-      `${Math.min(currentStep, TOTAL)}/${TOTAL}`;
+    atualizarProgresso();
 
     const next = document.querySelector(`.step[data-step="${currentStep}"]`);
     if (next) next.classList.remove('locked');
@@ -115,7 +205,8 @@
     if (currentStep > TOTAL) {
       const btn = document.getElementById('btnDownload');
       btn.disabled = false;
-      btn.textContent = config.mensagemFinal || '⬇️ Baixar agora';
+      document.getElementById('btnIcon').textContent = '⬇️';
+      document.getElementById('btnText').textContent = config.mensagemFinal || 'Baixar agora';
     }
   }
 
@@ -125,7 +216,11 @@
 
     const btn = document.getElementById('btnDownload');
     btn.disabled = true;
-    btn.textContent = '✅ Download iniciado';
+    btn.style.background = '#22c55e';
+    btn.style.boxShadow = 'none';
+    btn.style.transform = 'none';
+    document.getElementById('btnIcon').textContent = '✅';
+    document.getElementById('btnText').textContent = 'Download iniciado';
   });
 
   carregar();
