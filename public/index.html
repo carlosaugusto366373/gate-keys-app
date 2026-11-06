@@ -1,8 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
 <title>QZZ Community Download</title>
 
 <style>
@@ -13,108 +15,122 @@
   font-family: 'Inter', system-ui, sans-serif;
 }
 
-body {
+html {
+  min-height: 100%;
   background: #050505;
-  background-image:
-    radial-gradient(circle at 50% -20%, rgba(220,38,38,.15), transparent 60%),
-    radial-gradient(circle at 10% 90%, rgba(220,38,38,.05), transparent 40%);
-  color: #fff;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+}
+
+body {
   margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 20px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% -20%, rgba(220,38,38,.15), transparent 60%),
+    radial-gradient(circle at 10% 90%, rgba(220,38,38,.05), transparent 40%),
+    #050505;
+  color: #fff;
 }
 
 .card {
+  width: 100%;
+  max-width: 460px;
+  min-width: 0;
+  margin: auto;
+  padding: 30px;
   background: #0a0a0a;
   border: 1px solid #1f1f1f;
-  border-top: 1px solid rgba(220,38,38,.4);
+  border-top: 1px solid rgba(220,38,38,.5);
   border-radius: 16px;
-  padding: 32px;
-  max-width: 460px;
-  width: 100%;
-  box-shadow: 0 30px 60px -15px rgba(0,0,0,.9),
-              0 0 40px -10px rgba(220,38,38,.15);
-  animation: slideUp .6s cubic-bezier(.16,1,.3,1);
-  position: relative;
+  box-shadow:
+    0 30px 60px -15px rgba(0,0,0,.9),
+    0 0 40px -10px rgba(220,38,38,.15);
+  animation: slideUp .6s ease;
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 h1 {
+  margin: 0 0 8px;
+  color: #ef4444;
   font-size: 22px;
   font-weight: 900;
-  margin: 0 0 8px;
   letter-spacing: -.5px;
   line-height: 1.2;
-  color: #ef4444;
-  text-shadow: 0 0 20px rgba(239,68,68,.3);
   text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(239,68,68,.3);
 }
 
 .sub {
+  margin: 0 0 24px;
   color: #a1a1aa;
   font-size: 14px;
   line-height: 1.5;
-  margin-bottom: 24px;
 }
 
 .progress-container {
-  margin-bottom: 28px;
+  margin-bottom: 25px;
 }
 
 .progress-text {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
-  font-weight: 700;
-  color: #71717a;
   margin-bottom: 8px;
-  text-transform: uppercase;
+  color: #71717a;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: .5px;
+  text-transform: uppercase;
 }
 
 .progress-bar {
-  background: #1f1f1f;
-  border-radius: 4px;
-  height: 6px;
   width: 100%;
+  height: 6px;
   overflow: hidden;
+  border-radius: 10px;
+  background: #1f1f1f;
 }
 
 .progress-fill {
-  background: #dc2626;
-  height: 100%;
   width: 0%;
-  transition: width .5s cubic-bezier(.4,0,.2,1);
-  border-radius: 4px;
+  height: 100%;
+  border-radius: 10px;
+  background: #dc2626;
   box-shadow: 0 0 10px rgba(220,38,38,.5);
+  transition: width .4s ease, background .3s ease;
 }
 
 .step {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  background: #111;
+  gap: 14px;
+  min-width: 0;
+  padding: 15px;
+  margin-bottom: 11px;
   border: 1px solid #27272a;
-  transition: all .25s ease;
+  border-radius: 12px;
+  background: #111;
   cursor: pointer;
   user-select: none;
+  transition: .25s ease;
 }
 
 .step:not(.locked):not(.done):hover {
-  background: #1a1a1a;
+  background: #191919;
   border-color: #dc2626;
-  transform: translateX(4px);
-  box-shadow: 0 4px 20px rgba(220,38,38,.15);
+  transform: translateX(3px);
+  box-shadow: 0 4px 20px rgba(220,38,38,.12);
 }
 
 .step.locked {
@@ -125,36 +141,44 @@ h1 {
 
 .step.done {
   background: #0f0f0f;
-  border-color: rgba(34,197,94,.3);
-}
-
-.step.done .check {
-  background: #22c55e;
-  color: #000;
-  border-color: #22c55e;
-  box-shadow: 0 0 10px rgba(34,197,94,.3);
+  border-color: rgba(34,197,94,.35);
+  cursor: default;
 }
 
 .check {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: #1f1f1f;
-  border: 1px solid #3f3f46;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #3f3f46;
+  border-radius: 8px;
+  background: #1f1f1f;
+  color: #a1a1aa;
   font-size: 13px;
   font-weight: 800;
-  flex-shrink: 0;
-  color: #a1a1aa;
+}
+
+.step.done .check {
+  color: #000;
+  background: #22c55e;
+  border-color: #22c55e;
 }
 
 .step-txt {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.4;
+  min-width: 0;
   color: #d4d4d8;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.step-txt b,
+.step-txt strong {
+  color: #fff;
+  font-weight: 700;
 }
 
 .step.done .step-txt {
@@ -162,49 +186,45 @@ h1 {
   text-decoration: line-through;
 }
 
-.step-txt b {
-  color: #fff;
-  font-weight: 700;
-}
-
 .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   width: 100%;
+  margin-top: 22px;
   padding: 16px;
-  border-radius: 12px;
   border: 1px solid #27272a;
+  border-radius: 12px;
   background: #111;
   color: #52525b;
+  font-size: 14px;
   font-weight: 700;
-  font-size: 15px;
-  cursor: not-allowed;
-  margin-top: 24px;
-  transition: all .3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  text-transform: uppercase;
   letter-spacing: .5px;
+  text-transform: uppercase;
+  cursor: not-allowed;
+  transition: .3s ease;
 }
 
 .btn:not(:disabled) {
-  background: linear-gradient(135deg,#dc2626,#991b1b);
   border-color: #ef4444;
+  background: linear-gradient(135deg,#dc2626,#991b1b);
   color: #fff;
   cursor: pointer;
   box-shadow: 0 4px 20px rgba(220,38,38,.4);
 }
 
 .btn:not(:disabled):hover {
-  background: linear-gradient(135deg,#ef4444,#dc2626);
   transform: translateY(-2px);
+  background: linear-gradient(135deg,#ef4444,#dc2626);
 }
 
 .loading {
+  padding: 25px 0;
+  color: #ef4444;
   text-align: center;
-  color: #dc2626;
-  padding: 40px 0;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 800;
   letter-spacing: 1px;
   text-transform: uppercase;
   animation: pulse 1.5s infinite;
@@ -214,18 +234,50 @@ h1 {
   0%,100% { opacity: 1; }
   50% { opacity: .4; }
 }
+
+.error {
+  color: #ef4444;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+@media(max-width:480px) {
+  body {
+    padding: 16px;
+  }
+
+  .card {
+    padding: 22px;
+    max-width: 100%;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+}
+
+@media(max-width:350px) {
+  .card {
+    padding: 17px;
+  }
+
+  .step {
+    padding: 12px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<main class="card">
 
   <div id="loading" class="loading">
-    Carregando...
+    CARREGANDO...
   </div>
 
-  <div id="conteudo" style="display:none">
+  <section id="conteudo" hidden>
 
     <h1>QZZ COMMUNITY DOWNLOAD</h1>
 
@@ -251,8 +303,9 @@ h1 {
       <span id="btnText">Complete as etapas</span>
     </button>
 
-  </div>
-</div>
+  </section>
+
+</main>
 
 <script>
 'use strict';
@@ -265,56 +318,106 @@ const TEMPO_MINIMO = 30000;
 
 let missaoPendente = null;
 let inicioMissao = 0;
-let avisoExibido = false;
+let avisoRetorno = false;
 
+// Carregamento da configuração.
 async function carregar() {
   try {
-    const res = await fetch('/api/config');
+    const res = await fetch('/api/config', {
+      cache: 'no-store'
+    });
 
     if (!res.ok) {
-      throw new Error('Erro na configuração');
+      throw new Error('Erro ao carregar configuração');
     }
 
     config = await res.json();
 
     if (!Array.isArray(config.etapas)) {
-      throw new Error('Etapas inválidas');
+      throw new Error('Configuração de etapas inválida');
     }
 
     TOTAL = config.etapas.length;
+
+    document.getElementById('loading').hidden = true;
+    document.getElementById('conteudo').hidden = false;
+
     render();
 
-  } catch (err) {
-    document.getElementById('loading').textContent =
-      '❌ Erro ao carregar.';
+  } catch (error) {
+    const loading = document.getElementById('loading');
+    loading.classList.add('error');
+    loading.textContent = '❌ Erro ao carregar. Atualize a página.';
   }
 }
 
-function render() {
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('conteudo').style.display = 'block';
+// Insere somente formatação HTML permitida.
+function inserirTextoSeguro(container, html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(
+    String(html ?? ''),
+    'text/html'
+  );
 
+  const permitidas = [
+    'B', 'STRONG', 'I', 'EM', 'U', 'BR'
+  ];
+
+  function copiar(origem, destino) {
+    for (const node of origem.childNodes) {
+
+      if (node.nodeType === Node.TEXT_NODE) {
+        destino.appendChild(
+          document.createTextNode(node.textContent)
+        );
+        continue;
+      }
+
+      if (node.nodeType !== Node.ELEMENT_NODE) continue;
+
+      if (permitidas.includes(node.tagName)) {
+        const novo = document.createElement(
+          node.tagName.toLowerCase()
+        );
+
+        copiar(node, novo);
+        destino.appendChild(novo);
+
+      } else {
+        copiar(node, destino);
+      }
+    }
+  }
+
+  copiar(doc.body, container);
+}
+
+// Montagem das missões.
+function render() {
   const box = document.getElementById('etapasBox');
-  box.innerHTML = '';
+  box.replaceChildren();
 
   config.etapas.forEach((et, i) => {
 
     const div = document.createElement('div');
 
     div.className = 'step' + (i === 0 ? '' : ' locked');
-    div.dataset.step = i + 1;
+    div.dataset.step = String(i + 1);
 
     const check = document.createElement('div');
     check.className = 'check';
-    check.textContent = i + 1;
+    check.textContent = String(i + 1);
 
     const txt = document.createElement('div');
     txt.className = 'step-txt';
-    txt.textContent = et.texto;
+
+    inserirTextoSeguro(txt, et.texto);
 
     div.append(check, txt);
 
-    div.onclick = () => openLink(div, et.link, i + 1);
+    div.addEventListener('click', () => {
+      openLink(div, et.link, i + 1);
+    });
 
     box.appendChild(div);
   });
@@ -322,124 +425,121 @@ function render() {
   atualizarProgresso();
 }
 
+// Barra de progresso.
 function atualizarProgresso() {
-
-  const completas = currentStep - 1;
-
   const pct = TOTAL > 0
-    ? Math.min(Math.round((completas / TOTAL) * 100), 100)
+    ? Math.round(((currentStep - 1) / TOTAL) * 100)
     : 100;
 
-  document.getElementById('progFill').style.width = pct + '%';
-  document.getElementById('progTxt').textContent = pct + '%';
+  const fill = document.getElementById('progFill');
+
+  fill.style.width = pct + '%';
+
+  document.getElementById('progTxt').textContent =
+    pct + '%';
 
   if (pct === 100) {
-    document.getElementById('progFill').style.background = '#22c55e';
+    fill.style.background = '#22c55e';
+    fill.style.boxShadow =
+      '0 0 10px rgba(34,197,94,.5)';
   }
 }
 
+// Abrir missão e verificar tempo.
 function openLink(el, url, step) {
 
   if (step !== currentStep) return;
 
-  // Primeira abertura da missão.
+  // Primeira abertura.
   if (missaoPendente !== step) {
 
+    let destino;
+
     try {
-      const destino = new URL(url, window.location.origin);
+      destino = new URL(url, window.location.origin);
 
       if (!['http:', 'https:'].includes(destino.protocol)) {
         throw new Error('URL inválida');
       }
 
-      const novaAba = window.open(
-        destino.href,
-        '_blank',
-        'noopener,noreferrer'
-      );
-
-      if (!novaAba) {
-        alert('Permita a abertura de novas abas para continuar.');
-        return;
-      }
-
-      missaoPendente = step;
-      inicioMissao = Date.now();
-      avisoExibido = false;
-
-      return;
-
-    } catch (err) {
-      alert('Não foi possível abrir a missão.');
+    } catch (error) {
+      alert('Link da missão inválido.');
       return;
     }
+
+    // Abre a missão em outra aba.
+    const link = document.createElement('a');
+
+    link.href = destino.href;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    missaoPendente = step;
+    inicioMissao = Date.now();
+    avisoRetorno = false;
+
+    return;
   }
 
-  // Verificação silenciosa do tempo.
+  // Verificação dos 30 segundos.
   const decorrido = Date.now() - inicioMissao;
 
   if (decorrido < TEMPO_MINIMO) {
     alert(
-      '⚠️ Você ainda não fez essa missão!\n\n' +
+      '⚠️ VOCÊ AINDA NÃO FEZ ESSA MISSÃO!\n\n' +
       'Conclua a tarefa antes de continuar.'
     );
     return;
   }
 
-  // Liberação da etapa.
+  // Confirmação da etapa pelo usuário.
   el.classList.add('done');
   el.querySelector('.check').textContent = '✓';
 
   missaoPendente = null;
   inicioMissao = 0;
-  avisoExibido = false;
+  avisoRetorno = false;
 
   currentStep++;
 
   atualizarProgresso();
 
-  const next = document.querySelector(
+  // Desbloquear próxima missão.
+  const proxima = document.querySelector(
     `.step[data-step="${currentStep}"]`
   );
 
-  if (next) {
-    next.classList.remove('locked');
+  if (proxima) {
+    proxima.classList.remove('locked');
   }
 
+  // Todas as missões concluídas.
   if (currentStep > TOTAL) {
-
-    const btn = document.getElementById('btnDownload');
-
-    btn.disabled = false;
-
-    document.getElementById('btnIcon').textContent = '⬇️';
-
-    document.getElementById('btnText').textContent =
-      config.mensagemFinal || 'BAIXAR APK';
+    liberarDownload();
   }
 }
 
-// Detectar retorno à página.
+// Aviso quando o usuário volta à página.
 function verificarRetorno() {
 
   if (
-    missaoPendente !== null &&
-    document.visibilityState === 'visible' &&
-    !avisoExibido
+    missaoPendente === null ||
+    document.visibilityState !== 'visible' ||
+    avisoRetorno
   ) {
-
-    avisoExibido = true;
-
-    const decorrido = Date.now() - inicioMissao;
-
-    if (decorrido < TEMPO_MINIMO) {
-
-      alert(
-        '⚠️ Você ainda não fez essa missão!\n\n' +
-        'Conclua a tarefa antes de continuar.'
-      );
-    }
+    return;
   }
+
+  avisoRetorno = true;
+
+  alert(
+    '⚠️ VOCÊ AINDA NÃO FEZ ESSA MISSÃO!\n\n' +
+    'Conclua a tarefa e depois volte para continuar.'
+  );
 }
 
 document.addEventListener(
@@ -447,515 +547,43 @@ document.addEventListener(
   verificarRetorno
 );
 
-window.addEventListener(
-  'focus',
-  verificarRetorno
-);
+// Download.
+function liberarDownload() {
+  const btn = document.getElementById('btnDownload');
 
-// Download final.
-document.getElementById('btnDownload').addEventListener('click', () => {
+  btn.disabled = false;
 
-  if (currentStep <= TOTAL) return;
+  document.getElementById('btnIcon').textContent = '⬇️';
 
-  const url = config.downloadUrl || config.linkDownload;
-
-  try {
-
-    const destino = new URL(url);
-
-    if (!['http:', 'https:'].includes(destino.protocol)) {
-      throw new Error('URL inválida');
-    }
-
-    window.location.href = destino.href;
-
-  } catch (err) {
-    alert('Link de download inválido.');
-  }
-});
-
-carregar();
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QZZ Community Download</title>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
-
-* {
-  box-sizing: border-box;
-  font-family: 'Inter', system-ui, sans-serif;
+  document.getElementById('btnText').textContent =
+    config.mensagemFinal || 'BAIXAR APK';
 }
 
-body {
-  background: #050505;
-  background-image:
-    radial-gradient(circle at 50% -20%, rgba(220,38,38,.15), transparent 60%),
-    radial-gradient(circle at 10% 90%, rgba(220,38,38,.05), transparent 40%);
-  color: #fff;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  margin: 0;
-}
+document.getElementById('btnDownload').addEventListener(
+  'click',
+  () => {
 
-.card {
-  background: #0a0a0a;
-  border: 1px solid #1f1f1f;
-  border-top: 1px solid rgba(220,38,38,.4);
-  border-radius: 16px;
-  padding: 32px;
-  max-width: 460px;
-  width: 100%;
-  box-shadow: 0 30px 60px -15px rgba(0,0,0,.9),
-              0 0 40px -10px rgba(220,38,38,.15);
-  animation: slideUp .6s cubic-bezier(.16,1,.3,1);
-  position: relative;
-}
+    if (currentStep <= TOTAL) return;
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-h1 {
-  font-size: 22px;
-  font-weight: 900;
-  margin: 0 0 8px;
-  letter-spacing: -.5px;
-  line-height: 1.2;
-  color: #ef4444;
-  text-shadow: 0 0 20px rgba(239,68,68,.3);
-  text-transform: uppercase;
-}
-
-.sub {
-  color: #a1a1aa;
-  font-size: 14px;
-  line-height: 1.5;
-  margin-bottom: 24px;
-}
-
-.progress-container {
-  margin-bottom: 28px;
-}
-
-.progress-text {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  font-weight: 700;
-  color: #71717a;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-}
-
-.progress-bar {
-  background: #1f1f1f;
-  border-radius: 4px;
-  height: 6px;
-  width: 100%;
-  overflow: hidden;
-}
-
-.progress-fill {
-  background: #dc2626;
-  height: 100%;
-  width: 0%;
-  transition: width .5s cubic-bezier(.4,0,.2,1);
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(220,38,38,.5);
-}
-
-.step {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  background: #111;
-  border: 1px solid #27272a;
-  transition: all .25s ease;
-  cursor: pointer;
-  user-select: none;
-}
-
-.step:not(.locked):not(.done):hover {
-  background: #1a1a1a;
-  border-color: #dc2626;
-  transform: translateX(4px);
-  box-shadow: 0 4px 20px rgba(220,38,38,.15);
-}
-
-.step.locked {
-  opacity: .3;
-  pointer-events: none;
-  filter: grayscale(1);
-}
-
-.step.done {
-  background: #0f0f0f;
-  border-color: rgba(34,197,94,.3);
-}
-
-.step.done .check {
-  background: #22c55e;
-  color: #000;
-  border-color: #22c55e;
-  box-shadow: 0 0 10px rgba(34,197,94,.3);
-}
-
-.check {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: #1f1f1f;
-  border: 1px solid #3f3f46;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 800;
-  flex-shrink: 0;
-  color: #a1a1aa;
-}
-
-.step-txt {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.4;
-  color: #d4d4d8;
-}
-
-.step.done .step-txt {
-  color: #a1a1aa;
-  text-decoration: line-through;
-}
-
-.step-txt b {
-  color: #fff;
-  font-weight: 700;
-}
-
-.btn {
-  width: 100%;
-  padding: 16px;
-  border-radius: 12px;
-  border: 1px solid #27272a;
-  background: #111;
-  color: #52525b;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: not-allowed;
-  margin-top: 24px;
-  transition: all .3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-}
-
-.btn:not(:disabled) {
-  background: linear-gradient(135deg,#dc2626,#991b1b);
-  border-color: #ef4444;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 4px 20px rgba(220,38,38,.4);
-}
-
-.btn:not(:disabled):hover {
-  background: linear-gradient(135deg,#ef4444,#dc2626);
-  transform: translateY(-2px);
-}
-
-.loading {
-  text-align: center;
-  color: #dc2626;
-  padding: 40px 0;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0%,100% { opacity: 1; }
-  50% { opacity: .4; }
-}
-</style>
-</head>
-
-<body>
-
-<div class="card">
-
-  <div id="loading" class="loading">
-    Carregando...
-  </div>
-
-  <div id="conteudo" style="display:none">
-
-    <h1>QZZ COMMUNITY DOWNLOAD</h1>
-
-    <p class="sub">
-      Complete as etapas abaixo para liberar o download.
-    </p>
-
-    <div class="progress-container">
-      <div class="progress-text">
-        <span>Progresso</span>
-        <span id="progTxt">0%</span>
-      </div>
-
-      <div class="progress-bar">
-        <div class="progress-fill" id="progFill"></div>
-      </div>
-    </div>
-
-    <div id="etapasBox"></div>
-
-    <button class="btn" id="btnDownload" disabled>
-      <span id="btnIcon">🔒</span>
-      <span id="btnText">Complete as etapas</span>
-    </button>
-
-  </div>
-</div>
-
-<script>
-'use strict';
-
-let config = null;
-let currentStep = 1;
-let TOTAL = 0;
-
-const TEMPO_MINIMO = 30000;
-
-let missaoPendente = null;
-let inicioMissao = 0;
-let avisoExibido = false;
-
-async function carregar() {
-  try {
-    const res = await fetch('/api/config');
-
-    if (!res.ok) {
-      throw new Error('Erro na configuração');
-    }
-
-    config = await res.json();
-
-    if (!Array.isArray(config.etapas)) {
-      throw new Error('Etapas inválidas');
-    }
-
-    TOTAL = config.etapas.length;
-    render();
-
-  } catch (err) {
-    document.getElementById('loading').textContent =
-      '❌ Erro ao carregar.';
-  }
-}
-
-function render() {
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('conteudo').style.display = 'block';
-
-  const box = document.getElementById('etapasBox');
-  box.innerHTML = '';
-
-  config.etapas.forEach((et, i) => {
-
-    const div = document.createElement('div');
-
-    div.className = 'step' + (i === 0 ? '' : ' locked');
-    div.dataset.step = i + 1;
-
-    const check = document.createElement('div');
-    check.className = 'check';
-    check.textContent = i + 1;
-
-    const txt = document.createElement('div');
-    txt.className = 'step-txt';
-    txt.textContent = et.texto;
-
-    div.append(check, txt);
-
-    div.onclick = () => openLink(div, et.link, i + 1);
-
-    box.appendChild(div);
-  });
-
-  atualizarProgresso();
-}
-
-function atualizarProgresso() {
-
-  const completas = currentStep - 1;
-
-  const pct = TOTAL > 0
-    ? Math.min(Math.round((completas / TOTAL) * 100), 100)
-    : 100;
-
-  document.getElementById('progFill').style.width = pct + '%';
-  document.getElementById('progTxt').textContent = pct + '%';
-
-  if (pct === 100) {
-    document.getElementById('progFill').style.background = '#22c55e';
-  }
-}
-
-function openLink(el, url, step) {
-
-  if (step !== currentStep) return;
-
-  // Primeira abertura da missão.
-  if (missaoPendente !== step) {
+    const url = config.downloadUrl || config.linkDownload;
 
     try {
-      const destino = new URL(url, window.location.origin);
+      const destino = new URL(url);
 
       if (!['http:', 'https:'].includes(destino.protocol)) {
         throw new Error('URL inválida');
       }
 
-      const novaAba = window.open(
-        destino.href,
-        '_blank',
-        'noopener,noreferrer'
-      );
+      window.location.href = destino.href;
 
-      if (!novaAba) {
-        alert('Permita a abertura de novas abas para continuar.');
-        return;
-      }
-
-      missaoPendente = step;
-      inicioMissao = Date.now();
-      avisoExibido = false;
-
-      return;
-
-    } catch (err) {
-      alert('Não foi possível abrir a missão.');
-      return;
+    } catch (error) {
+      alert('Link de download inválido.');
     }
   }
-
-  // Verificação silenciosa do tempo.
-  const decorrido = Date.now() - inicioMissao;
-
-  if (decorrido < TEMPO_MINIMO) {
-    alert(
-      '⚠️ Você ainda não fez essa missão!\n\n' +
-      'Conclua a tarefa antes de continuar.'
-    );
-    return;
-  }
-
-  // Liberação da etapa.
-  el.classList.add('done');
-  el.querySelector('.check').textContent = '✓';
-
-  missaoPendente = null;
-  inicioMissao = 0;
-  avisoExibido = false;
-
-  currentStep++;
-
-  atualizarProgresso();
-
-  const next = document.querySelector(
-    `.step[data-step="${currentStep}"]`
-  );
-
-  if (next) {
-    next.classList.remove('locked');
-  }
-
-  if (currentStep > TOTAL) {
-
-    const btn = document.getElementById('btnDownload');
-
-    btn.disabled = false;
-
-    document.getElementById('btnIcon').textContent = '⬇️';
-
-    document.getElementById('btnText').textContent =
-      config.mensagemFinal || 'BAIXAR APK';
-  }
-}
-
-// Detectar retorno à página.
-function verificarRetorno() {
-
-  if (
-    missaoPendente !== null &&
-    document.visibilityState === 'visible' &&
-    !avisoExibido
-  ) {
-
-    avisoExibido = true;
-
-    const decorrido = Date.now() - inicioMissao;
-
-    if (decorrido < TEMPO_MINIMO) {
-
-      alert(
-        '⚠️ Você ainda não fez essa missão!\n\n' +
-        'Conclua a tarefa antes de continuar.'
-      );
-    }
-  }
-}
-
-document.addEventListener(
-  'visibilitychange',
-  verificarRetorno
 );
-
-window.addEventListener(
-  'focus',
-  verificarRetorno
-);
-
-// Download final.
-document.getElementById('btnDownload').addEventListener('click', () => {
-
-  if (currentStep <= TOTAL) return;
-
-  const url = config.downloadUrl || config.linkDownload;
-
-  try {
-
-    const destino = new URL(url);
-
-    if (!['http:', 'https:'].includes(destino.protocol)) {
-      throw new Error('URL inválida');
-    }
-
-    window.location.href = destino.href;
-
-  } catch (err) {
-    alert('Link de download inválido.');
-  }
-});
 
 carregar();
+
 </script>
 
 </body>
