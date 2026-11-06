@@ -4,151 +4,241 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QZZ Community Download</title>
+
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
 
-  * { box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
-  
-  body {
-    background: #050505;
-    background-image: 
-      radial-gradient(circle at 50% -20%, rgba(220, 38, 38, 0.15), transparent 60%),
-      radial-gradient(circle at 10% 90%, rgba(220, 38, 38, 0.05), transparent 40%);
-    color: #fff; min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    padding: 20px; margin: 0;
-  }
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, sans-serif;
+}
 
-  .card {
-    background: #0a0a0a;
-    border: 1px solid #1f1f1f;
-    border-top: 1px solid rgba(220, 38, 38, 0.4);
-    border-radius: 16px; padding: 32px; max-width: 460px; width: 100%;
-    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9), 
-                0 0 40px -10px rgba(220, 38, 38, 0.15);
-    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-  }
+body {
+  background: #050505;
+  background-image:
+    radial-gradient(circle at 50% -20%, rgba(220,38,38,.15), transparent 60%),
+    radial-gradient(circle at 10% 90%, rgba(220,38,38,.05), transparent 40%);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 0;
+}
 
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+.card {
+  background: #0a0a0a;
+  border: 1px solid #1f1f1f;
+  border-top: 1px solid rgba(220,38,38,.4);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: 0 30px 60px -15px rgba(0,0,0,.9),
+              0 0 40px -10px rgba(220,38,38,.15);
+  animation: slideUp .6s cubic-bezier(.16,1,.3,1);
+  position: relative;
+}
 
-  h1 { 
-    font-size: 22px; font-weight: 900; margin: 0 0 8px; 
-    letter-spacing: -0.5px; line-height: 1.2;
-    color: #ef4444;
-    text-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
-    text-transform: uppercase;
-  }
-  
-  .sub { color: #a1a1aa; font-size: 14px; line-height: 1.5; margin-bottom: 24px; }
-  
-  /* Barra de progresso */
-  .progress-container {
-    margin-bottom: 28px;
-  }
-  .progress-text {
-    display: flex; justify-content: space-between; 
-    font-size: 12px; font-weight: 700; color: #71717a; 
-    margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .progress-bar {
-    background: #1f1f1f; border-radius: 4px; height: 6px; width: 100%;
-    overflow: hidden;
-  }
-  .progress-fill {
-    background: #dc2626; height: 100%; width: 0%;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
-    border-radius: 4px;
-    box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
-  }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  /* Etapas */
-  .step {
-    display: flex; align-items: center; gap: 16px;
-    padding: 16px; border-radius: 12px; margin-bottom: 12px;
-    background: #111111; border: 1px solid #27272a;
-    transition: all 0.25s ease; 
-    cursor: pointer; user-select: none;
-  }
-  
-  .step:not(.locked):not(.done):hover {
-    background: #1a1a1a; border-color: #dc2626; transform: translateX(4px);
-    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.15);
-  }
+h1 {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0 0 8px;
+  letter-spacing: -.5px;
+  line-height: 1.2;
+  color: #ef4444;
+  text-shadow: 0 0 20px rgba(239,68,68,.3);
+  text-transform: uppercase;
+}
 
-  .step.locked { opacity: 0.3; pointer-events: none; filter: grayscale(1); }
-  
-  .step.done { 
-    background: #0f0f0f; 
-    border-color: rgba(34, 197, 94, 0.3); 
-  }
-  
-  .step.done .check { 
-    background: #22c55e; color: #000; 
-    border-color: #22c55e;
-    box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
-  }
+.sub {
+  color: #a1a1aa;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
 
-  .check {
-    width: 28px; height: 28px; border-radius: 8px;
-    background: #1f1f1f; border: 1px solid #3f3f46; 
-    display: flex; align-items: center; justify-content: center; 
-    font-size: 13px; font-weight: 800; flex-shrink: 0;
-    transition: all 0.3s; color: #a1a1aa;
-  }
+.progress-container {
+  margin-bottom: 28px;
+}
 
-  .step-txt { font-size: 14px; font-weight: 500; line-height: 1.4; color: #d4d4d8; }
-  .step.done .step-txt { color: #a1a1aa; text-decoration: line-through; text-decoration-color: rgba(161, 161, 170, 0.5); }
-  .step-txt b { color: #fff; font-weight: 700; }
+.progress-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  color: #71717a;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
 
-  /* Botão Final */
-  .btn {
-    width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #27272a;
-    background: #111111; color: #52525b; font-weight: 700; font-size: 15px;
-    cursor: not-allowed; margin-top: 24px; transition: all 0.3s;
-    display: flex; justify-content: center; align-items: center; gap: 10px;
-    font-family: inherit; text-transform: uppercase; letter-spacing: 0.5px;
-  }
+.progress-bar {
+  background: #1f1f1f;
+  border-radius: 4px;
+  height: 6px;
+  width: 100%;
+  overflow: hidden;
+}
 
-  .btn:not(:disabled) {
-    background: linear-gradient(135deg, #dc2626, #991b1b);
-    border-color: #ef4444;
-    color: #fff; cursor: pointer;
-    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
-  }
+.progress-fill {
+  background: #dc2626;
+  height: 100%;
+  width: 0%;
+  transition: width .5s cubic-bezier(.4,0,.2,1);
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(220,38,38,.5);
+}
 
-  .btn:not(:disabled):hover {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(220, 38, 38, 0.6);
-  }
+.step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  background: #111;
+  border: 1px solid #27272a;
+  transition: all .25s ease;
+  cursor: pointer;
+  user-select: none;
+}
 
-  .btn:not(:disabled):active {
-    transform: translateY(0);
-    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-  }
+.step:not(.locked):not(.done):hover {
+  background: #1a1a1a;
+  border-color: #dc2626;
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(220,38,38,.15);
+}
 
-  .loading { text-align: center; color: #dc2626; padding: 40px 0; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; animation: pulse 1.5s infinite; }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.step.locked {
+  opacity: .3;
+  pointer-events: none;
+  filter: grayscale(1);
+}
+
+.step.done {
+  background: #0f0f0f;
+  border-color: rgba(34,197,94,.3);
+}
+
+.step.done .check {
+  background: #22c55e;
+  color: #000;
+  border-color: #22c55e;
+  box-shadow: 0 0 10px rgba(34,197,94,.3);
+}
+
+.check {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #1f1f1f;
+  border: 1px solid #3f3f46;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+  color: #a1a1aa;
+}
+
+.step-txt {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #d4d4d8;
+}
+
+.step.done .step-txt {
+  color: #a1a1aa;
+  text-decoration: line-through;
+}
+
+.step-txt b {
+  color: #fff;
+  font-weight: 700;
+}
+
+.btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #27272a;
+  background: #111;
+  color: #52525b;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: not-allowed;
+  margin-top: 24px;
+  transition: all .3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.btn:not(:disabled) {
+  background: linear-gradient(135deg,#dc2626,#991b1b);
+  border-color: #ef4444;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(220,38,38,.4);
+}
+
+.btn:not(:disabled):hover {
+  background: linear-gradient(135deg,#ef4444,#dc2626);
+  transform: translateY(-2px);
+}
+
+.loading {
+  text-align: center;
+  color: #dc2626;
+  padding: 40px 0;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: .4; }
+}
 </style>
 </head>
+
 <body>
+
 <div class="card">
-  <div id="loading" class="loading">Carregando...</div>
+
+  <div id="loading" class="loading">
+    Carregando...
+  </div>
 
   <div id="conteudo" style="display:none">
-    <!-- TÍTULO E SUBTÍTULO FIXOS, NÃO PUXAM MAIS DO SERVIDOR -->
+
     <h1>QZZ COMMUNITY DOWNLOAD</h1>
-    <p class="sub">Complete as etapas abaixo para liberar o download.</p>
-    
+
+    <p class="sub">
+      Complete as etapas abaixo para liberar o download.
+    </p>
+
     <div class="progress-container">
       <div class="progress-text">
         <span>Progresso</span>
         <span id="progTxt">0%</span>
       </div>
+
       <div class="progress-bar">
         <div class="progress-fill" id="progFill"></div>
       </div>
@@ -157,96 +247,716 @@
     <div id="etapasBox"></div>
 
     <button class="btn" id="btnDownload" disabled>
-      <span id="btnIcon">🔒</span> <span id="btnText">Complete as etapas</span>
+      <span id="btnIcon">🔒</span>
+      <span id="btnText">Complete as etapas</span>
     </button>
+
   </div>
 </div>
 
 <script>
-  let config = null;
-  let currentStep = 1;
-  let TOTAL = 0;
+'use strict';
 
-  async function carregar() {
-    try {
-      const res = await fetch('/api/config');
-      config = await res.json();
-      TOTAL = config.etapas.length;
-      render();
-    } catch (err) {
-      document.getElementById('loading').textContent = '❌ Erro ao carregar.';
+let config = null;
+let currentStep = 1;
+let TOTAL = 0;
+
+const TEMPO_MINIMO = 30000;
+
+let missaoPendente = null;
+let inicioMissao = 0;
+let avisoExibido = false;
+
+async function carregar() {
+  try {
+    const res = await fetch('/api/config');
+
+    if (!res.ok) {
+      throw new Error('Erro na configuração');
     }
-  }
 
-  function render() {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('conteudo').style.display = 'block';
-    
-    atualizarProgresso();
+    config = await res.json();
 
-    const box = document.getElementById('etapasBox');
-    box.innerHTML = '';
-    config.etapas.forEach((et, i) => {
-      const div = document.createElement('div');
-      div.className = 'step' + (i === 0 ? '' : ' locked');
-      div.dataset.step = i + 1;
-      div.innerHTML = `
-        <div class="check">${i + 1}</div>
-        <div class="step-txt">${et.texto}</div>
-      `;
-      div.onclick = () => openLink(div, et.link);
-      box.appendChild(div);
-    });
-  }
-
-  function atualizarProgresso() {
-    const completas = currentStep - 1;
-    const pct = Math.min(Math.round((completas / TOTAL) * 100), 100);
-    
-    document.getElementById('progFill').style.width = pct + '%';
-    document.getElementById('progTxt').textContent = pct + '%';
-
-    if (pct === 100) {
-      document.getElementById('progFill').style.background = '#22c55e';
-      document.getElementById('progFill').style.boxShadow = '0 0 10px rgba(34, 197, 94, 0.5)';
+    if (!Array.isArray(config.etapas)) {
+      throw new Error('Etapas inválidas');
     }
+
+    TOTAL = config.etapas.length;
+    render();
+
+  } catch (err) {
+    document.getElementById('loading').textContent =
+      '❌ Erro ao carregar.';
   }
+}
 
-  function openLink(el, url) {
-    window.open(url, '_blank');
-    el.classList.add('done');
-    el.querySelector('.check').textContent = '✓';
+function render() {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('conteudo').style.display = 'block';
 
-    currentStep++;
-    atualizarProgresso();
+  const box = document.getElementById('etapasBox');
+  box.innerHTML = '';
 
-    const next = document.querySelector(`.step[data-step="${currentStep}"]`);
-    if (next) next.classList.remove('locked');
+  config.etapas.forEach((et, i) => {
 
-    if (currentStep > TOTAL) {
-      const btn = document.getElementById('btnDownload');
-      btn.disabled = false;
-      document.getElementById('btnIcon').textContent = '⬇️';
-      // Aqui o botão final vai usar o texto do seu painel admin, ou "Baixar APK" como padrão
-      document.getElementById('btnText').textContent = config.mensagemFinal || 'BAIXAR APK';
-    }
-  }
+    const div = document.createElement('div');
 
-  document.getElementById('btnDownload').addEventListener('click', () => {
-    const url = config.downloadUrl || config.linkDownload || '#';
-    window.location.href = url;
+    div.className = 'step' + (i === 0 ? '' : ' locked');
+    div.dataset.step = i + 1;
 
-    const btn = document.getElementById('btnDownload');
-    btn.disabled = true;
-    btn.style.background = '#22c55e';
-    btn.style.borderColor = '#22c55e';
-    btn.style.boxShadow = '0 4px 20px rgba(34, 197, 94, 0.4)';
-    btn.style.transform = 'none';
-    document.getElementById('btnIcon').textContent = '✅';
-    document.getElementById('btnText').textContent = 'DOWNLOAD INICIADO';
+    const check = document.createElement('div');
+    check.className = 'check';
+    check.textContent = i + 1;
+
+    const txt = document.createElement('div');
+    txt.className = 'step-txt';
+    txt.textContent = et.texto;
+
+    div.append(check, txt);
+
+    div.onclick = () => openLink(div, et.link, i + 1);
+
+    box.appendChild(div);
   });
 
-  carregar();
+  atualizarProgresso();
+}
+
+function atualizarProgresso() {
+
+  const completas = currentStep - 1;
+
+  const pct = TOTAL > 0
+    ? Math.min(Math.round((completas / TOTAL) * 100), 100)
+    : 100;
+
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progTxt').textContent = pct + '%';
+
+  if (pct === 100) {
+    document.getElementById('progFill').style.background = '#22c55e';
+  }
+}
+
+function openLink(el, url, step) {
+
+  if (step !== currentStep) return;
+
+  // Primeira abertura da missão.
+  if (missaoPendente !== step) {
+
+    try {
+      const destino = new URL(url, window.location.origin);
+
+      if (!['http:', 'https:'].includes(destino.protocol)) {
+        throw new Error('URL inválida');
+      }
+
+      const novaAba = window.open(
+        destino.href,
+        '_blank',
+        'noopener,noreferrer'
+      );
+
+      if (!novaAba) {
+        alert('Permita a abertura de novas abas para continuar.');
+        return;
+      }
+
+      missaoPendente = step;
+      inicioMissao = Date.now();
+      avisoExibido = false;
+
+      return;
+
+    } catch (err) {
+      alert('Não foi possível abrir a missão.');
+      return;
+    }
+  }
+
+  // Verificação silenciosa do tempo.
+  const decorrido = Date.now() - inicioMissao;
+
+  if (decorrido < TEMPO_MINIMO) {
+    alert(
+      '⚠️ Você ainda não fez essa missão!\n\n' +
+      'Conclua a tarefa antes de continuar.'
+    );
+    return;
+  }
+
+  // Liberação da etapa.
+  el.classList.add('done');
+  el.querySelector('.check').textContent = '✓';
+
+  missaoPendente = null;
+  inicioMissao = 0;
+  avisoExibido = false;
+
+  currentStep++;
+
+  atualizarProgresso();
+
+  const next = document.querySelector(
+    `.step[data-step="${currentStep}"]`
+  );
+
+  if (next) {
+    next.classList.remove('locked');
+  }
+
+  if (currentStep > TOTAL) {
+
+    const btn = document.getElementById('btnDownload');
+
+    btn.disabled = false;
+
+    document.getElementById('btnIcon').textContent = '⬇️';
+
+    document.getElementById('btnText').textContent =
+      config.mensagemFinal || 'BAIXAR APK';
+  }
+}
+
+// Detectar retorno à página.
+function verificarRetorno() {
+
+  if (
+    missaoPendente !== null &&
+    document.visibilityState === 'visible' &&
+    !avisoExibido
+  ) {
+
+    avisoExibido = true;
+
+    const decorrido = Date.now() - inicioMissao;
+
+    if (decorrido < TEMPO_MINIMO) {
+
+      alert(
+        '⚠️ Você ainda não fez essa missão!\n\n' +
+        'Conclua a tarefa antes de continuar.'
+      );
+    }
+  }
+}
+
+document.addEventListener(
+  'visibilitychange',
+  verificarRetorno
+);
+
+window.addEventListener(
+  'focus',
+  verificarRetorno
+);
+
+// Download final.
+document.getElementById('btnDownload').addEventListener('click', () => {
+
+  if (currentStep <= TOTAL) return;
+
+  const url = config.downloadUrl || config.linkDownload;
+
+  try {
+
+    const destino = new URL(url);
+
+    if (!['http:', 'https:'].includes(destino.protocol)) {
+      throw new Error('URL inválida');
+    }
+
+    window.location.href = destino.href;
+
+  } catch (err) {
+    alert('Link de download inválido.');
+  }
+});
+
+carregar();
 </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QZZ Community Download</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  background: #050505;
+  background-image:
+    radial-gradient(circle at 50% -20%, rgba(220,38,38,.15), transparent 60%),
+    radial-gradient(circle at 10% 90%, rgba(220,38,38,.05), transparent 40%);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 0;
+}
+
+.card {
+  background: #0a0a0a;
+  border: 1px solid #1f1f1f;
+  border-top: 1px solid rgba(220,38,38,.4);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: 0 30px 60px -15px rgba(0,0,0,.9),
+              0 0 40px -10px rgba(220,38,38,.15);
+  animation: slideUp .6s cubic-bezier(.16,1,.3,1);
+  position: relative;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0 0 8px;
+  letter-spacing: -.5px;
+  line-height: 1.2;
+  color: #ef4444;
+  text-shadow: 0 0 20px rgba(239,68,68,.3);
+  text-transform: uppercase;
+}
+
+.sub {
+  color: #a1a1aa;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.progress-container {
+  margin-bottom: 28px;
+}
+
+.progress-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  color: #71717a;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.progress-bar {
+  background: #1f1f1f;
+  border-radius: 4px;
+  height: 6px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.progress-fill {
+  background: #dc2626;
+  height: 100%;
+  width: 0%;
+  transition: width .5s cubic-bezier(.4,0,.2,1);
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(220,38,38,.5);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  background: #111;
+  border: 1px solid #27272a;
+  transition: all .25s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.step:not(.locked):not(.done):hover {
+  background: #1a1a1a;
+  border-color: #dc2626;
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(220,38,38,.15);
+}
+
+.step.locked {
+  opacity: .3;
+  pointer-events: none;
+  filter: grayscale(1);
+}
+
+.step.done {
+  background: #0f0f0f;
+  border-color: rgba(34,197,94,.3);
+}
+
+.step.done .check {
+  background: #22c55e;
+  color: #000;
+  border-color: #22c55e;
+  box-shadow: 0 0 10px rgba(34,197,94,.3);
+}
+
+.check {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #1f1f1f;
+  border: 1px solid #3f3f46;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+  color: #a1a1aa;
+}
+
+.step-txt {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #d4d4d8;
+}
+
+.step.done .step-txt {
+  color: #a1a1aa;
+  text-decoration: line-through;
+}
+
+.step-txt b {
+  color: #fff;
+  font-weight: 700;
+}
+
+.btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #27272a;
+  background: #111;
+  color: #52525b;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: not-allowed;
+  margin-top: 24px;
+  transition: all .3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.btn:not(:disabled) {
+  background: linear-gradient(135deg,#dc2626,#991b1b);
+  border-color: #ef4444;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(220,38,38,.4);
+}
+
+.btn:not(:disabled):hover {
+  background: linear-gradient(135deg,#ef4444,#dc2626);
+  transform: translateY(-2px);
+}
+
+.loading {
+  text-align: center;
+  color: #dc2626;
+  padding: 40px 0;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: .4; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div id="loading" class="loading">
+    Carregando...
+  </div>
+
+  <div id="conteudo" style="display:none">
+
+    <h1>QZZ COMMUNITY DOWNLOAD</h1>
+
+    <p class="sub">
+      Complete as etapas abaixo para liberar o download.
+    </p>
+
+    <div class="progress-container">
+      <div class="progress-text">
+        <span>Progresso</span>
+        <span id="progTxt">0%</span>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progFill"></div>
+      </div>
+    </div>
+
+    <div id="etapasBox"></div>
+
+    <button class="btn" id="btnDownload" disabled>
+      <span id="btnIcon">🔒</span>
+      <span id="btnText">Complete as etapas</span>
+    </button>
+
+  </div>
+</div>
+
+<script>
+'use strict';
+
+let config = null;
+let currentStep = 1;
+let TOTAL = 0;
+
+const TEMPO_MINIMO = 30000;
+
+let missaoPendente = null;
+let inicioMissao = 0;
+let avisoExibido = false;
+
+async function carregar() {
+  try {
+    const res = await fetch('/api/config');
+
+    if (!res.ok) {
+      throw new Error('Erro na configuração');
+    }
+
+    config = await res.json();
+
+    if (!Array.isArray(config.etapas)) {
+      throw new Error('Etapas inválidas');
+    }
+
+    TOTAL = config.etapas.length;
+    render();
+
+  } catch (err) {
+    document.getElementById('loading').textContent =
+      '❌ Erro ao carregar.';
+  }
+}
+
+function render() {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('conteudo').style.display = 'block';
+
+  const box = document.getElementById('etapasBox');
+  box.innerHTML = '';
+
+  config.etapas.forEach((et, i) => {
+
+    const div = document.createElement('div');
+
+    div.className = 'step' + (i === 0 ? '' : ' locked');
+    div.dataset.step = i + 1;
+
+    const check = document.createElement('div');
+    check.className = 'check';
+    check.textContent = i + 1;
+
+    const txt = document.createElement('div');
+    txt.className = 'step-txt';
+    txt.textContent = et.texto;
+
+    div.append(check, txt);
+
+    div.onclick = () => openLink(div, et.link, i + 1);
+
+    box.appendChild(div);
+  });
+
+  atualizarProgresso();
+}
+
+function atualizarProgresso() {
+
+  const completas = currentStep - 1;
+
+  const pct = TOTAL > 0
+    ? Math.min(Math.round((completas / TOTAL) * 100), 100)
+    : 100;
+
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progTxt').textContent = pct + '%';
+
+  if (pct === 100) {
+    document.getElementById('progFill').style.background = '#22c55e';
+  }
+}
+
+function openLink(el, url, step) {
+
+  if (step !== currentStep) return;
+
+  // Primeira abertura da missão.
+  if (missaoPendente !== step) {
+
+    try {
+      const destino = new URL(url, window.location.origin);
+
+      if (!['http:', 'https:'].includes(destino.protocol)) {
+        throw new Error('URL inválida');
+      }
+
+      const novaAba = window.open(
+        destino.href,
+        '_blank',
+        'noopener,noreferrer'
+      );
+
+      if (!novaAba) {
+        alert('Permita a abertura de novas abas para continuar.');
+        return;
+      }
+
+      missaoPendente = step;
+      inicioMissao = Date.now();
+      avisoExibido = false;
+
+      return;
+
+    } catch (err) {
+      alert('Não foi possível abrir a missão.');
+      return;
+    }
+  }
+
+  // Verificação silenciosa do tempo.
+  const decorrido = Date.now() - inicioMissao;
+
+  if (decorrido < TEMPO_MINIMO) {
+    alert(
+      '⚠️ Você ainda não fez essa missão!\n\n' +
+      'Conclua a tarefa antes de continuar.'
+    );
+    return;
+  }
+
+  // Liberação da etapa.
+  el.classList.add('done');
+  el.querySelector('.check').textContent = '✓';
+
+  missaoPendente = null;
+  inicioMissao = 0;
+  avisoExibido = false;
+
+  currentStep++;
+
+  atualizarProgresso();
+
+  const next = document.querySelector(
+    `.step[data-step="${currentStep}"]`
+  );
+
+  if (next) {
+    next.classList.remove('locked');
+  }
+
+  if (currentStep > TOTAL) {
+
+    const btn = document.getElementById('btnDownload');
+
+    btn.disabled = false;
+
+    document.getElementById('btnIcon').textContent = '⬇️';
+
+    document.getElementById('btnText').textContent =
+      config.mensagemFinal || 'BAIXAR APK';
+  }
+}
+
+// Detectar retorno à página.
+function verificarRetorno() {
+
+  if (
+    missaoPendente !== null &&
+    document.visibilityState === 'visible' &&
+    !avisoExibido
+  ) {
+
+    avisoExibido = true;
+
+    const decorrido = Date.now() - inicioMissao;
+
+    if (decorrido < TEMPO_MINIMO) {
+
+      alert(
+        '⚠️ Você ainda não fez essa missão!\n\n' +
+        'Conclua a tarefa antes de continuar.'
+      );
+    }
+  }
+}
+
+document.addEventListener(
+  'visibilitychange',
+  verificarRetorno
+);
+
+window.addEventListener(
+  'focus',
+  verificarRetorno
+);
+
+// Download final.
+document.getElementById('btnDownload').addEventListener('click', () => {
+
+  if (currentStep <= TOTAL) return;
+
+  const url = config.downloadUrl || config.linkDownload;
+
+  try {
+
+    const destino = new URL(url);
+
+    if (!['http:', 'https:'].includes(destino.protocol)) {
+      throw new Error('URL inválida');
+    }
+
+    window.location.href = destino.href;
+
+  } catch (err) {
+    alert('Link de download inválido.');
+  }
+});
+
+carregar();
+</script>
+
 </body>
 </html>
